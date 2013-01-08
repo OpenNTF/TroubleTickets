@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" replicaid="80257AC9005C8838" version="9.0" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="202" sequence="8" unid="2DB146C83BBBD336852578240064D942">
+<created><datetime>20110126T132132,18-05</datetime></created>
+<modified><datetime>20121206T123747,66+08</datetime></modified>
+<revised><datetime>20121206T123747,65+08</datetime></revised>
+<lastaccessed><datetime>20121206T123747,66+08</datetime></lastaccessed>
+<addedtofile><datetime>20121203T165042,84+00</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Hunter Medney/OU=San Francisco/O=IBM</name><name>CN=Domino Admin/O=renovations</name><name>CN=Niklas Heidloff/OU=Germany/O=IBM</name><name>CN=Amy Jones104/O=DUB</name><name>CN=admin/O=baxter</name><name>CN=admin/O=IBM</name></updatedby>
+<item name="$ImagesWide" sign="true"><number>1</number></item>
+<item name="$ImagesHigh" sign="true"><number>1</number></item>
+<item name="$ImagesColorize" sign="true"><number>0</number></item>
+
+
+
+<item name="$MimeType" sign="true"><text>image/gif</text></item>
+<item name="$FileModDT" sign="true"><datetime>20010209T034226,00-08</datetime></item>
+<item name="$ImageNames" sign="true"><text>discussion_outline.gif</text></item>
+<item name="$Comment" sign="true"><text>outline image graphic</text></item>
+<item name="$LANGUAGE" sign="true"><text>en</text></item>
+<item name="$TITLE" sign="true"><textlist><text>keyboard.gif</text><text>OutlinePage.gif</text></textlist></item>
+<item name="$DesignerVersion" sign="true"><text>8.5.2</text></item>
+<item name="$EditFilePath"><text>r:\temp\notesF8B682\~discussion_outline.gif</text></item>
+<item name="$Flags"><text>34CiQ$</text></item></note>

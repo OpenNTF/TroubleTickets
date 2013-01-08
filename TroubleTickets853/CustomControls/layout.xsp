@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xe="http://www.ibm.com/xsp/coreex">
+	<xp:this.resources>
+		<xp:script src="/xpagesCommon.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
+	<xe:applicationLayout id="applicationLayout1">
+		<xe:this.facets>
+			<xp:callback facetName="facetLeft" id="facetLeft" xp:key="LeftColumn"></xp:callback>
+		</xe:this.facets>
+		<xp:div styleClass="lotusMessage lotusConfirm" rendered="${not empty sessionScope.confirmMessage}">
+			<img src="images/ok_16x16.png" width="16" height="16" style="margin:0px 5px 0px 0px"/>
+			<xp:text tagName="span" style="line-height: 16px">
+				<xp:this.value><![CDATA[${javascript:var message = sessionScope.confirmMessage;
+sessionScope.confirmMessage = null;
+return message;}]]></xp:this.value>
+			</xp:text>			
+		</xp:div>
+		<xp:div styleClass="lotusMessage lotusInfo" rendered="${not empty sessionScope.infoMessage}">
+			<img src="images/info_16x16.png" width="16" height="16" style="margin:0px 5px 0px 0px"/>
+			<xp:text tagName="span" style="line-height: 16px">
+				<xp:this.value><![CDATA[${javascript:var message = sessionScope.infoMessage;
+sessionScope.infoMessage = null;
+return message;}]]></xp:this.value>
+			</xp:text>			
+		</xp:div>
+		<xp:callback facetName="content" id="callback1"></xp:callback>
+		<xe:this.configuration>
+			<xe:oneuiApplication banner="true" titleBarName="Trouble Tickets" titleBar="true" productLogo="/logo.gif" placeBar="#{javascript:compositeData.placeBarName}" placeBarName="#{javascript:compositeData.placeBarName}"
+				navigationPath="${not empty compositeData.navigationPath ? compositeData.navigationPath : '/'}">
+				<xe:this.titleBarTabs>
+					<xe:pageTreeNode page="welcome.xsp" label="Welcome"></xe:pageTreeNode>
+					<xe:pageTreeNode page="employeeHome.xsp" label="My Tickets"></xe:pageTreeNode>
+					<xe:pageTreeNode page="staffAllTickets.xsp" label="Staff" rendered="#{javascript:roles.isStaff()}" selection="/staff"></xe:pageTreeNode>
+					<xe:pageTreeNode page="managerAnnouncements.xsp" label="Manager" rendered="#{javascript:roles.isManager()}" selection="/manager"></xe:pageTreeNode>
+				</xe:this.titleBarTabs>
+				<xe:this.bannerUtilityLinks>
+					<xe:pageTreeNode label="New Ticket" page="/editTicket.xsp"></xe:pageTreeNode>
+					<xe:userTreeNode>
+						<xe:this.label><![CDATA[#{javascript:var userRoles = roles.getRoles(); 
+userRoles = @ReplaceSubstring(userRoles, ["[", "]"], ["", ""]);
+var rolesStr = @Implode(userRoles, ", "); 
+userBean.displayName + (rolesStr.length ? " [" + rolesStr + "]" : "");}]]></xe:this.label>
+					</xe:userTreeNode>
+				</xe:this.bannerUtilityLinks>
+				<xe:this.searchBar>
+					<xe:appSearchBar queryParam="search" pageName="/search.xsp" optionsParam="search"></xe:appSearchBar>
+				</xe:this.searchBar>
+			</xe:oneuiApplication>
+		</xe:this.configuration>
+	</xe:applicationLayout>
+</xp:view>

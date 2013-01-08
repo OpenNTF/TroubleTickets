@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" replicaid="80257AC9005C8838" version="9.0" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="296" sequence="9" unid="C4AB094CA174A42285257A3E00252906">
+<created><datetime dst="true">20120717T024553,34-04</datetime></created>
+<modified><datetime>20121206T123746,52+08</datetime></modified>
+<revised><datetime>20121206T123746,51+08</datetime></revised>
+<lastaccessed><datetime>20121206T123746,52+08</datetime></lastaccessed>
+<addedtofile><datetime>20121203T165043,58+00</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Hunter Medney/OU=San Francisco/O=IBM</name><name>CN=Domino Admin/O=renovations</name><name>CN=Niklas Heidloff/OU=Germany/O=IBM</name><name>CN=Amy Jones104/O=DUB</name><name>CN=admin/O=baxter</name><name>CN=admin/O=IBM</name></updatedby>
+<item name="$TITLE"><text>oneui21.theme</text></item>
+<item name="$Flags"><text>34567Cg~`</text></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+
+
+<item name="$FileNames" sign="true"><text>oneui21.theme</text></item>
+<item name="$CSSFiles"><text>custom.css</text></item></note>

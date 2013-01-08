@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xc="http://www.ibm.com/xsp/custom" dojoParseOnLoad="true">
+	<xp:this.resources>
+		<xp:script src="/xpagesCommon.jss" clientSide="false"></xp:script>
+		<xp:dojoModule name="dojox.charting.widget.Chart2D"></xp:dojoModule>
+		<xp:dojoModule name="dojox.charting.themes.PlotKit.blue"></xp:dojoModule>
+		<xp:dojoModule name="dojox.charting.themes.MiamiNice"></xp:dojoModule>
+		<xp:dojoModule name="dojox.charting.themes.Claro"></xp:dojoModule>
+		<xp:dojoModule name="dojox.charting.action2d.Highlight"></xp:dojoModule>
+		<xp:dojoModule name="dojo.parser"></xp:dojoModule>
+	</xp:this.resources>
+	<xc:layout navigationPath="/manager">
+		<xp:this.facets>
+			<xc:managerNav xp:key="facetLeft"></xc:managerNav>
+			<xp:panel xp:key="content">
+				<xp:scriptBlock id="scriptBlock1">
+					<xp:this.value><![CDATA[
+	var chartData = [ {
+		x : "1",
+		y : "19021"
+	}, {
+		x : "1",
+		y : "12837"
+	}, {
+		x : "1",
+		y : "12378"
+	}, {
+		x : "1",
+		y : "21882"
+	}, {
+		x : "1",
+		y : "17654"
+	}, {
+		x : "1",
+		y : "15833"
+	}, {
+		x : "1",
+		y : "16122"
+	} ];]]></xp:this.value>
+				</xp:scriptBlock>
+				Note: The Dojo chart below is a work-in-progress and is not using actual data from the database.
+				<div dojoType="dojox.charting.widget.Chart2D" theme="dojox.charting.themes.Claro" id="viewsChart" style="width: 550px; height: 550px;">
+					<!-- Pie Chart: add the plot -->
+					<div class="plot" name="default" type="Pie" radius="200" fontColor="#000" labelOffset="-20"></div>
+					<!-- pieData is the data source -->
+					<div class="series" name="Last Week's Visits" array="chartData"></div>
+				</div>
+			</xp:panel>
+		</xp:this.facets>
+	</xc:layout>
+</xp:view>

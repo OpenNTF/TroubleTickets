@@ -1,0 +1,282 @@
+'++LotusScript Development Environment:2:5:(Options):0:74
+' © Copyright IBM Corp. 2009 
+'
+' Licensed under the Apache License, Version 2.0 (the "License");  
+' you may not use this file except in compliance with the License. 
+' You may obtain a copy of the License at:
+'
+' http://www.apache.org/licenses/LICENSE-2.0 
+'
+' Unless required by applicable law or agreed to in writing, software
+' distributed under the License is distributed on an "AS IS" BASIS, 
+' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+' implied. See the License for the specific language governing 
+' permissions and limitations under the License.
+Option Public
+Option Declare
+
+'++LotusScript Development Environment:2:5:(Forward):0:1
+Declare Sub Initialize()
+Declare Sub CloseTicket(doc As NotesDocument, resolution$)
+Declare Sub SubmitTicket(doc As NotesDocument)
+Declare Sub CommonSave(doc As NotesDocument)
+Declare Sub SaveTicket(doc As NotesDocument)
+Declare Function GetRandomNum(upperLimit%) As Integer
+Declare Sub AssertRequiredField(doc As NotesDocument, fieldName$, label$)
+Declare Sub AssignTicket(doc As NotesDocument, assignedTo$)
+Declare Function GenerateTicketId() As String
+Declare Sub AddComment(doc As NotesDocument, comment$)
+Declare Sub AppendToHistory(doc As NotesDocument, msg$)
+
+'++LotusScript Development Environment:2:5:(Declarations):0:10
+Const STATUS_DRAFT$ = "Draft"
+Const STATUS_SUBMITTED$ = "Submitted"
+Const STATUS_ASSIGNED$ = "Assigned"
+Const STATUS_CLOSED$ = "Closed"
+
+Const ERROR_REQUIRED_FIELD% = 1000
+Const ERROR_UNABLE_PERFORM_OPERATION% = 1001
+Const ERROR_UNABLE_PERFORM_OPERATION__MSG$ = "Unable to perform operation"
+
+'++LotusScript Development Environment:2:2:Initialize:1:10
+Sub Initialize()
+	
+End Sub
+
+
+
+'++LotusScript Development Environment:2:2:CloseTicket:4:8
+%REM
+	Closes a ticket.
+%END REM
+Sub CloseTicket(doc As NotesDocument, resolution$)
+	' update doc fields
+	Call doc.replaceItemValue("Status", STATUS_CLOSED$)
+	Call doc.replaceItemValue("Closed", Now)
+	Call doc.replaceItemValue("ClosedBy", doc.Parentdatabase.Parent.Effectiveusername)
+	Call doc.replaceItemValue("Resolution", resolution$)
+	Call AppendToHistory(doc, "Ticket closed, resolution: " + resolution$)
+	
+	Call CommonSave(doc)	
+	Call doc.save(True, False)	
+End Sub
+
+'++LotusScript Development Environment:2:2:SubmitTicket:4:8
+%REM
+	Submits a ticket.
+%END REM
+Sub SubmitTicket(doc As NotesDocument)
+	' set doc fields
+	Call doc.replaceItemValue("Status", STATUS_SUBMITTED$)
+	Call doc.replaceItemValue("Submitted", Now)
+	Call doc.replaceItemValue("SubmittedBy", doc.Parentdatabase.Parent.Effectiveusername)
+	Call doc.replaceItemValue("ID", GenerateTicketId())
+	Call AppendToHistory(doc, "Ticket submitted")
+	
+	Call CommonSave(doc)
+	Call doc.save(True, False)	
+	Dim session As New NotesSession
+	Dim db As NotesDatabase
+	Dim namesdb As NotesDatabase
+	Dim nv As NotesView
+	Dim person As NotesDocument
+	Dim emailAddress As String, firstName As String, lastName As String
+	Set namesdb = session.Getdatabase("", "names.nsf")	
+	Set nv = namesdb.getView("$Users")	
+	Set person = nv.Getdocumentbykey(doc.SubmittedBy(0), false)	
+	If Not (person Is Nothing) Then		
+		emailAddress = person.InternetAddress(0)
+		firstName = person.FirstName(0)
+		lastName = person.LastName(0)
+	Else
+		Print doc.SubmittedBy(0) + " not found."
+	End If
+	Dim memo As NotesDocument
+	Set db = session.CurrentDatabase
+	Set memo = New NotesDocument( db )
+	memo.Form = "Memo"	
+	memo.Principal = """" + firstName + " " + lastName + """ <" + emailAddress + ">"
+	memo.SendTo = """" + firstName + " " + lastName + """ <" + emailAddress + ">"
+	memo.Subject = "New Trouble Ticket Submitted"		
+	Dim rtitem As NotesRichTextItem
+	Set rtitem = memo.CreateRichTextItem("Body")	
+	Call rtitem.AppendText("Trouble Ticket Application")
+	Call rtitem.AddNewLine(1)
+	Call rtitem.AppendText("http://ttvm03.swg.usma.ibm.com/Tickets.nsf/employeeHome.xsp")		
+	Call memo.Send( False )
+End Sub
+
+'++LotusScript Development Environment:2:2:CommonSave:5:8
+%REM
+	Sub CommonSave
+	Description: Comments for Sub
+%END REM
+Sub CommonSave(doc As NotesDocument)
+	Call doc.replaceItemValue("Updated", Now)
+	Call doc.replaceItemValue("UpdatedBy", doc.Parentdatabase.Parent.Effectiveusername)
+	
+	If (Not doc.hasItem("Created")) Then
+		Call doc.replaceItemValue("Created", Now)
+		Call doc.replaceItemValue("CreatedBy", doc.Parentdatabase.Parent.Effectiveusername)		
+	End If	
+End Sub
+
+
+'++LotusScript Development Environment:2:2:SaveTicket:5:8
+%REM
+	Sub SaveTicket
+	Description: Comments for Sub
+%END REM
+Sub SaveTicket(doc As NotesDocument)
+	If (doc.getItemValue("Status")(0) <> STATUS_DRAFT$) Then
+		Call AppendToHistory(doc, "Ticket edited")		
+	End If
+	
+	Call CommonSave(doc)
+	Call doc.save(True, False)	
+End Sub
+
+'++LotusScript Development Environment:2:1:GetRandomNum:5:8
+%REM
+	Function GetRandomNum
+	Description: Comments for Function
+%END REM
+Function GetRandomNum(upperLimit%) As Integer
+	GetRandomNum = CInt(Rnd() * upperLimit%)
+End Function
+
+
+'++LotusScript Development Environment:2:2:AssertRequiredField:5:8
+%REM
+	Function GetRandomNum
+	Description: Comments for Function
+%END REM
+Sub AssertRequiredField(doc As NotesDocument, fieldName$, label$)
+	Dim value$
+	value$ = doc.GetItemValue(fieldName$)(0)
+	If (value$ = "") Then
+		Error ERROR_REQUIRED_FIELD%, "Field " + label$ + " is required"
+	End If
+End Sub
+
+'++LotusScript Development Environment:2:2:AssignTicket:4:8
+%REM
+	Assigns a ticket.
+%END REM
+Sub AssignTicket(doc As NotesDocument, assignedTo$)
+	' get Notes name
+	Dim assignedToNotes As New NotesName(assignedTo$)
+	Dim s As New NotesSession
+	Dim db As NotesDatabase
+	Dim agent As NotesAgent
+	Dim direct As NotesDirectory
+	Dim nav As NotesDirectoryNavigator
+	Dim value As Variant
+	Set db = s.CurrentDatabase
+	Set direct = s.getDirectory
+	Set nav = direct.LookupNames("$Users",assignedTo$,"ShortName")
+	value = nav.GetFirstItemValue
+	
+	' update doc fields
+	Call doc.replaceItemValue("Status", STATUS_ASSIGNED$)
+	Call doc.replaceItemValue("Assigned", Now)
+	Call doc.replaceItemValue("AssignedBy", doc.Parentdatabase.Parent.Effectiveusername)
+	Call doc.replaceItemValue("AssignedTo", assignedToNotes.Canonical)
+	Call doc.Replaceitemvalue("ShortName", value)
+	Call AppendToHistory(doc, "Ticket assigned to " + assignedToNotes.Abbreviated)
+	
+	Call CommonSave(doc)	
+	Call doc.save(True, False)	
+	'Set agent = db.GetAgent("RestrictedPhrase")
+	'Call agent.RunOnServer(doc.NoteID)
+End Sub
+
+'++LotusScript Development Environment:2:1:GenerateTicketId:5:8
+%REM
+	Function GenerateTicketId
+	Description: Comments for Function
+%END REM
+Function GenerateTicketId() As String
+	Dim i%, id$
+	id$ = ""
+	For i%=1 To 10
+		id$ = id$ + Left$(CStr(GetRandomNum(10)), 1)
+	Next
+	GenerateTicketId = id$
+End Function
+
+
+'++LotusScript Development Environment:2:2:AddComment:4:8
+%REM
+	Append comment to ticket history
+%END REM
+Sub AddComment(doc As NotesDocument, comment$)
+	Call AppendToHistory(doc, "Comments: " + comment$)
+	Call CommonSave(doc)	
+	Call doc.save(True, False)	
+End Sub
+
+'++LotusScript Development Environment:2:2:AppendToHistory:4:8
+%REM
+	Appends a new entry to the History rtf
+%END REM
+Sub AppendToHistory(doc As NotesDocument, msg$)
+	Dim session As NotesSession
+	Dim rti As NotesRichTextItem
+	Dim userNameNotes As NotesName 
+	Dim userName$
+	Dim headerStyle As NotesRichTextStyle
+	Dim labelStyle As NotesRichTextStyle	
+	Dim messageStyle As NotesRichTextStyle	
+	Dim plainStyle As NotesRichTextStyle	
+	Const historyFieldName$ = "History"
+	Set session = doc.Parentdatabase.Parent
+	
+	' get/create rti
+	If (doc.Hasitem(historyFieldName$)) Then
+		Set rti = doc.getFirstItem(historyFieldName$)
+	Else
+		Set rti = doc.Createrichtextitem(historyFieldName$)
+	End If
+	
+	' get display name
+	Set userNameNotes = New NotesName(session.Effectiveusername)
+	userName$ = userNameNotes.Abbreviated
+	
+	' create styles
+	Set headerStyle = session.Createrichtextstyle()
+	headerStyle.Bold = False
+	headerStyle.Fontsize = 10
+	headerStyle.Notescolor = COLOR_BLACK
+	Set labelStyle = session.Createrichtextstyle()
+	labelStyle.Bold = False
+	labelStyle.Fontsize = 8
+	labelStyle.Notescolor = COLOR_BLACK
+	Set messageStyle = session.Createrichtextstyle()
+	messageStyle.Bold = False
+	messageStyle.Fontsize = 8
+	messageStyle.Notescolor	= COLOR_DARK_BLUE
+	Set plainStyle = session.Createrichtextstyle()
+	
+	' add spacing if this is not the first entry
+	If (rti.Getunformattedtext() <> "") Then
+		Call rti.Addnewline(2, True)		
+	End If
+	
+	' message divider
+	Call rti.Appendstyle(headerStyle)
+	Call rti.Appendtext(UString$(150, "-"))
+	Call rti.Addnewline(1, False)
+
+	' message contents
+	Call rti.Appendstyle(labelStyle)
+	Call rti.Appendtext("[" + Now + "] ")
+	Call rti.Appendtext(userName$ + ": ")	
+	Call rti.Appendstyle(messageStyle)
+	Call rti.Appendtext(msg$)
+	
+	' set last activity
+	Call doc.replaceItemValue("LastActivity", msg$)
+	Call doc.replaceItemValue("LastActivityBy", session.Effectiveusername)
+	Call doc.replaceItemValue("LastActivityDate", Now)
+End Sub

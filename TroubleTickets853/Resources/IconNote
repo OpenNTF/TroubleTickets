@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<note default='true' class='icon' xmlns='http://www.lotus.com/dxl' version='9.0'
+ replicaid='80257AC9005C8838'>
+<noteinfo noteid='11a' unid='19A46BF86760C93F85257824002D028E' sequence='39'>
+<created><datetime>20110126T031137,74-05</datetime></created>
+<modified><datetime>20121208T005402,08+08</datetime></modified>
+<revised><datetime>20121208T005402,07+08</datetime></revised>
+<lastaccessed><datetime>20121208T005402,08+08</datetime></lastaccessed>
+<addedtofile><datetime>20121203T165041,90+00</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Hunter Medney/OU=San Francisco/O=IBM</name><name>CN=George Brichacek/OU=Chicago/O=IBM</name><name
+>CN=Domino Admin/O=renovations</name><name>CN=Niklas Heidloff/OU=Germany/O=IBM</name><name
+>CN=Demo/O=DUB</name><name>CN=admin/O=IBM</name></updatedby>
+<item name='IconBitmap' summary='true'>
+<rawitemdata type='6'>
+AiAgAQAA///////wD///gAH//gAAf/wAAD/4AAAf8AAAD+AAAAfgAAAHwAAAA8AAAAPAAAADgAAA
+AYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAHAAAADwAAAA8AAAAPgAAAH4AAAB/AAAA/4AAAf
+/AAAP/4AAH//gAH///AP//////8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAiIiIiAAAAAAAAAAAAAAI
+jPZmZm/IgAAAAAAAAAAIjGZmZmZmZsiAAAAAAAAAjGZmZmZmZmZmyAAAAAAACMZmZmZmZmZmZmyA
+AAAAAIxmZmZmZmZmZmZmyAAAAAjGZmZmZmZmZmZmZmyAAAAIZmbyL2byL2byL2ZmgAAAjGZmIiJm
+IiJmIiJmZsgAAIZmZiIiZiIiZiIiZmZoAADGZmYiImYiImYiImZmbAAI9mZmIiJmIiJmIiJmZm+A
+CGZmZiIiZiIiZiIiZmZmgAhmZmYiImYiImYiImZmZoAIZmZmIiJmIiJmIiJmZmaACGZvIiIiZiIi
+ZiIiIvZmgAhmYiIiImYiImYiIiImZoAIZm8iIi9m8i9m8iIi9maACPZmZmZmZmZmZmZmZmZvgADG
+ZmbyL2byL2byL2ZmbAAAj2ZmIiJmIiJmIiJmZvgAAIxmZiIiZiIiZiIiZmbIAAAI9mbyL2byL2by
+L2ZvgAAACMZmZmZmZmZmZmZmbIAAAACMZmZmZmZmZmZmZsgAAAAACMZmZmZmZmZmZmyAAAAAAACM
+9mZmZmZmZm/IAAAAAAAACIz2ZmZmZm/IgAAAAAAAAAAIiMZmZmyIgAAAAAAAAAAAAACIiIiIAAAA
+AAAAUEECICABAAD/////+A4DgA==
+</rawitemdata></item>
+<item name='$DefaultFrameset'><text>main</text></item>
+<item name='$DBTheme'><text>oneui21.theme</text></item>
+<item name='$DefaultXPage'><text>launch.xsp</text></item>
+<item name='$DefaultCompApp'><text>demo.ca</text></item>
+<item name='$DefaultCompAppPage'><text>[rep_id]_85257A4000012634</text></item>
+<item name='$Daos'><text>0</text></item>
+<item name='$TITLE'><text>Trouble Tickets2</text></item>
+<item name='$Flags'><text>J!7?</text></item>
+<item name='$LaunchXPageRunOnServer'><text>0</text></item>
+<item name='$FlagsNoRefresh'><text/></item>
+<item name='$DefaultClientXPage'><text>launch.xsp</text></item></note>
+

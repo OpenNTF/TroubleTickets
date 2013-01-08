@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" replicaid="80257AC9005C8838" version="9.0" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="3d6" sequence="91" unid="C899D035A2714DDA85257ACB007FB7D2">
+<created><datetime>20121205T181501,30-05</datetime></created>
+<modified><datetime>20121207T235556,91+08</datetime></modified>
+<revised><datetime>20121207T235556,90+08</datetime></revised>
+<lastaccessed><datetime>20121207T235556,91+08</datetime></lastaccessed>
+<addedtofile><datetime>20121205T181501,31-05</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=admin/O=baxter</name><name>CN=admin/O=IBM</name></updatedby>
+<item name="$Flags"><text>34567Cg~[</text></item>
+<item name="$TITLE"><text>nsf/XPagesTickets.java</text></item>
+
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+
+
+<item name="$FileNames" sign="true"><text>nsf/XPagesTickets.java</text></item>
+
+</note>

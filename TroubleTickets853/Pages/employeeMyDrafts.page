@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<note class='form' xmlns='http://www.lotus.com/dxl' version='9.0' replicaid='80257AC9005C8838'>
+<noteinfo noteid='1fa' unid='2242A0DD7A4B4E84852578250016BCCD' sequence='23'>
+<created><datetime>20110126T230821,25-05</datetime></created>
+<modified><datetime>20121206T123747,62+08</datetime></modified>
+<revised><datetime>20121206T123747,61+08</datetime></revised>
+<lastaccessed><datetime>20121206T123747,62+08</datetime></lastaccessed>
+<addedtofile><datetime>20121203T165042,80+00</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Hunter Medney/OU=San Francisco/O=IBM</name><name>CN=Domino Admin/O=renovations</name><name
+>CN=Niklas Heidloff/OU=Germany/O=IBM</name><name>CN=Amy Jones104/O=DUB</name><name
+>CN=admin/O=baxter</name><name>CN=admin/O=IBM</name></updatedby>
+<item name='$Comment' sign='true'><text/></item>
+<item name='$HTMLCode' sign='true'>
+<rawitemdata type='1'>
+X/8QAAIADwAHAAAAAAAAAA==
+</rawitemdata></item>
+<item name='$Info' sign='true'>
+<rawitemdata type='1'>
+hhgBAIAAAAAAgAAAAQABAP///wAQAAAA
+</rawitemdata></item>
+<item name='$Flags'><text>C34WQ</text></item>
+<item name='$WebFlags' sign='true'><text>V</text></item>
+<item name='$TITLE' sign='true'><text>employeeMyDrafts</text></item>
+<item name='$DesignerVersion' sign='true'><text>8.5.2</text></item>
+<item name='$$ScriptName' summary='false' sign='true'><text>employeeMyDrafts</text></item>
+<item name='$Body' sign='true'>
+<rawitemdata type='1'>
+gQKC/1oAAQAAAAAAAAAAADgEAAA4BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAABAAAAAJSEOAQNADgEDQAAAAAAAQAAAAQAAACDBAEAhf8IAAEAAArdBgAArf9x/zMA
+AAAAAAMAAgARAAAAAAAAAAAAAAAAAAAAAAAAAAAAZW1wbG95ZWVNeURyYWZ0cwAArf8dABMACAAA
+ABEAZW1wbG95ZWVNeURyYWZ0cwAA6v8+ABMAoUQAAGQA1BwBAAAKAAAAAAAAAAABAAAKAQAACgAA
+BQD///8AAQAAAAAAAAAAAAAAAAAAAAAAAADt/yoAggAAAAAAAAAKAAAAAAAAAAAAAAAAAAAAAAAA
+AAoAAAAIAPQAAwCuAt4GAACuAIX/CAABAAAK
+</rawitemdata></item></note>
+

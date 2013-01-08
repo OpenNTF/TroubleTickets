@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='utf-8'?>
+<note class='view' xmlns='http://www.lotus.com/dxl' version='9.0' replicaid='80257AC9005C8838'>
+<noteinfo noteid='1ca' unid='BC52E40002ACF6618525782500104008' sequence='23'>
+<created><datetime>20110126T215729,68-05</datetime></created>
+<modified><datetime>20121206T123747,94+08</datetime></modified>
+<revised><datetime>20121206T123747,93+08</datetime></revised>
+<lastaccessed><datetime>20121206T123747,94+08</datetime></lastaccessed>
+<addedtofile><datetime>20121203T165042,56+00</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Hunter Medney/OU=San Francisco/O=IBM</name><name>CN=Domino Admin/O=renovations</name><name
+>CN=Niklas Heidloff/OU=Germany/O=IBM</name><name>CN=Amy Jones104/O=DUB</name><name
+>CN=admin/O=baxter</name><name>CN=admin/O=IBM</name></updatedby>
+<item name='$FormulaClass' sign='true'><text>1</text></item>
+<item name='$TITLE' sign='true'><text>managerAnnouncements</text></item>
+<item name='$Index' sign='true'><text/></item>
+<item name='$Formula' summary='true' sign='true'><formula compiled='true'>
+WAAFACIAHgADAAQABwAJAERhdGVTdW1tYXJ5JENvbmZsaWN0BAAEAAAAJAAFAAQARm9ybQEADABh
+bm5vdW5jZW1lbnQKAgQABAADAAcADAAFAAkzUzRTAA==
+</formula></item>
+<item name='$Collation' summary='true'>
+<rawitemdata type='2'>
+EQABAABEAWYAAAAEAERhdGU=
+</rawitemdata></item>
+<item name='$ViewFormat' summary='true' sign='true'>
+<rawitemdata type='5'>
+AQACAAMACgIAAFZDBQAEAAQAAAAAAHAAAQAACgAAAAAAAAABAAICAAAAVkMAAAcABwAAAAAAHQEB
+AAAKAAAAAAAAAAAAAgIAAABEYXRlRGF0ZVN1bW1hcnlTdW1tYXJ5JgABAAAAAQEACQEAAAoBAQ4K
+AAABAK0rAQABAAEAAAAAAAAAAABXQwEBAAkAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAD//wAAAAAA
+AAAAAAAAAAAAV0MBAQAJAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA//8AAAAAAAAAAAAAAAAAAEIA
+EAAAAAEA////AAUA////AAEAAAAAAAAAAAAAAAAAAQD///8AAQD///8AAAABAAAAAAABAAAAAAAB
+AAAAAAAAAAgAAAAAAAEAWEMBDIACAAAAAAABAQMCAQECAQcEAgABAAAAAAAAICAsIDpZQwAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+</rawitemdata></item>
+<item name='$Comment' sign='true'><text/></item>
+<item name='$Flags'><text>PY</text></item>
+<item name='$DesignerVersion'><text>8.5.2</text></item>
+<item name='$SelQuery' sign='true'>
+<rawitemdata type='f'>
+gQYAAAAAif8YAAAAAAABAAwAYW5ub3VuY2VtZW50
+</rawitemdata></item>
+<item name='$V5ACTIONS' sign='true'>
+<rawitemdata type='1'>
+vRwRAAAAAQABAAAABQAAAAAAAAAAAAAACAACAHn/bAABAP/vzgABAAAAAAAJAAAAAAABAO/v7wAC
+AB8AAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPz/OgAAAAAAAQAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAC+/1YAAAABAHwAngEAABEAAAAAAAAAIE5ldyBBbm5vdW5j
+ZW1lbnQALgAAACIAAgDoAwAAAAAAAAEADABhbm5vdW5jZW1lbnTtAgMABwAKAAMACTRTAA==
+</rawitemdata></item></note>
+

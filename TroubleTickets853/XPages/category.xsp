@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xc="http://www.ibm.com/xsp/custom">
+	<xp:this.data>
+		<xp:dominoDocument var="document1" formName="category"></xp:dominoDocument>
+	</xp:this.data>
+	<xp:this.resources>
+		<xp:script src="/xpagesCommon.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
+	<xc:layout placeBarName="Category">
+		<xp:this.facets>
+			<xp:panel xp:key="content">
+				<xp:div styleClass="lotusBtnContainer" rendered="#{javascript:roles.isManager()}">
+					<xp:button value="Edit" id="button1" styleClass="lotusBtn lotusBtnAction" rendered="#{javascript:!currentDocument.isEditable()}">
+						<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+							<xp:this.action>
+								<xp:changeDocumentMode mode="edit"></xp:changeDocumentMode>
+							</xp:this.action>
+						</xp:eventHandler>
+					</xp:button>
+					<xp:button value="Save" id="button2" styleClass="lotusBtn lotusBtnAction" rendered="#{javascript:currentDocument.isEditable()}">
+						<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+							<xp:this.action>
+								<xp:save name="/managerCategories.xsp"></xp:save>
+							</xp:this.action>
+						</xp:eventHandler>
+					</xp:button>
+					<xp:button value="Cancel" id="button3" styleClass="lotusBtn lotusBtnAction" rendered="#{javascript:currentDocument.isEditable()}">
+						<xp:eventHandler event="onclick" submit="true" refreshMode="complete" disableValidators="true">
+							<xp:this.action><![CDATA[#{javascript:context.reloadPage()}]]></xp:this.action>
+						</xp:eventHandler>
+					</xp:button>
+					<xp:button value="Delete" id="button4" styleClass="lotusBtn lotusBtnAction" rendered="#{javascript:!currentDocument.isEditable()}">
+						<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+							<xp:this.action>
+								<xp:actionGroup>
+									<xp:deleteDocument name="/managerCategories.xsp" message="Delete document?" var="document1"></xp:deleteDocument>
+									<xp:executeScript>
+										<xp:this.script><![CDATA[#{javascript:setConfirmationMessage("Category \"" + currentDocument.getItemValueString("Name") + "\" has been deleted")}]]></xp:this.script>
+									</xp:executeScript>
+								</xp:actionGroup>
+							</xp:this.action>
+						</xp:eventHandler>
+					</xp:button>
+					<xp:button value="Back" id="button7" styleClass="lotusBtn lotusBtnAction" rendered="#{javascript:!currentDocument.isEditable()}">
+						<xp:eventHandler event="onclick" submit="true" refreshMode="complete" disableValidators="true" execMode="partial">
+							<xp:this.action>
+								<xp:openPage name="#{javascript:navUtil.getBackPage()}"></xp:openPage>
+							</xp:this.action>
+						</xp:eventHandler>
+					</xp:button>
+				</xp:div>
+				<table class="lotusVertTable" width="100%">
+					<tr class="lotusFirst">
+						<td colspan="2">
+							<xp:messages id="messages1"></xp:messages>
+						</td>
+					</tr>
+					<tr class="lotusFirst">
+						<th style="width:4em">Category:</th>
+						<td>
+							<xp:inputText value="#{document1.Name}" styleClass="lotusText" required="true">
+								<xp:this.validators>
+									<xp:validateRequired message="Name is required"></xp:validateRequired>
+								</xp:this.validators>
+							</xp:inputText>
+						</td>
+					</tr>
+					<tr>
+						<th>Resources:</th>
+						<td>
+							<xp:inputTextarea id="inputTextarea1" value="#{document1.Resources}" rows="5" styleClass="lotusText">
+								<xp:this.multipleSeparator><![CDATA[${javascript:"\n"}]]></xp:this.multipleSeparator>
+							</xp:inputTextarea>
+						</td>
+					</tr>
+				</table>
+			</xp:panel>
+		</xp:this.facets>
+	</xc:layout>
+</xp:view>

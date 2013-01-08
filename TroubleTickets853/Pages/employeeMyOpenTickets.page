@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<note class='form' xmlns='http://www.lotus.com/dxl' version='9.0' replicaid='80257AC9005C8838'>
+<noteinfo noteid='1de' unid='0F9BB4A2C49979D385257825003303A2' sequence='21'>
+<created><datetime>20110127T041712,66-05</datetime></created>
+<modified><datetime>20121206T123748,04+08</datetime></modified>
+<revised><datetime>20121206T123748,03+08</datetime></revised>
+<lastaccessed><datetime>20121206T123748,04+08</datetime></lastaccessed>
+<addedtofile><datetime>20121203T165042,66+00</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Hunter Medney/OU=San Francisco/O=IBM</name><name>CN=Domino Admin/O=renovations</name><name
+>CN=Niklas Heidloff/OU=Germany/O=IBM</name><name>CN=Amy Jones104/O=DUB</name><name
+>CN=admin/O=baxter</name><name>CN=admin/O=IBM</name></updatedby>
+<item name='$Comment' sign='true'><text/></item>
+<item name='$HTMLCode' sign='true'>
+<rawitemdata type='1'>
+X/8QAAIADwAHAAAAAAAAAA==
+</rawitemdata></item>
+<item name='$TITLE'><text>employeeMyOpenTickets</text></item>
+<item name='$Info' sign='true'>
+<rawitemdata type='1'>
+hhgBAIAAAAAAgAAAAQABAP///wAQAAAA
+</rawitemdata></item>
+<item name='$Flags'><text>C34WQ</text></item>
+<item name='$WebFlags'><text>V</text></item>
+<item name='$DesignerVersion'><text>8.5.2</text></item>
+<item name='$$ScriptName' summary='false' sign='true'><text>employeeMyOpenTickets</text></item>
+<item name='$Body' sign='true'>
+<rawitemdata type='1'>
+gQKC/1oAAQAAAAAAAAAAADgEAAA4BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAABAAAAAJSEOAQNADgEDQAAAAAAAQAAAAQAAACDBAEAhf8IAAEAAArdBgAArf9x/zgA
+AAAAAAMAAgAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAZW1wbG95ZWVNeU9wZW5UaWNrZXRzAK3/IgAT
+AAgAAAAWAGVtcGxveWVlTXlPcGVuVGlja2V0cwDq/z4AEwChRAAAZAAhGwEAAAoAAAAAAAAAAAEA
+AAoBAAAKAAAFAP///wABAAAAAAAAAAAAAAAAAAAAAAAAAO3/KgCCAAAAAAAAAAoAAAAAAAAAAAAA
+AAAAAAAAAAAACgAAAAgA9AADAK4C3gYAAK4Ahf8IAAEAAAo=
+</rawitemdata></item></note>
+

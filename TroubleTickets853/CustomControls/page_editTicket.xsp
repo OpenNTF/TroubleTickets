@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+	<div class="lotusForm">
+		<table class="lotusFormTable" cellpadding="0" cellspacing="0" border="0" role="presentation">
+			<tbody>
+				<tr>
+					<td colspan="2" class="lotusFormTitle">
+						<xp:text value="#{javascript:currentDocument.isNewNote() ? 'New Ticket' : 'Edit Ticket'}" tagName="h2"></xp:text>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						<xp:messages id="messages1"></xp:messages>
+					</td>
+				</tr>
+				<tr class="lotusFormFieldRow">
+					<td width="15%" class="lotusFormLabel">
+						<xp:label for="summary1">
+							<span class="lotusFormRequired">*</span>
+							Summary:
+						</xp:label>
+					</td>
+					<td>
+						<xp:inputText value="#{document1.Summary}" id="summary1" styleClass="lotusText" required="true">
+							<xp:this.validators>
+								<xp:validateRequired message="Problem summary is required"></xp:validateRequired>
+							</xp:this.validators>
+						</xp:inputText>
+					</td>
+				</tr>
+				<tr class="lotusFormFieldRow">
+					<td width="15%" class="lotusFormLabel">
+						<xp:label for="category1">
+							<span class="lotusFormRequired">*</span>
+							Category:
+						</xp:label>
+					</td>
+					<td>
+						<xp:comboBox value="#{document1.Category}" id="category1">
+							<xp:this.validators>
+								<xp:validateRequired message="Category is required"></xp:validateRequired>
+							</xp:this.validators>
+							<xp:selectItem itemLabel=""></xp:selectItem>
+							<xp:selectItems>
+								<xp:this.value><![CDATA[#{javascript:@DbColumn(@DbName(), "managerCategories", 1);}]]></xp:this.value>
+							</xp:selectItems>
+						</xp:comboBox>
+					</td>
+				</tr>
+				<tr class="lotusFormFieldRow">
+					<td width="15%" class="lotusFormLabel">
+						<xp:label for="radioGroup1">
+							<span class="lotusFormRequired">*</span>
+							Priority:
+						</xp:label>
+					</td>
+					<td>
+						<xp:radioGroup id="radioGroup1" value="#{document1.Priority}" layout="lineDirection">
+							<xp:this.validators>
+								<xp:validateRequired message="Priority is required"></xp:validateRequired>
+							</xp:this.validators>
+							<xp:selectItem itemLabel="High" itemValue="High"></xp:selectItem>
+							<xp:selectItem itemLabel="Medium" itemValue="Medium"></xp:selectItem>
+							<xp:selectItem itemLabel="Low" itemValue="Low"></xp:selectItem>
+						</xp:radioGroup>
+					</td>
+				</tr>
+				<xp:tr rendered="#{not empty currentDocument.ID}" styleClass="lotusFormFieldRow">
+					<td width="15%" class="lotusFormLabel">
+						<label for="description">Ticket ID:</label>
+					</td>
+					<td>
+						<xp:text value="#{currentDocument.ID}"></xp:text>
+					</td>
+				</xp:tr>
+				<tr class="lotusFormFieldRow">
+					<td width="15%" class="lotusFormLabel">Details:</td>
+					<td>
+						<xp:inputRichText id="inputRichText1" value="#{document1.Details}" styleClass="lotusText"></xp:inputRichText>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3" class="lotusFormFooter">
+						<xp:button value="Save" id="button1" styleClass="lotusFormButton">
+							<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+								<xp:this.action>
+									<xp:actionGroup>
+										<xp:actionGroup>
+											<xp:executeScript>
+												<xp:this.script><![CDATA[#{javascript:if (currentDocument.isNewNote()) {
+	setInformationMessage("Your ticket has been created as a draft.  You may continue editing it or submit it to the help desk.");
+}
+}]]></xp:this.script>
+											</xp:executeScript>
+											<xp:saveDocument var="document1"></xp:saveDocument>
+											<xp:openPage name="/viewTicket.xsp" target="openDocument" documentId="#{javascript:currentDocument.getNoteID()}"></xp:openPage>
+										</xp:actionGroup>
+									</xp:actionGroup>
+								</xp:this.action>
+							</xp:eventHandler>
+						</xp:button>
+						<xp:button value="Cancel" id="existingCancel" styleClass="lotusFormButton" rendered="#{javascript:!currentDocument.isNewNote()}">
+							<xp:eventHandler event="onclick" submit="true" refreshMode="complete" immediate="true">
+								<xp:this.action>
+									<xp:openPage name="/viewTicket.xsp" target="openDocument" documentId="#{javascript:currentDocument.getNoteID()}"></xp:openPage>
+								</xp:this.action>
+							</xp:eventHandler>
+						</xp:button>
+						<xp:button value="Cancel" id="newCancel" styleClass="lotusFormButton" rendered="#{javascript:currentDocument.isNewNote()}">
+							<xp:eventHandler event="onclick" submit="true" refreshMode="complete" immediate="true">
+								<xp:this.action>
+								<xp:openPage name="/employeeHome.xsp"></xp:openPage>
+								</xp:this.action>
+							</xp:eventHandler>
+						</xp:button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</xp:view>

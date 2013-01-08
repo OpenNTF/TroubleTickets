@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xe="http://www.ibm.com/xsp/coreex">
+	<xe:navigator id="navigator1" expandable="false">
+		<xe:this.treeNodes>
+			<xe:pageTreeNode label="All Tickets" page="staffAllTickets.xsp"></xe:pageTreeNode>
+			<xe:pageTreeNode label="Assigned To Me" page="staffAssignedToMe.xsp"></xe:pageTreeNode>
+			<xe:pageTreeNode label="Unassigned" page="staffUnassigned.xsp"></xe:pageTreeNode>
+		</xe:this.treeNodes>
+	</xe:navigator>
+</xp:view>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xc="http://www.ibm.com/xsp/custom" createForm="false">
+	<xp:this.data>
+		<xp:dominoView var="announcementsView" viewName="xpagesAnnouncements"></xp:dominoView>
+	</xp:this.data>
+	<xp:this.beforePageLoad><![CDATA[#{javascript:navUtil.setBackPage()}]]></xp:this.beforePageLoad>
+	<xp:this.resources>
+		<xp:script src="/xpagesCommon.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
+	<xc:layout>
+		<xp:this.facets>
+			<xp:panel xp:key="content">
+				<div class="lotusWelcomeBox">
+					<h2>Trouble Tickets Demo</h2>
+					<p> Lorem Ipsum dolor sit amet, consectetuer adipiscingelit. Duis tellus. Donec ante dolor, iaculis nec, gravidaac, cursus in, eros. Mauris vestibulum, felis et egestasullamcorper, purus nibh
+						vehicula sem, eu egestas antenisl non justo. Fusce tincidunt, lorem nev dapibusconsectetuer, leo orci mollis ipsum, eget suscipit erospurus in ante.</p>
+					<ul>
+						<li>Donec sapien ante, accumsan ut</li>
+						<li>Maecenas a elitlacinia urna posuere</li>
+					</ul>
+					<div class="lotusBtnContainer">
+						<span class="lotusBtn lotusBtnSpecial">
+							<a href="employeeHome.xsp">View My Tickets</a>
+						</span>
+						<span class="lotusBtn lotusBtnSpecial">
+							<a href="editTicket.xsp">New Ticket</a>
+						</span>
+					</div>
+				</div>
+				<br />
+				<div class="lotusWidget2">
+					<h2>Announcements</h2>
+					<div class="lotusWidgetBody">
+						<table cellpadding="0" cellspacing="0" class="lotusTable">
+							<xp:repeat id="repeat1" rows="5" value="#{announcementsView}" var="entry" indexVar="index">
+								<tr class="#{javascript: index == 0 ? 'lotusFirst' : ''}">
+									<td>
+										<h4>
+											<xp:link escape="true" text="#{entry.Summary}" id="link1">
+												<xp:this.value><![CDATA[#{javascript:"announcement.xsp?action=openDocument&documentId=" + entry.getNoteID()}]]></xp:this.value>
+											</xp:link>
+										</h4>
+										<div class="lotusMeta">
+											<xp:text value="#{entry.Date}"></xp:text>
+										</div>
+									</td>
+								</tr>
+							</xp:repeat>
+						</table>
+					</div>
+				</div>
+			</xp:panel>
+		</xp:this.facets>
+	</xc:layout>
+</xp:view>
