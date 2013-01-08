@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="filter" replicaid="80257AC9005C8838" version="9.0" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="152" sequence="49" unid="6B84302A56FE8A2D85257A3E00414FB0">
+<created><datetime dst="true">20120717T075322,40-04</datetime></created>
+<modified><datetime>20121220T060052,93-05</datetime></modified>
+<revised><datetime>20121220T060052,92-05</datetime></revised>
+<lastaccessed><datetime>20121220T060052,93-05</datetime></lastaccessed>
+<addedtofile><datetime>20121203T165042,12+00</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Hunter Medney/OU=San Francisco/O=IBM</name><name>CN=Domino Admin/O=renovations</name><name>CN=Niklas Heidloff/OU=Germany/O=IBM</name><name>CN=Amy Jones104/O=DUB</name><name>CN=admin/O=baxter</name><name>CN=admin/O=IBM</name><name>CN=linyunz-work/O=social</name></updatedby>
+<wassignedby><name>CN=linyunz-work/O=social</name></wassignedby>
+<item name="$TITLE" sign="true"><text>xpagesCommon</text></item>
+<item name="$Flags"><text>.5834Q</text></item>
+<item name="$PublicAccess" sign="true"><text>1</text></item>
+<item name="$DesignerVersion" sign="true"><text>8.5.3</text></item>
+</note>

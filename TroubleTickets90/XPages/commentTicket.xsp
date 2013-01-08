@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	style="background-color:rgb(255,255,255)">
+	<xp:this.resources>
+		<xp:script src="/xpagesCommon.jss" clientSide="false"></xp:script>
+		<xp:script src="/xpagesTickets.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
+	<div class="lotusWidget2">
+		<h2>Comment</h2>
+	</div>
+	<xp:button value="Add" id="button1"
+		styleClass="lotusBtn lotusBtnAction">
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="complete">
+			<xp:this.action><![CDATA[#{javascript:var comment = getComponent("inputTextarea1").getValue();
+if (comment && comment.length > 0) {
+	var doc = currentDocument.getDocument(true);
+	addComment(doc, comment);
+	var documentId=doc.getUniversalID(); 
+	context.redirectToPage("/myViewTicket.xsp?documentId=" + documentId + "&action=openDocument");
+}}]]>
+			</xp:this.action>
+		</xp:eventHandler>
+	</xp:button>
+	&#160;
+	<xp:this.data>
+		<xp:dominoDocument formName="dialogCloseTicket" var="document1" />
+		<xp:dominoDocument var="document2"
+			formName="dialogAddComment">
+		</xp:dominoDocument>
+	</xp:this.data>
+	<xp:button value="Cancel" id="button5"
+		styleClass="lotusBtn lotusBtnAction">
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="complete">
+			<xp:this.action>
+				<xp:openPage name="/myViewTicket.xsp"
+					target="openDocument"
+					documentId="#{javascript:currentDocument.getNoteID()}">
+				</xp:openPage>
+			</xp:this.action>
+		</xp:eventHandler>
+	</xp:button>
+	<xp:br></xp:br>
+	<xp:br></xp:br>
+	<xp:table>
+		<xp:tr>
+			<xp:td style="vertical-align:top">
+				<xp:label value="Comment:" id="label1"></xp:label>
+			</xp:td>
+			<xp:td>
+				<xp:inputTextarea id="inputTextarea1"
+					value="#{document2.Comment}" rows="8">
+				</xp:inputTextarea>
+			</xp:td>
+		</xp:tr>
+	</xp:table>
+	<xp:br></xp:br>
+</xp:view>

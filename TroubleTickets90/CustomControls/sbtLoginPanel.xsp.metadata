@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" replicaid="80257AC9005C8838" version="9.0" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="3ce" sequence="11" unid="29E9353443E4BF1F85257ACB00707582">
+<created><datetime>20121205T152821,14-05</datetime></created>
+<modified><datetime>20121220T060054,85-05</datetime></modified>
+<revised><datetime>20121220T060054,84-05</datetime></revised>
+<lastaccessed><datetime>20121220T060054,85-05</datetime></lastaccessed>
+<addedtofile><datetime>20121205T152821,15-05</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=admin/O=baxter</name><name>CN=admin/O=IBM</name><name>CN=admin/O=social</name><name>CN=linyunz-work/O=social</name></updatedby>
+<wassignedby><name>CN=linyunz-work/O=social</name></wassignedby>
+<item name="$TITLE"><text>sbtLoginPanel.xsp</text></item>
+<item name="$Flags"><text>gC~4;</text></item>
+
+
+<item name="$FileNames" sign="true"><text>sbtLoginPanel.xsp</text></item>
+
+
+
+
+
+<item name="$DesignerVersion" sign="true"><text>9.0.0</text></item>
+
+</note>

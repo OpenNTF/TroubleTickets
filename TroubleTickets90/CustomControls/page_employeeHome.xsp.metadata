@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" replicaid="80257AC9005C8838" version="9.0" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="1d2" sequence="115" unid="038CC56C0E459E9785257A3E00260CB9">
+<created><datetime dst="true">20120717T025536,25-04</datetime></created>
+<modified><datetime>20121220T060054,79-05</datetime></modified>
+<revised><datetime>20121220T060054,78-05</datetime></revised>
+<lastaccessed><datetime>20121220T060054,79-05</datetime></lastaccessed>
+<addedtofile><datetime>20121203T165042,60+00</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Hunter Medney/OU=San Francisco/O=IBM</name><name>CN=Domino Admin/O=renovations</name><name>CN=Niklas Heidloff/OU=Germany/O=IBM</name><name>CN=Amy Jones104/O=DUB</name><name>CN=admin/O=baxter</name><name>CN=admin/O=IBM</name><name>CN=admin/O=social</name><name>CN=linyunz-work/O=social</name></updatedby>
+<wassignedby><name>CN=linyunz-work/O=social</name></wassignedby>
+<item name="$Flags"><text>gC~4;</text></item>
+
+
+<item name="$TITLE" sign="true"><text>page_employeeHome.xsp</text></item>
+
+
+
+<item name="$FileNames" sign="true"><text>page_employeeHome.xsp</text></item>
+<item name="$DesignerVersion" sign="true"><text>9.0.0</text></item>
+
+
+
+</note>

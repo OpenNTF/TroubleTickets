@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xc="http://www.ibm.com/xsp/custom">
+	<xp:this.beforePageLoad><![CDATA[#{javascript:navUtil.setBackPage()}]]></xp:this.beforePageLoad>
+	<xp:this.resources>
+		<xp:script src="/xpagesCommon.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
+	<xc:layout navigationPath="/manager">
+		<xp:this.facets>
+			<xc:managerNav xp:key="facetLeft"></xc:managerNav>
+			<xp:panel xp:key="content">
+				<xp:div styleClass="lotusBtnContainer" rendered="#{javascript:roles.isManager()}">
+					<xp:button value="New Announcement" id="button1">
+						<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+							<xp:this.action>
+								<xp:openPage name="/announcement.xsp" target="newDocument"></xp:openPage>
+							</xp:this.action>
+						</xp:eventHandler>
+					</xp:button>
+					<br/><br/>
+				</xp:div>
+				<xp:viewPanel rows="30" id="viewPanel1">
+					<xp:this.facets>
+						<xp:pager partialRefresh="true" layout="Previous Group Next" xp:key="headerPager" id="pager1"></xp:pager>
+					</xp:this.facets>
+					<xp:this.data>
+						<xp:dominoView var="view1" viewName="managerAnnouncements"></xp:dominoView>
+					</xp:this.data>
+					<xp:viewColumn columnName="Summary" id="viewColumn2" displayAs="link" openDocAsReadonly="true">
+						<xp:viewColumnHeader value="Summary" id="viewColumnHeader2"></xp:viewColumnHeader>
+					</xp:viewColumn>
+					<xp:viewColumn columnName="Date" id="viewColumn1">
+						<xp:viewColumnHeader value="Date" id="viewColumnHeader1"></xp:viewColumnHeader>
+					</xp:viewColumn>
+				</xp:viewPanel>
+			</xp:panel>
+		</xp:this.facets>
+	</xc:layout>
+</xp:view>
