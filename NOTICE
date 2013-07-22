@@ -1,0 +1,13 @@
+OpenNTF Trouble Tickets Notes-to-XPages Example
+(C)Copyright 2013, IBM Corporation
+
+This product includes software contributed to
+OpenNTF (http://www.OpenNTF.org/)
+
+This product is licensed under the terms of the Apache 2.0 license.
+
+The project includes the following third party package:
+
+Apache Commons Logging 1.1.1
+Licensed under Apache 2.0
+Available from http://commons.apache.org/proper/commons-logging
