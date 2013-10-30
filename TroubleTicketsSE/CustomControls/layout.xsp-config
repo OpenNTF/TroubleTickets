@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config>
+  <faces-config-extension>
+    <namespace-uri>http://www.ibm.com/xsp/custom</namespace-uri>
+    <default-prefix>xc</default-prefix>
+  </faces-config-extension>
+  <composite-component>
+    <component-type>layout</component-type>
+    <composite-name>layout</composite-name>
+    <composite-file>/layout.xsp</composite-file>
+    <composite-extension>
+      <designer-extension>
+        <in-palette>true</in-palette>
+      </designer-extension>
+    </composite-extension>
+    <property>
+      <property-name>placeBarName</property-name>
+      <property-class>string</property-class>
+      <display-name>Place Bar Name</display-name>
+    </property>
+    <property>
+      <property-name>navigationPath</property-name>
+      <property-class>string</property-class>
+      <display-name>Navigation Path</display-name>
+    </property>
+  </composite-component>
+</faces-config>

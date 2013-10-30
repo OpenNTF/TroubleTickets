@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xc="http://www.ibm.com/xsp/custom">
+	<xp:this.resources>
+		<xp:script src="/xpagesTickets.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
+	<xp:this.data>
+		<xp:dominoDocument var="document1" formName="ticket">
+			<xp:this.postNewDocument><![CDATA[#{javascript:// set document defaults
+currentDocument.replaceItemValue("Status", "Draft");
+currentDocument.replaceItemValue("Requestor", @UserName());}]]></xp:this.postNewDocument>
+			<xp:this.postSaveDocument><![CDATA[#{javascript:var doc:NotesDocument = currentDocument.getDocument(true); 
+postSave(doc);}]]></xp:this.postSaveDocument></xp:dominoDocument>
+	</xp:this.data>
+
+	<xc:layout placeBarName="Trouble Ticket">
+		<xp:this.facets>
+			<xc:page_editTicket xp:key="content"
+				viewTicketPage="/viewTicket.xsp" homePage="/employeeHome.xsp">
+			</xc:page_editTicket>
+		</xp:this.facets>
+	</xc:layout>
+</xp:view>

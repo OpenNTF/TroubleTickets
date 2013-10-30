@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="1.0" replicaid="85257AEF001FEE0D" version="9.0" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="21a" sequence="8" unid="D9DEA83890B9876085257AEF001FEED5">
+<created><datetime>20130110T004847,57-05</datetime></created>
+<modified><datetime>20130531T201116,31+00</datetime></modified>
+<revised><datetime>20130531T201116,30+00</datetime></revised>
+<lastaccessed><datetime>20130531T201116,31+00</datetime></lastaccessed>
+<addedtofile><datetime>20130110T004849,35-05</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=admin/O=social</name><name>CN=notes/O=renovations</name></updatedby>
+<item name="$FlagsExt" sign="true"><text>D</text></item>
+<item name="$ImagesWide" sign="true"><number>1</number></item>
+<item name="$ImagesHigh" sign="true"><number>1</number></item>
+<item name="$ImagesColorize" sign="true"><number>0</number></item>
+<item name="$FileModDT" sign="true"><datetime dst="true">20120929T101518,78-04</datetime></item>
+<item name="$ImageNames" sign="true"><text>glyphicons_131_inbox_plus.png</text></item>
+<item name="$EditFilePath" sign="true"><text>C:\Users\rbaxter\AppData\Local\Temp\notes9D92E6\~glyphicons_131_inbox_plus.png</text></item>
+<item name="$Flags"><text>34CiQ$</text></item>
+<item name="$TITLE" sign="true"><text>assigned.png</text></item>
+<item name="$DesignerVersion" sign="true"><text>8.5.3</text></item>
+
+</note>

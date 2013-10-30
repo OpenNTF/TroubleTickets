@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="1.0" replicaid="85257AEF001FEE0D" version="9.0" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="2a6" sequence="210" unid="69ECB0D747B746C285257AEF001FEF39">
+<created><datetime>20130110T004848,57-05</datetime></created>
+<modified><datetime dst="true">20131018T031347,88+01</datetime></modified>
+<revised><datetime dst="true">20131018T031347,87+01</datetime></revised>
+<lastaccessed><datetime dst="true">20131018T031347,88+01</datetime></lastaccessed>
+<addedtofile><datetime>20130110T004851,47-05</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=admin/O=social</name><name>CN=notes/O=renovations</name></updatedby>
+<item name="$Flags"><text>34567Cg~[</text></item>
+<item name="$TITLE"><text>nsf/XPagesTickets.java</text></item>
+
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+
+
+<item name="$FileNames" sign="true"><text>nsf/XPagesTickets.java</text></item>
+
+</note>

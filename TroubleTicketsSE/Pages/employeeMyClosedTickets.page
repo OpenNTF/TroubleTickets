@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<note class='form' xmlns='http://www.lotus.com/dxl' version='9.0' maintenanceversion='1.0'
+ replicaid='85257AEF001FEE0D'>
+<noteinfo noteid='232' unid='8ED47A7DB2CF18C085257AEF001FEEE1' sequence='8'>
+<created><datetime>20130110T004847,69-05</datetime></created>
+<modified><datetime dst='true'>20130927T174310,56+01</datetime></modified>
+<revised><datetime dst='true'>20130927T174310,55+01</datetime></revised>
+<lastaccessed><datetime dst='true'>20130927T174310,56+01</datetime></lastaccessed>
+<addedtofile><datetime>20130110T004849,61-05</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=admin/O=social</name><name>CN=notes/O=renovations</name></updatedby>
+<item name='$Comment' sign='true'><text/></item>
+<item name='$HTMLCode' sign='true'>
+<rawitemdata type='1'>
+X/8QAAIADwAHAAAAAAAAAA==
+</rawitemdata></item>
+<item name='$TITLE'><text>employeeMyClosedTickets</text></item>
+<item name='$Info' sign='true'>
+<rawitemdata type='1'>
+hhgBAIAAAAAAgAAAAQABAP///wAQAAAA
+</rawitemdata></item>
+<item name='$Flags'><text>C34WQ</text></item>
+<item name='$WebFlags' sign='true'><text>V</text></item>
+<item name='$DesignerVersion' sign='true'><text>8.5.2</text></item>
+<item name='$$ScriptName' summary='false' sign='true'><text>employeeMyClosedTickets</text></item>
+<item name='$Body' sign='true'>
+<rawitemdata type='1'>
+gQKC/1oAAQAAAAAAAAAAADgEAAA4BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAABAAAAAJSEOAQNADgEDQAAAAAAAQAAAAQAAACDBAEAhf8IAAEAAArdBgAArf9x/zoA
+AAAAAAMAAgAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAZW1wbG95ZWVNeUNsb3NlZFRpY2tldHMArf8k
+ABMACAAAABgAZW1wbG95ZWVNeUNsb3NlZFRpY2tldHMA6v8+ABMAoUQAAGQAIRsBAAAKAAAAAAAA
+AAABAAAKAQAACgAABQD///8AAQAAAAAAAAAAAAAAAAAAAAAAAADt/yoAggAAAAAAAAAKAAAAAAAA
+AAAAAAAAAAAAAAAAAAoAAAAIAPQAAwCuAt4GAACuAIX/CAABAAAK
+</rawitemdata></item></note>
+

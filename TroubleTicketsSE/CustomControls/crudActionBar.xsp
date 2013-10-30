@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+	<xp:div styleClass="lotusBtnContainer">
+		<xp:div rendered="#{javascript:roles.isManager()}">
+			<xp:button value="Edit" id="button1" styleClass="lotusBtn lotusBtnAction" rendered="#{javascript:!currentDocument.isEditable()}">
+				<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+					<xp:this.action>
+						<xp:changeDocumentMode mode="edit"></xp:changeDocumentMode>
+					</xp:this.action>
+				</xp:eventHandler>
+			</xp:button>
+			<xp:button value="Save" id="button2" styleClass="lotusBtn lotusBtnAction" rendered="#{javascript:currentDocument.isEditable()}">
+				<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+					<xp:this.action>
+						<xp:save name="/managerCategories.xsp"></xp:save>
+					</xp:this.action>
+				</xp:eventHandler>
+			</xp:button>
+			<xp:button value="Cancel" id="button3" styleClass="lotusBtn lotusBtnAction" rendered="#{javascript:currentDocument.isEditable()}">
+				<xp:eventHandler event="onclick" submit="true" refreshMode="complete" disableValidators="true">
+					<xp:this.action><![CDATA[#{javascript:context.reloadPage()}]]></xp:this.action>
+				</xp:eventHandler>
+			</xp:button>
+			<xp:button value="Delete" id="button4" styleClass="lotusBtn lotusBtnAction" rendered="#{javascript:!currentDocument.isEditable()}">
+				<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+					<xp:this.action>
+						<xp:actionGroup>
+							<xp:deleteDocument name="/managerCategories.xsp" message="Delete document?" var="document1"></xp:deleteDocument>
+							<xp:executeScript>
+								<xp:this.script><![CDATA[#{javascript:setConfirmationMessage("Category \"" + currentDocument.getItemValueString("Name") + "\" has been deleted")}]]></xp:this.script>
+							</xp:executeScript>
+						</xp:actionGroup>
+					</xp:this.action>
+				</xp:eventHandler>
+			</xp:button>
+		</xp:div>
+		<xp:button value="Back" id="button7" styleClass="lotusBtn lotusBtnAction" rendered="#{javascript:!currentDocument.isEditable()}">
+			<xp:eventHandler event="onclick" submit="true" refreshMode="complete" disableValidators="true" execMode="partial">
+				<xp:this.action>
+					<xp:openPage name="#{javascript:navUtil.getBackPage()}"></xp:openPage>
+				</xp:this.action>
+			</xp:eventHandler>
+		</xp:button>
+	</xp:div>
+</xp:view>

@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<note default='true' class='icon' xmlns='http://www.lotus.com/dxl' version='9.0'
+ maintenanceversion='1.0' replicaid='85257AEF001FEE0D'>
+<noteinfo noteid='11a' unid='25CB2E6D35EA7D4585257AEF001FEE11' sequence='20'>
+<created><datetime>20130110T004845,61-05</datetime></created>
+<modified><datetime dst='true'>20131018T032012,97+01</datetime></modified>
+<revised><datetime dst='true'>20131018T032012,96+01</datetime></revised>
+<lastaccessed><datetime dst='true'>20131018T032012,97+01</datetime></lastaccessed>
+<addedtofile><datetime>20130110T004845,64-05</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=admin/O=social</name><name>CN=notes/O=renovations</name><name
+>CN=Frank Adams/O=renovations</name><name>CN=notes/O=renovations</name></updatedby>
+<item name='IconBitmap' summary='true' sign='true'>
+<rawitemdata type='6'>
+AiAgAQAA///////wD///gAH//gAAf/wAAD/4AAAf8AAAD+AAAAfgAAAHwAAAA8AAAAPAAAADgAAA
+AYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAHAAAADwAAAA8AAAAPgAAAH4AAAB/AAAA/4AAAf
+/AAAP/4AAH//gAH///AP//////8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAiIiIiAAAAAAAAAAAAAAI
+jPZmZm/IgAAAAAAAAAAIjGZmZmZmZsiAAAAAAAAAjGZmZmZmZmZmyAAAAAAACMZmZmZmZmZmZmyA
+AAAAAIxmZmZmZmZmZmZmyAAAAAjGZmZmZmZmZmZmZmyAAAAIZmbyL2byL2byL2ZmgAAAjGZmIiJm
+IiJmIiJmZsgAAIZmZiIiZiIiZiIiZmZoAADGZmYiImYiImYiImZmbAAI9mZmIiJmIiJmIiJmZm+A
+CGZmZiIiZiIiZiIiZmZmgAhmZmYiImYiImYiImZmZoAIZmZmIiJmIiJmIiJmZmaACGZvIiIiZiIi
+ZiIiIvZmgAhmYiIiImYiImYiIiImZoAIZm8iIi9m8i9m8iIi9maACPZmZmZmZmZmZmZmZmZvgADG
+ZmbyL2byL2byL2ZmbAAAj2ZmIiJmIiJmIiJmZvgAAIxmZiIiZiIiZiIiZmbIAAAI9mbyL2byL2by
+L2ZvgAAACMZmZmZmZmZmZmZmbIAAAACMZmZmZmZmZmZmZsgAAAAACMZmZmZmZmZmZmyAAAAAAACM
+9mZmZmZmZm/IAAAAAAAACIz2ZmZmZm/IgAAAAAAAAAAIiMZmZmyIgAAAAAAAAAAAAACIiIiIAAAA
+AAAAUEECICABAAD/////+A4DgA==
+</rawitemdata></item>
+<item name='$DefaultFrameset' sign='true'><text>main</text></item>
+<item name='$DBTheme' sign='true'><text>oneui21.theme</text></item>
+<item name='$DefaultCompApp' sign='true'><text>demo.ca</text></item>
+<item name='$DefaultCompAppPage' sign='true'><text>[rep_id]_85257A4000012634</text></item>
+<item name='$DefaultXPage' sign='true'><text>launch.xsp</text></item>
+<item name='$Daos'><text>0</text></item>
+<item name='$DefaultClientXPage'><text>myViewTicket.xsp</text></item>
+<item name='$Flags'><text>J7!</text></item>
+<item name='$LaunchXPageRunOnServer'><text>0</text></item>
+<item name='$FlagsNoRefresh'><text>rv</text></item>
+<item name='$TITLE'><text>Trouble Tickets SE
+</text></item></note>
+

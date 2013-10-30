@@ -1,0 +1,11 @@
+/* fix h2 for sections/widgets inside forms (apparently OneUI does not expect sections/widgets to be used inside forms) */ 
+.lotusSection h2, .lotusWidget2 h2  {
+	 margin: 0px; 
+}
+
+/* OneUI 2.1 fix: add cross-browser versions of banner gradient */
+.lotusBanner {
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#525252', endColorstr='#000000' );
+	background: -webkit-gradient(linear, left top, left bottom, from(#525252), to(#000) );
+	background: -moz-linear-gradient(top, #525252, #000);
+}

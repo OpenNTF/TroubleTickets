@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom">
+
+	<xc:my_draft></xc:my_draft>
+	<xp:br></xp:br>
+	<xc:my_open></xc:my_open>
+	<xp:br></xp:br>
+	<xc:my_closed></xc:my_closed></xp:view>

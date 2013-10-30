@@ -1,0 +1,183 @@
+'++LotusScript Development Environment:2:5:(Options):0:74
+' © Copyright IBM Corp. 2009 
+'
+' Licensed under the Apache License, Version 2.0 (the "License");  
+' you may not use this file except in compliance with the License. 
+' You may obtain a copy of the License at:
+'
+' http://www.apache.org/licenses/LICENSE-2.0 
+'
+' Unless required by applicable law or agreed to in writing, software
+' distributed under the License is distributed on an "AS IS" BASIS, 
+' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+' implied. See the License for the specific language governing 
+' permissions and limitations under the License.
+
+%REM
+	Library UI
+	Created Jan 27, 2011 by Hunter Medney/San Francisco/IBM
+	Description: Comments for Library
+%END REM
+Option Public
+Option Declare
+Use "NotesBackend"
+
+'++LotusScript Development Environment:2:5:(Forward):0:1
+Declare Sub AssignTicketAction(doc As NotesDocument)
+Declare Sub RefreshCurrentView()
+Declare Sub AddCommentAction(doc As NotesDocument)
+Declare Sub RefreshCurrentDocument()
+Declare Sub SubmitTicketAction(doc As NotesDocument)
+Declare Sub CloseTicketAction(doc As NotesDocument)
+Declare Function GetSelectedDocument() As NotesDocument
+
+'++LotusScript Development Environment:2:5:(Declarations):0:2
+
+'++LotusScript Development Environment:2:2:AssignTicketAction:5:8
+%REM
+	Function AssignTicketDialog
+	Returns True if ticket was successfully assigned
+%END REM
+Sub AssignTicketAction(doc As NotesDocument)
+	Dim uiw As New NotesUIWorkspace
+	Dim db As NotesDatabase
+	Dim req As NotesDocument	
+	Dim rc%, assignedTo$
+		
+	' create temp doc for dialog
+	Set req = doc.ParentDatabase.Createdocument()
+	Call req.Replaceitemvalue("Category", doc.getItemValue("Category"))
+		
+	' open dialog	
+	rc% = uiw.Dialogbox("dialogAssignTicket", true, true, false, false, false, false, "Assign Ticket", req, true, false, true)
+	
+	' perform assignment
+	If (rc% = True) Then
+		assignedTo$ = req.getItemValue("AssignedTo")(0)
+		If (assignedTo$ <> "") Then
+			Call AssignTicket(doc, assignedTo$, "")
+			Call RefreshCurrentView()
+			Call RefreshCurrentDocument()
+			MessageBox "Ticket successfully assigned", 64
+		End If		
+	End If
+End Sub
+
+'++LotusScript Development Environment:2:2:RefreshCurrentView:5:8
+
+%REM
+	Force current view to refresh
+%END REM
+Sub RefreshCurrentView()
+	Dim uiw As New NotesUIWorkspace
+	Dim uiview As NotesUIView
+	Set uiview = uiw.Currentview
+	Call uiw.Viewrefresh()
+End Sub
+
+'++LotusScript Development Environment:2:2:AddCommentAction:5:8
+%REM
+	Append a comment to ticket history
+	Returns True if comment was successfully added
+%END REM
+Sub AddCommentAction(doc As NotesDocument)
+	Dim uiw As New NotesUIWorkspace
+	Dim session As New NotesSession
+	Dim db As NotesDatabase
+	Dim req As NotesDocument	
+	Dim rc%, comment$
+	
+	Set db = session.Currentdatabase
+	Set req = db.Createdocument()
+	
+	rc% = uiw.Dialogbox("dialogAddComment", True, True, False, False, False, False, "Comments", req, True, False, True)
+	If (rc% = True) Then
+		comment$ = req.getItemValue("Comment")(0)
+		If (comment$ <> "") Then
+			Call AddComment(doc, comment$)
+			Call RefreshCurrentView() 
+			Call RefreshCurrentDocument()
+			MessageBox "Comment successfully added", 64
+		End If
+	End If
+End Sub
+
+'++LotusScript Development Environment:2:2:RefreshCurrentDocument:4:8
+%REM
+    Refresh the current document
+%END REM
+Sub RefreshCurrentDocument()
+	Dim uiw As New NotesUIWorkspace
+	Dim uidoc As NotesUIDocument
+	Dim doc As NotesDocument
+	
+	Set uidoc = uiw.currentDocument		
+	If (Not uidoc Is Nothing) Then
+		Set doc = uidoc.Document	
+		Call uidoc.close(True)
+		Call uiw.Editdocument(False, doc, False)
+	End If
+End Sub
+
+'++LotusScript Development Environment:2:2:SubmitTicketAction:6:8
+
+%REM
+	Function AssignTicketDialog
+	Returns True if ticket was successfully assigned
+%END REM
+Sub SubmitTicketAction(doc As NotesDocument)
+	Dim status$
+	status$ = doc.getItemValue("Status")(0)
+	If (status$ = STATUS_DRAFT$) Then
+		Call SubmitTicket(doc)	
+		Call RefreshCurrentView()
+		Call RefreshCurrentDocument()
+		MessageBox "Ticket submitted successfully", 64
+	End If	
+End Sub
+
+'++LotusScript Development Environment:2:2:CloseTicketAction:5:8
+%REM
+	Close ticket
+	Returns True if ticket was successfully closed
+%END REM
+Sub CloseTicketAction(doc As NotesDocument)
+	Dim uiw As New NotesUIWorkspace
+	Dim session As New NotesSession
+	Dim db As NotesDatabase
+	Dim req As NotesDocument	
+	Dim rc%, resolution$
+	
+	Set db = session.Currentdatabase
+	Set req = db.Createdocument()
+	
+	rc% = uiw.Dialogbox("dialogCloseTicket", True, True, False, False, False, False, "Close Ticket", req, True, False, True)
+	If (rc% = True) Then
+		resolution$ = req.getItemValue("Resolution")(0)
+		If (resolution$ <> "") Then
+			Call CloseTicket(doc, resolution$)
+			Call RefreshCurrentView()
+			Call RefreshCurrentDocument()
+			MessageBox "Ticket successfully closed", 64
+		End If
+	End If
+End Sub
+
+'++LotusScript Development Environment:2:1:GetSelectedDocument:4:8
+%REM
+	Return the selected document from the current view
+%END REM
+Function GetSelectedDocument() As NotesDocument
+	Dim session As New NotesSession
+	Dim db As NotesDatabase
+	Dim doc As NotesDocument
+	Dim dc As NotesDocumentCollection
+	Dim rc%
+	
+	Set db = session.CurrentDatabase	
+	Set dc = db.UnprocessedDocuments	
+	If (dc.Count = 0) Then
+		Exit Function
+	End If
+	Set GetSelectedDocument = dc.GetFirstDocument	
+End Function
