@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xc="http://www.ibm.com/xsp/custom">
+	<xp:this.data>
+		<xp:dominoDocument var="document1" formName="announcement"></xp:dominoDocument>
+	</xp:this.data>
+	<xp:this.resources>
+		<xp:script src="/xpagesCommon.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
+	<xc:layout placeBarName="Announcement">
+		<xp:this.facets>
+			<xp:panel xp:key="content">
+				<xp:div styleClass="lotusBtnContainer" rendered="#{javascript:roles.isManager()}">
+					<xp:button value="Edit" id="button1" styleClass="lotusBtn lotusBtnAction" rendered="#{javascript:!currentDocument.isEditable()}">
+						<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+							<xp:this.action>
+								<xp:changeDocumentMode mode="edit"></xp:changeDocumentMode>
+							</xp:this.action>
+						</xp:eventHandler>
+					</xp:button>
+					<xp:button value="Save" id="button2" styleClass="lotusBtn lotusBtnAction" rendered="#{javascript:currentDocument.isEditable()}">
+						<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+							<xp:this.action>
+								<xp:save name="/managerAnnouncements.xsp"></xp:save>
+							</xp:this.action>
+						</xp:eventHandler>
+					</xp:button>
+					<xp:button value="Cancel" id="button3" styleClass="lotusBtn lotusBtnAction" rendered="#{javascript:currentDocument.isEditable()}">
+						<xp:eventHandler event="onclick" submit="true" refreshMode="complete" disableValidators="true">
+							<xp:this.action><![CDATA[#{javascript:context.reloadPage()}]]></xp:this.action>
+						</xp:eventHandler>
+					</xp:button>
+					<xp:button value="Delete" id="button4" styleClass="lotusBtn lotusBtnAction" rendered="#{javascript:!currentDocument.isEditable()}">
+						<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+							<xp:this.action>
+								<xp:actionGroup>
+									<xp:deleteDocument name="/managerAnnouncements.xsp" message="Delete document?" var="document1"></xp:deleteDocument>
+									<xp:executeScript>
+										<xp:this.script><![CDATA[#{javascript:setConfirmationMessage("Announcement \"" + currentDocument.getItemValueString("Summary") + "\" has been deleted")}]]></xp:this.script>
+									</xp:executeScript>
+								</xp:actionGroup>
+							</xp:this.action>
+						</xp:eventHandler>
+					</xp:button>
+					<xp:button value="Back" id="button7" styleClass="lotusBtn lotusBtnAction" rendered="#{javascript:!currentDocument.isEditable()}">
+						<xp:eventHandler event="onclick" submit="true" refreshMode="complete" disableValidators="true" execMode="partial">
+							<xp:this.action>
+								<xp:openPage name="#{javascript:navUtil.getBackPage()}"></xp:openPage>
+							</xp:this.action>
+						</xp:eventHandler>
+					</xp:button>
+				</xp:div>
+				<table class="lotusVertTable" width="100%">
+					<tr class="lotusFirst">
+						<td colspan="2">
+							<xp:messages id="messages1"></xp:messages>
+						</td>
+					</tr>
+					<tr class="lotusFirst">
+						<th style="width:4em">Summary:</th>
+						<td>
+							<xp:inputText value="#{document1.Summary}" styleClass="lotusText" required="true">
+								<xp:this.validators>
+									<xp:validateRequired message="Summary is required"></xp:validateRequired>
+								</xp:this.validators>
+							</xp:inputText>
+						</td>
+					</tr>
+					<tr>
+						<th>Date:</th>
+						<td>
+							<xp:inputText id="inputText1" value="#{document1.Date}" required="true">
+								<xp:this.validators>
+									<xp:validateRequired message="Announcement date is required"></xp:validateRequired>
+								</xp:this.validators>
+								<xp:dateTimeHelper id="dateTimeHelper1"></xp:dateTimeHelper>
+								<xp:this.converter>
+									<xp:convertDateTime type="both" dateStyle="short" timeStyle="short"></xp:convertDateTime>
+								</xp:this.converter>
+							</xp:inputText>
+						</td>
+					</tr>
+				</table>
+				<br />
+				<div class="lotusWidget2">
+					<h2>Details</h2>
+					<div class="lotusWidgetBody">
+						<xp:inputRichText id="inputRichText1" value="#{document1.Contnet}"></xp:inputRichText>
+					</div>
+				</div>
+			</xp:panel>
+		</xp:this.facets>
+	</xc:layout>
+</xp:view>

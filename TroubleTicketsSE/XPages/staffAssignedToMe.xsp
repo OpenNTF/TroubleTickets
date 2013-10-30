@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xc="http://www.ibm.com/xsp/custom" createForm="false">
+	<xp:this.beforePageLoad><![CDATA[#{javascript:navUtil.setBackPage()}]]></xp:this.beforePageLoad>
+	<xp:this.resources>
+		<xp:script src="/xpagesCommon.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
+	<xc:layout navigationPath="/staff">
+		<xp:this.facets>
+			<xc:staffNav xp:key="facetLeft"></xc:staffNav>
+			<xp:panel xp:key="content">
+				<xp:viewPanel rows="30" id="viewPanel1" viewStyle="width:100%" pageName="/viewTicket.xsp">
+					<xp:this.facets>
+						<xp:pager partialRefresh="true" layout="Previous Group Next" xp:key="headerPager" id="pager1"></xp:pager>
+					</xp:this.facets>
+					<xp:this.data>
+						<xp:dominoView var="view1" viewName="staffMyAssigned" categoryFilter="#{javascript:session.getEffectiveUserName()}"></xp:dominoView>
+					</xp:this.data>
+					<xp:viewColumn columnName="ID" id="viewColumn4" displayAs="link" openDocAsReadonly="true">
+						<xp:viewColumnHeader value="Ticket ID" id="viewColumnHeader4"></xp:viewColumnHeader>
+					</xp:viewColumn>
+					<xp:viewColumn columnName="Status" id="viewColumn2">
+						<xp:viewColumnHeader value="Status" id="viewColumnHeader2"></xp:viewColumnHeader>
+					</xp:viewColumn>
+					<xp:viewColumn columnName="Updated" id="viewColumn3">
+						<xp:viewColumnHeader value="Updated" id="viewColumnHeader3"></xp:viewColumnHeader>
+					</xp:viewColumn>
+					<xp:viewColumn columnName="$6" id="viewColumn5">
+						<xp:viewColumnHeader value="Requestor" id="viewColumnHeader5"></xp:viewColumnHeader>
+					</xp:viewColumn>
+					<xp:viewColumn columnName="Summary" id="viewColumn6">
+						<xp:viewColumnHeader value="Summary" id="viewColumnHeader6"></xp:viewColumnHeader>
+					</xp:viewColumn>
+					<xp:viewColumn columnName="LastActivity" id="viewColumn7">
+						<xp:viewColumnHeader value="Last Activity" id="viewColumnHeader7"></xp:viewColumnHeader>
+					</xp:viewColumn>
+				</xp:viewPanel>
+			</xp:panel>
+		</xp:this.facets>
+	</xc:layout>
+</xp:view>

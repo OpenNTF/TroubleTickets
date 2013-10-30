@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ibm-portal-composite xmlns="http://www.ibm.com/xmlns/prod/websphere/portal/v6.0/ibm-portal-composite" xmlns:var="http://www.ibm.com/xmlns/prod/websphere/portal/v6.0/ibm-portal-composite-variable" xmlns:base="http://www.ibm.com/xmlns/prod/websphere/portal/v6.0/ibm-portal-composite-base" xmlns:community="http://www.ibm.com/xmlns/prod/websphere/portal/v6.0/ibm-portal-composite-community">
+<application-info guid="[rep_id]_85257A4000024279" category="default">
+<base:title>
+<base:nls-string xml:lang="de">Leere Anwendung</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="de">Leere Anwendung</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="no">Tom applikasjon</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="no">Tom applikasjon</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="fi">Tyhjä sovellus</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="fi">Tyhjä sovellus</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="ru">Пустое приложение</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="ru">Пустое приложение</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="pt">Aplicação em branco</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="pt">Aplicação em branco</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="fr">Application vide</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="fr">Application vide</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="hu">Üres alkalmazás</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="hu">Üres alkalmazás</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="uk">Blank Application</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="uk">Blank Application</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="sk">Prázdna aplikácia</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="sk">Prázdna aplikácia</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="sl">Prazen program</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="sl">Prazen program</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="ca">Aplicació buida</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="ca">Aplicació buida</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="sv">Tomt program</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="sv">Tomt program</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="ko">빈 애플리케이션</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="ko">빈 애플리케이션</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="el">Κενή εφαρμογή</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="el">Κενή εφαρμογή</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="en">Trouble Tickets Demo</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="en">This app demonstrates an XPages interface added to an existing Notes app.</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="it">Applicazione vuota</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="it">Applicazione vuota</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="pt_BR"/>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="pt_BR"/>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="es">Aplicación en blanco</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="es">Aplicación en blanco</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="zh">空应用程序</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="zh">空应用程序</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="iw">יישום ריק</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="iw">יישום ריק</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="cs">Prázdná aplikace</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="cs">Prázdná aplikace</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="ar">تطبيق فارغ</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="ar">تطبيق فارغ</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="th">แอ็พพลิเคชันว่าง</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="th">แอ็พพลิเคชันว่าง</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="zh_TW"/>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="zh_TW"/>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="ja">ブランクアプリケーション</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="ja">ブランクアプリケーション</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="pl">Pusta aplikacja</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="pl">Pusta aplikacja</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="da">Tomt program</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="da">Tomt program</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="ro">Blank Application</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="ro">Blank Application</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="tr">Boş Uygulama</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="tr">Boş Uygulama</base:nls-string>
+</base:description>
+<base:title>
+<base:nls-string xml:lang="nl">Lege toepassing</base:nls-string>
+</base:title>
+<base:description>
+<base:nls-string xml:lang="nl">Lege toepassing</base:nls-string>
+</base:description>
+</application-info>
+<business-component guid="[rep_id]_6_T6N1H4420G3SC02AVFRVVJ00H1" name="com.ibm.portal.blank.paa" handlerRef="local:ejb/ejb/com/ibm/wps/internalapp/service/PaaInstantiationServiceHome">
+<var:component-role ref="Manager@6_T6N1H4420G3SC02AVFRVVJ00H1"/>
+<var:component-role ref="Manager@3_T6N1H4420G3SC02AVFRVVJ0090"/>
+<var:component-role ref="Manager@3_T6N1H4420G3SC02AVFRVVJ0097"/>
+<var:component-role ref="Manager@3_T6N1H4420G3SC02AVFRVVJ00P3"/>	<var:component-role ref="User@6_T6N1H4420G3SC02AVFRVVJ00H1"/>
+<object-data>
+<ibm-portal-topology xmlns="http://www.ibm.com/xmlns/prod/websphere/portal/v6.0/ibm-portal-topology" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.ibm.com/xmlns/prod/websphere/portal/v6.0/ibm-portal-topology ibm-portal-topology.xsd">
+  <component-tree>
+    <portlet-definition id="MDY0MTlhZDRkZWVlOTZlYTotNDI1MWQ5MmI6MTM4OWZjYmFlNDY6LTdmZjc_">
+      <description>
+        <base:nls-string xml:lang="en">Original Notes version of Trouble Tickets</base:nls-string>
+      </description>
+      <preference name="com.ibm.rcp.container.applicationDefinition">
+        <base:value value="PHBsdWdpbj4NCjxleHRlbnNpb24gcG9pbnQ9Im9yZy5lY2xpcHNlLnVpLnZpZXdzIj4mI3gwQTs8dmlldyBhbGxvd011bHRpcGxlPSJ0cnVlIiBjbGFzcz0iY29tLmlibS5ub3Rlcy52aWV3LmNvbnRhaW5lci52aWV3cy5Ob3Rlc1ZpZXdDb250YWluZXIiIGlkPSJhcHBsaWNhdGlvbi12aWV3LWNvbS5pYm0ubm90ZXMudmlldy5jb250YWluZXItTURZME1UbGhaRFJrWldWbE9UWmxZVG90TkRJMU1XUTVNbUk2TVRNNE9XWmpZbUZsTkRZNkxUZG1aallfIiBuYW1lPSJOb3RlcyBWaWV3IENvbnRhaW5lciIvPiYjeDBBOzwvZXh0ZW5zaW9uPg0KPGV4dGVuc2lvbiBpZD0iYXBwbGljYXRpb24tY29udGFpbm1lbnQtY29tLmlibS5ub3Rlcy52aWV3LmNvbnRhaW5lci1NRFkwTVRsaFpEUmtaV1ZsT1RabFlUb3ROREkxTVdRNU1tSTZNVE00T1daalltRmxORFk2TFRkbVpqWV8iIHBvaW50PSJjb20uaWJtLnJjcC5jb21wb3NpdGUuY29udGFpbmVyLmNvcmUuY29udGFpbm1lbnRDb25maWd1cmF0aW9uIj4NCjx2aWV3IGlkPSJhcHBsaWNhdGlvbi12aWV3LWNvbS5pYm0ubm90ZXMudmlldy5jb250YWluZXItTURZME1UbGhaRFJrWldWbE9UWmxZVG90TkRJMU1XUTVNbUk2TVRNNE9XWmpZbUZsTkRZNkxUZG1aallfIi8+DQo8L2V4dGVuc2lvbj4NCjwvcGx1Z2luPg==" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.notes.viewCustomization.hideNavigator">
+        <base:value value="false" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.notes.notesurl">
+        <base:value value="notes:///[rep_id]/main?OpenFrameset" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.extensionType">
+        <base:value value="app container" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.title.fixed">
+        <base:value value="true" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.aaf.component.id">
+        <base:value value="com.ibm.notes.view.container" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.csiviews.viewpart.folderalias">
+        <base:value value="" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.propertybroker.autosetactions">
+        <base:value value="true" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.viewId">
+        <base:value value="application-view-com.ibm.notes.view.container-MDY0MTlhZDRkZWVlOTZlYTotNDI1MWQ5MmI6MTM4OWZjYmFlNDY6LTdmZjY_" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.aaf.provider.id">
+        <base:value value="com.ibm.rcp.aaf.domino.provider.NotesViewProvider" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.container.Events">
+        <base:value value="selection" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.notes.enableBuiltInPB">
+        <base:value value="true" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.aaf.createdByAAF">
+        <base:value value="com.ibm.rcp.aaf.createdByAAF" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.closeable">
+        <base:value value="false" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.showTitle">
+        <base:value value="true" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.moveable">
+        <base:value value="false" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.visible">
+        <base:value value="true" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.component.enable.window.actions">
+        <base:value value="false" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.aaf.portletappid">
+        <base:value value="null" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.aaf.comptype">
+        <base:value value="1" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.standalone">
+        <base:value value="true" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.notes.viewCustomization.hideHeader">
+        <base:value value="false" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.notes.viewCustomization.hideActionBar">
+        <base:value value="false" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.delimiter.line">
+        <base:value value="\0\0" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.delimiter.value">
+        <base:value value="\0" xsi:type="base:String"/>
+      </preference>
+      <object-id value="[rep_id]_MDY0MTlhZDRkZWVlOTZlYTotNDI1MWQ5MmI6MTM4OWZjYmFlNDY6LTdmZjQ_"/>
+      <title>
+        <base:nls-string xml:lang="en">Original Notes version of Trouble Tickets</base:nls-string>
+      </title>
+      <resource-link portletApplication="PlaceHolder_Portlet">
+        <name value="Notes View Container"/>
+        <portletId/>
+      </resource-link>
+    </portlet-definition>
+    <portlet-entity id="MDY0MTlhZDRkZWVlOTZlYTotNDI1MWQ5MmI6MTM4OWZjYmFlNDY6LTdmZjc_.1" portletDefinitionRef="MDY0MTlhZDRkZWVlOTZlYTotNDI1MWQ5MmI6MTM4OWZjYmFlNDY6LTdmZjc_">
+      <object-id value="[rep_id]_MDY0MTlhZDRkZWVlOTZlYTotNDI1MWQ5MmI6MTM4OWZjYmFlNDY6LTdmZjI_"/>
+    </portlet-entity>
+    <portlet-definition id="MDY0MTlhZDRkZWVlOTZlYTotMjZjNTI1MGE6MTM4OWZkOTk3OGQ6LTdmZTk_">
+      <description>
+        <base:nls-string xml:lang="en">XPages interface to same Notes app</base:nls-string>
+      </description>
+      <preference name="com.ibm.rcp.container.applicationDefinition">
+        <base:value value="PHBsdWdpbj4NCjxleHRlbnNpb24gcG9pbnQ9Im9yZy5lY2xpcHNlLnVpLnZpZXdzIj4mI3gwQTs8dmlldyBhbGxvd011bHRpcGxlPSJ0cnVlIiBjbGFzcz0iY29tLmlibS5ub3Rlcy52aWV3LmNvbnRhaW5lci52aWV3cy5Ob3Rlc1ZpZXdDb250YWluZXIiIGlkPSJhcHBsaWNhdGlvbi12aWV3LWNvbS5pYm0ubm90ZXMudmlldy5jb250YWluZXItTURZME1UbGhaRFJrWldWbE9UWmxZVG90TWpaak5USTFNR0U2TVRNNE9XWmtPVGszT0dRNkxUZG1aVGdfIiBuYW1lPSJOb3RlcyBWaWV3IENvbnRhaW5lciIvPiYjeDBBOzwvZXh0ZW5zaW9uPg0KPGV4dGVuc2lvbiBpZD0iYXBwbGljYXRpb24tY29udGFpbm1lbnQtY29tLmlibS5ub3Rlcy52aWV3LmNvbnRhaW5lci1NRFkwTVRsaFpEUmtaV1ZsT1RabFlUb3RNalpqTlRJMU1HRTZNVE00T1daa09UazNPR1E2TFRkbVpUZ18iIHBvaW50PSJjb20uaWJtLnJjcC5jb21wb3NpdGUuY29udGFpbmVyLmNvcmUuY29udGFpbm1lbnRDb25maWd1cmF0aW9uIj4NCjx2aWV3IGlkPSJhcHBsaWNhdGlvbi12aWV3LWNvbS5pYm0ubm90ZXMudmlldy5jb250YWluZXItTURZME1UbGhaRFJrWldWbE9UWmxZVG90TWpaak5USTFNR0U2TVRNNE9XWmtPVGszT0dRNkxUZG1aVGdfIi8+DQo8L2V4dGVuc2lvbj4NCjwvcGx1Z2luPg==" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.notes.viewCustomization.hideNavigator">
+        <base:value value="true" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.notes.notesurl">
+        <base:value value="notes:///[rep_id]/launch.xsp?OpenXPage" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.extensionType">
+        <base:value value="app container" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.title.fixed">
+        <base:value value="true" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.aaf.component.id">
+        <base:value value="com.ibm.notes.view.container" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.csiviews.viewpart.folderalias">
+        <base:value value="" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.propertybroker.autosetactions">
+        <base:value value="true" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.viewId">
+        <base:value value="com.ibm.xsp.rcp.XspViewPart" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.aaf.provider.id">
+        <base:value value="com.ibm.rcp.aaf.domino.provider.NotesViewProvider" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.container.Events">
+        <base:value value="selection" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.notes.enableBuiltInPB">
+        <base:value value="true" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.aaf.createdByAAF">
+        <base:value value="com.ibm.rcp.aaf.createdByAAF" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.closeable">
+        <base:value value="false" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.showTitle">
+        <base:value value="true" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.moveable">
+        <base:value value="false" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.visible">
+        <base:value value="true" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.component.enable.window.actions">
+        <base:value value="false" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.aaf.portletappid">
+        <base:value value="null" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.aaf.comptype">
+        <base:value value="1" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.standalone">
+        <base:value value="true" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.notes.viewCustomization.hideHeader">
+        <base:value value="true" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.notes.viewCustomization.hideActionBar">
+        <base:value value="true" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.delimiter.line">
+        <base:value value="\0\0" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.rcp.delimiter.value">
+        <base:value value="\0" xsi:type="base:String"/>
+      </preference>
+      <object-id value="[rep_id]_MDY0MTlhZDRkZWVlOTZlYTotMjZjNTI1MGE6MTM4OWZkOTk3OGQ6LTdmZTY_"/>
+      <title>
+        <base:nls-string xml:lang="en">XPages interface to same Notes app</base:nls-string>
+      </title>
+      <resource-link portletApplication="PlaceHolder_Portlet">
+        <name value="Notes View Container"/>
+        <portletId/>
+      </resource-link>
+    </portlet-definition>
+    <portlet-entity id="MDY0MTlhZDRkZWVlOTZlYTotMjZjNTI1MGE6MTM4OWZkOTk3OGQ6LTdmZTk_.1" portletDefinitionRef="MDY0MTlhZDRkZWVlOTZlYTotMjZjNTI1MGE6MTM4OWZkOTk3OGQ6LTdmZTk_">
+      <object-id value="[rep_id]_MDY0MTlhZDRkZWVlOTZlYTotMjZjNTI1MGE6MTM4OWZkOTk3OGQ6LTdmZTQ_"/>
+    </portlet-entity>
+  </component-tree>
+  <layout-tree>
+    <layout-element id="layout_TMP_10002">
+      <container xsi:type="SimpleContainer" orientation="row">
+        <window id="MDY0MTlhZDRkZWVlOTZlYTotNDI1MWQ5MmI6MTM4OWZjYmFlNDY6LTdmZjc_.1window"/>
+      </container>
+    </layout-element>
+    <layout-element id="XPages.MDY0MTlhZDRkZWVlOTZlYTotNDI1MWQ5MmI6MTM4OWZjYmFlNDY6LTdmZDU_">
+      <container xsi:type="SimpleContainer" orientation="row">
+        <window id="MDY0MTlhZDRkZWVlOTZlYTotMjZjNTI1MGE6MTM4OWZkOTk3OGQ6LTdmZTk_.1window"/>
+      </container>
+    </layout-element>
+  </layout-tree>
+  <navigation-element id="TMP_10000">
+    <title>
+      <base:nls-string xml:lang="ar">تطبيق فارغ</base:nls-string>
+      <base:nls-string xml:lang="ca">Aplicació buida</base:nls-string>
+      <base:nls-string xml:lang="cs">Prázdná aplikace</base:nls-string>
+      <base:nls-string xml:lang="da">Tomt program</base:nls-string>
+      <base:nls-string xml:lang="de">Leere Anwendung</base:nls-string>
+      <base:nls-string xml:lang="el">Κενή εφαρμογή</base:nls-string>
+      <base:nls-string xml:lang="en">Trouble Tickets Demo</base:nls-string>
+      <base:nls-string xml:lang="es">Aplicación en blanco</base:nls-string>
+      <base:nls-string xml:lang="fi">Tyhjä sovellus</base:nls-string>
+      <base:nls-string xml:lang="fr">Application vide</base:nls-string>
+      <base:nls-string xml:lang="hu">Üres alkalmazás</base:nls-string>
+      <base:nls-string xml:lang="it">Applicazione vuota</base:nls-string>
+      <base:nls-string xml:lang="iw">יישום ריק</base:nls-string>
+      <base:nls-string xml:lang="ja">ブランクアプリケーション</base:nls-string>
+      <base:nls-string xml:lang="ko">빈 애플리케이션</base:nls-string>
+      <base:nls-string xml:lang="nl">Lege toepassing</base:nls-string>
+      <base:nls-string xml:lang="no">Tom applikasjon</base:nls-string>
+      <base:nls-string xml:lang="pl">Pusta aplikacja</base:nls-string>
+      <base:nls-string xml:lang="pt">Aplicação em branco</base:nls-string>
+      <base:nls-string xml:lang="pt-BR">Aplicativo em branco</base:nls-string>
+      <base:nls-string xml:lang="ro">Blank Application</base:nls-string>
+      <base:nls-string xml:lang="ru">Пустое приложение</base:nls-string>
+      <base:nls-string xml:lang="sk">Prázdna aplikácia</base:nls-string>
+      <base:nls-string xml:lang="sl">Prazen program</base:nls-string>
+      <base:nls-string xml:lang="sv">Tomt program</base:nls-string>
+      <base:nls-string xml:lang="th">แอ็พพลิเคชันว่าง</base:nls-string>
+      <base:nls-string xml:lang="tr">Boş Uygulama</base:nls-string>
+      <base:nls-string xml:lang="uk">Blank Application</base:nls-string>
+      <base:nls-string xml:lang="zh">空应用程序</base:nls-string>
+      <base:nls-string xml:lang="zh-TW">空白應用程式</base:nls-string>
+    </title>
+    <description>
+      <base:nls-string xml:lang="ar">تطبيق فارغ</base:nls-string>
+      <base:nls-string xml:lang="ca">Aplicació buida</base:nls-string>
+      <base:nls-string xml:lang="cs">Prázdná aplikace</base:nls-string>
+      <base:nls-string xml:lang="da">Tomt program</base:nls-string>
+      <base:nls-string xml:lang="de">Leere Anwendung</base:nls-string>
+      <base:nls-string xml:lang="el">Κενή εφαρμογή</base:nls-string>
+      <base:nls-string xml:lang="en">This app demonstrates an XPages interface added to an existing Notes app.</base:nls-string>
+      <base:nls-string xml:lang="es">Aplicación en blanco</base:nls-string>
+      <base:nls-string xml:lang="fi">Tyhjä sovellus</base:nls-string>
+      <base:nls-string xml:lang="fr">Application vide</base:nls-string>
+      <base:nls-string xml:lang="hu">Üres alkalmazás</base:nls-string>
+      <base:nls-string xml:lang="it">Applicazione vuota</base:nls-string>
+      <base:nls-string xml:lang="iw">יישום ריק</base:nls-string>
+      <base:nls-string xml:lang="ja">ブランクアプリケーション</base:nls-string>
+      <base:nls-string xml:lang="ko">빈 애플리케이션</base:nls-string>
+      <base:nls-string xml:lang="nl">Lege toepassing</base:nls-string>
+      <base:nls-string xml:lang="no">Tom applikasjon</base:nls-string>
+      <base:nls-string xml:lang="pl">Pusta aplikacja</base:nls-string>
+      <base:nls-string xml:lang="pt">Aplicação em branco</base:nls-string>
+      <base:nls-string xml:lang="pt-BR">Aplicativo em branco</base:nls-string>
+      <base:nls-string xml:lang="ro">Blank Application</base:nls-string>
+      <base:nls-string xml:lang="ru">Пустое приложение</base:nls-string>
+      <base:nls-string xml:lang="sk">Prázdna aplikácia</base:nls-string>
+      <base:nls-string xml:lang="sl">Prazen program</base:nls-string>
+      <base:nls-string xml:lang="sv">Tomt program</base:nls-string>
+      <base:nls-string xml:lang="th">แอ็พพลิเคชันว่าง</base:nls-string>
+      <base:nls-string xml:lang="tr">Boş Uygulama</base:nls-string>
+      <base:nls-string xml:lang="uk">Blank Application</base:nls-string>
+      <base:nls-string xml:lang="zh">空应用程序</base:nls-string>
+      <base:nls-string xml:lang="zh-TW">空白應用程式</base:nls-string>
+    </description>
+    <preference name="com.ibm.portal.categoryGuid">
+      <base:value value="1HeDe13PG3IP6G1C03Q46P1DA6R46M9E46OOC6JP4JQ076JPC3Q473JD0" readOnly="false" required="false" xsi:type="base:String"/>
+    </preference>
+    <preference name="com.ibm.rcp.useNavigator">
+      <base:value value="true" xsi:type="base:String"/>
+    </preference>
+    <preference name="com.ibm.rcp.navigationModel">
+      <base:value value="" xsi:type="base:String"/>
+    </preference>
+    <preference name="com.ibm.portal.PageIcon">
+      <base:value value="" xsi:type="base:String"/>
+    </preference>
+    <preference name="com.ibm.rcp.activities">
+      <base:value value="" xsi:type="base:String"/>
+    </preference>
+    <preference name="com.ibm.rcp.alias">
+      <base:value value="" xsi:type="base:String"/>
+    </preference>
+    <preference name="com.ibm.rcp.autoStart">
+      <base:value value="false" xsi:type="base:String"/>
+    </preference>
+    <preference name="com.ibm.rcp.launcher">
+      <base:value value="false" xsi:type="base:String"/>
+    </preference>
+    <preference name="com.ibm.rcp.hidden">
+      <base:value value="false" xsi:type="base:String"/>
+    </preference>
+    <parent-tree>
+      <parent-tree-ref value="wps.application.root" parameterId="portal.root"/>
+    </parent-tree>
+    <object-id value="[rep_id]_85257A4000058373"/>
+    <navigation-element id="TMP_10001" layoutElementRef="layout_TMP_10002">
+      <title>
+        <base:nls-string xml:lang="en">Notes Version</base:nls-string>
+      </title>
+      <description>
+        <base:nls-string xml:lang="ar">صفحة خالية</base:nls-string>
+        <base:nls-string xml:lang="ca">Pàgina buida</base:nls-string>
+        <base:nls-string xml:lang="cs">Prázdná stránka</base:nls-string>
+        <base:nls-string xml:lang="da">Tom side</base:nls-string>
+        <base:nls-string xml:lang="de">Leere Seite</base:nls-string>
+        <base:nls-string xml:lang="el">Κενή σελίδα</base:nls-string>
+        <base:nls-string xml:lang="en">Blank Page</base:nls-string>
+        <base:nls-string xml:lang="es">Página en blanco</base:nls-string>
+        <base:nls-string xml:lang="fi">Tyhjä sivu</base:nls-string>
+        <base:nls-string xml:lang="fr">Page vide</base:nls-string>
+        <base:nls-string xml:lang="hu">Üres oldal</base:nls-string>
+        <base:nls-string xml:lang="it">Pagina vuota</base:nls-string>
+        <base:nls-string xml:lang="iw">דף ריק</base:nls-string>
+        <base:nls-string xml:lang="ja">空白ページ</base:nls-string>
+        <base:nls-string xml:lang="ko">공백 페이지</base:nls-string>
+        <base:nls-string xml:lang="nl">Lege pagina</base:nls-string>
+        <base:nls-string xml:lang="no">Tom side</base:nls-string>
+        <base:nls-string xml:lang="pl">Pusta strona</base:nls-string>
+        <base:nls-string xml:lang="pt">Página em branco</base:nls-string>
+        <base:nls-string xml:lang="pt-BR">Página Em Branco</base:nls-string>
+        <base:nls-string xml:lang="ro">Pagină goală</base:nls-string>
+        <base:nls-string xml:lang="ru">Пустая страница</base:nls-string>
+        <base:nls-string xml:lang="sk">Prázdna stránka</base:nls-string>
+        <base:nls-string xml:lang="sl">Prazna stran</base:nls-string>
+        <base:nls-string xml:lang="sv">Tom sida</base:nls-string>
+        <base:nls-string xml:lang="th">หน้าว่าง</base:nls-string>
+        <base:nls-string xml:lang="tr">Boş Sayfa</base:nls-string>
+        <base:nls-string xml:lang="uk">Порожня сторінка</base:nls-string>
+        <base:nls-string xml:lang="zh">空白页面</base:nls-string>
+        <base:nls-string xml:lang="zh-TW">空白頁面</base:nls-string>
+      </description>
+      <preference name="com.ibm.notes.enable.preferences">
+        <base:value value="true" xsi:type="base:String"/>
+      </preference>
+      <object-id value="[rep_id]_85257A4000012634"/>
+      <navigation-content windowRef="MDY0MTlhZDRkZWVlOTZlYTotNDI1MWQ5MmI6MTM4OWZjYmFlNDY6LTdmZjc_.1window" componentDefinitionRef="MDY0MTlhZDRkZWVlOTZlYTotNDI1MWQ5MmI6MTM4OWZjYmFlNDY6LTdmZjc_.1"/>
+    </navigation-element>
+    <navigation-element id="XPages.MDY0MTlhZDRkZWVlOTZlYTotNDI1MWQ5MmI6MTM4OWZjYmFlNDY6LTdmZDU_" layoutElementRef="XPages.MDY0MTlhZDRkZWVlOTZlYTotNDI1MWQ5MmI6MTM4OWZjYmFlNDY6LTdmZDU_">
+      <title>
+        <base:nls-string xml:lang="en">XPages Version</base:nls-string>
+      </title>
+      <description/>
+      <preference name="com.ibm.rcp.alias">
+        <base:value value="XPages" xsi:type="base:String"/>
+      </preference>
+      <preference name="com.ibm.notes.enable.preferences">
+        <base:value value="true" xsi:type="base:String"/>
+      </preference>
+      <object-id value="[rep_id]_MDY0MTlhZDRkZWVlOTZlYTotNDI1MWQ5MmI6MTM4OWZjYmFlNDY6LTdmZDQ_"/>
+      <navigation-content windowRef="MDY0MTlhZDRkZWVlOTZlYTotMjZjNTI1MGE6MTM4OWZkOTk3OGQ6LTdmZTk_.1window" componentDefinitionRef="MDY0MTlhZDRkZWVlOTZlYTotMjZjNTI1MGE6MTM4OWZkOTk3OGQ6LTdmZTk_.1"/>
+    </navigation-element>
+  </navigation-element>
+</ibm-portal-topology>
+</object-data>
+</business-component>
+</ibm-portal-composite>
+

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xc="http://www.ibm.com/xsp/custom" createForm="false">
+	<xp:this.beforePageLoad><![CDATA[#{javascript:navUtil.setBackPage()}]]></xp:this.beforePageLoad>
+	<xp:this.resources>
+		<xp:script src="/xpagesCommon.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
+	<xc:layout>
+		<xp:this.facets>
+			<xc:page_employeeHome xp:key="content"></xc:page_employeeHome>
+		</xp:this.facets>
+	</xc:layout>
+</xp:view>

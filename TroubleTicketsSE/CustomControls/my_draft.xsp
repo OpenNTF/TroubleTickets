@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+	<xp:this.data>
+		<xp:dominoView var="employeeMyOpenTickets" viewName="xpagesTicketsByRequestorAndStatus" categoryFilter="#{javascript:session.getEffectiveUserName() + '\\Open'}">
+		</xp:dominoView>
+		<xp:dominoView var="employeeMyClosedTickets" viewName="xpagesTicketsByRequestorAndStatus" categoryFilter="#{javascript:session.getEffectiveUserName() + '\\Closed'}">
+		</xp:dominoView>
+		<xp:dominoView var="employeeMyDraftTickets" viewName="xpagesTicketsByRequestorAndStatus" categoryFilter="#{javascript:session.getEffectiveUserName() + '\\Draft'}">
+		</xp:dominoView>
+	</xp:this.data>
+	<table width="100%" cellpadding="0" cellspacing="0">
+		<tr>						
+			<td valign="top">
+				<div class="lotusWidget2">
+					<h2>My Drafts</h2>
+					<div class="lotusWidgetBody">
+						<table cellpadding="0" cellspacing="0" class="lotusTable">
+							<xp:repeat id="repeat3" rows="5" var="entry" indexVar="index" value="#{employeeMyDraftTickets}">
+								<tr class="#{javascript: index == 0 ? 'lotusFirst' : ''}">
+									<td>
+										<h4 class="noMargins">
+											<xp:link escape="true" text="#{entry.Summary}">
+												<xp:this.value><![CDATA[#{javascript:"myViewTicket.xsp?action=openDocument&documentId=" + entry.getNoteID();}]]></xp:this.value>
+											</xp:link>
+										</h4>
+										<div class="lotusMeta">
+											<xp:text value="#{entry.Category}"></xp:text>
+											<span class="lotusDivider">|</span>
+											<xp:text value="#{entry.Priority}"></xp:text>
+											<span class="lotusDivider">|</span>
+											<xp:text value="#{javascript:'Last updated: ' + entry.getColumnValue('Last Updated')}"></xp:text>
+										</div>
+									</td>
+								</tr>
+							</xp:repeat>
+							<tr>
+								<td>
+									<span class="lotusBtn lotusBtnSpecial">
+										<a href="myEditTicket.xsp">New Ticket</a>
+									</span>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</td>
+		</tr>
+	</table>
+	
+	
+</xp:view>
