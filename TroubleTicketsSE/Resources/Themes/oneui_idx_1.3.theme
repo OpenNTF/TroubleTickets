@@ -1,0 +1,16 @@
+<theme extends="oneui_idx_v1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="platform:/plugin/com.ibm.designer.domino.stylekits/schema/stylekit.xsd" >
+	
+	<control override="false">
+	    <name>Form</name>
+	    <property mode="concat">
+	        <name>styleClass</name>
+	        <value>#{javascript:if(deviceBean.isAndroid()){if(view.getPageName() == "/mobile.xsp"){return "android";}}}</value>
+	    </property>
+	</control>
+	
+	<resources>
+		<styleSheet href="/custom.css"></styleSheet>
+		<styleSheet href="/mobile.css"></styleSheet>
+	</resources>
+</theme>

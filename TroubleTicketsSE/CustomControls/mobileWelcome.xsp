@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex"
+	xmlns:xc="http://www.ibm.com/xsp/custom"
+	dojoParseOnLoad="true" dojoTheme="true" >
+	<xp:this.resources>
+		<xp:dojoModule name="dojox/mobile"></xp:dojoModule>
+		<xp:dojoModule name="dojox/mobile/parser"></xp:dojoModule>
+		<xp:dojoModule name="dojox/mobile/Accordion"></xp:dojoModule>
+	</xp:this.resources>
+
+	<xe:djxmHeading id="djxmHeading1" back="Menu" moveTo="mMenu"
+		label="Welcome">
+		<xp:this.rendered><![CDATA[#{javascript:
+			sessionScope.from = "mWelcome";
+			return true;
+		}]]>
+		</xp:this.rendered>
+		<xp:this.facets>
+			<xp:panel xp:key="actionFacet">
+				<xc:mobileAddButton></xc:mobileAddButton>
+			</xp:panel>
+		</xp:this.facets>
+	</xe:djxmHeading>
+
+	<xp:div dojoType="dojox/mobile/Accordion" id="welcomeAccordion">
+		<xp:this.dojoAttributes>
+			<xp:dojoAttribute name="singleOpen" value="true"></xp:dojoAttribute>
+		</xp:this.dojoAttributes>
+		<xe:djContentPane id="announcementsPane">
+			<xe:this.dojoAttributes>
+				<xp:dojoAttribute name="label" value="Announcements">
+				</xp:dojoAttribute>
+				<xp:dojoAttribute name="icon1"
+					value="mblDomButtonBlackRightArrow16">
+				</xp:dojoAttribute>
+				<xp:dojoAttribute name="icon2"
+					value="mblDomButtonBlackDownArrow16">
+				</xp:dojoAttribute>
+			</xe:this.dojoAttributes>
+			<xe:dataView id="annsDataView" var="annsDataView" rows="5"
+				pageName="#mAnnouncement" openDocAsReadonly="true">
+				<xe:this.data>
+					<xp:dominoView var="view1" viewName="xpagesAnnouncements" expandLevel="0">
+					</xp:dominoView>
+				</xe:this.data>
+
+				<xe:this.summaryColumn>
+					<xe:viewSummaryColumn columnName="Summary"
+						columnTitle="AnnouncementSummary">
+					</xe:viewSummaryColumn>
+				</xe:this.summaryColumn>
+				<xe:this.categoryColumn>
+					<xe:viewCategoryColumn columnName="Date"
+						columnTitle="Date">
+					</xe:viewCategoryColumn>
+				</xe:this.categoryColumn>
+
+				<xp:this.facets>
+					<xp:panel xp:key="noRows">
+						<xp:div styleClass="xlEmptyFacet">
+							<xp:label value="No announcements"></xp:label>
+						</xp:div>
+					</xp:panel>
+
+					<xp:panel id="panel2" xp:key="detail">
+						<xp:text escape="true" id="dateLabel" value="Date: ">
+<!--							styleClass="mblDetailTextBold">-->
+						</xp:text>
+						<xp:text escape="true" id="dateValue"
+							value="#{javascript: annsDataView.getColumnValue('Date')}">
+<!--							styleClass="mblDetailTextNormal">-->
+						</xp:text>
+					</xp:panel>
+
+					<xp:link escape="true" text="See All" id="moreLink" xp:key="pagerBottom">
+						<xp:this.rendered>
+							<![CDATA[#{javascript:
+								var size = getComponent("annsDataView").getRowCount();
+								return size > 5;
+							}]]>
+						</xp:this.rendered>
+
+					<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+						<xp:this.action>
+							<xe:moveTo direction="Left to Right"
+								targetPage="mAllAnnouncements" transitionType="slide">
+							</xe:moveTo>
+						</xp:this.action></xp:eventHandler></xp:link>
+				</xp:this.facets>
+			</xe:dataView>
+		</xe:djContentPane>
+		<xe:djContentPane id="forumPane">
+			<xe:this.rendered>
+				<![CDATA[#{javascript:
+					return isConnectionsEnabled();
+				}]]>
+			</xe:this.rendered>
+			<xe:this.dojoAttributes>
+				<xp:dojoAttribute name="label" value="Trouble Ticket Forum">
+				</xp:dojoAttribute>
+				<xp:dojoAttribute name="icon1" value="mblDomButtonBlackRightArrow16">
+				</xp:dojoAttribute>
+				<xp:dojoAttribute name="icon2" value="mblDomButtonBlackDownArrow16">
+				</xp:dojoAttribute>
+			</xe:this.dojoAttributes>
+			<xe:dataView id="topicsDataView" var="topic" rows="5">
+				<xe:this.value><![CDATA[#{javascript:
+					try{
+						var url = getConnectionsURL();
+						var forumId = getForumId();
+						if("" == url || "" == forumId) {
+							return null;
+						}
+						
+						var endpoint = BeanFactory.getSSOBean("connections");
+						if(endpoint == null) {
+							endpoint = BeanFactory.createSSOBean("connections", url);
+							println("new endpoint: " + endpoint);
+						}
+						var forumService = com.ibm.sbt.services.client.connections.forums.ForumService(endpoint);	
+						var topics = forumService.getForum(forumId).getTopics();
+						return topics;
+					}catch(exception){
+						println("Forum defaultFacet error: " + exception);
+						return null;
+					}}]]>
+				</xe:this.value>
+				
+				<xe:this.extraColumns>
+					<xe:viewExtraColumn columnTitle="Content"></xe:viewExtraColumn>
+				</xe:this.extraColumns>
+
+				<xe:this.summaryColumn>
+					<xe:viewSummaryColumn columnTitle="Topic"></xe:viewSummaryColumn>
+				</xe:this.summaryColumn>
+				
+				<xp:this.facets>
+					<xp:panel xp:key="noRows">
+						<xp:div styleClass="xlEmptyFacet">
+							<xp:label value="No community forum found"></xp:label>
+						</xp:div>
+					</xp:panel>
+					<xp:panel id="panel4" xp:key="summary" style="white-space:nowrap;">
+						<xp:link escape="true" id="link3" text="#{javascript:return topic.getTitle();}" target="_blank">
+							<xp:this.value>
+								<![CDATA[#{javascript:var url = topic.getTopicUrl();
+													var topicUrl = url.replace("/atom/", "/html/").replace("topic?topicUuid=", "topic?id=");
+													return topicUrl;}]]>
+<!--								<![CDATA[#{javascript:return "mobile.xsp#mViewTicket?topicId="+topic.getTopicUuid();}]]>-->
+							</xp:this.value>
+						</xp:link>
+					</xp:panel>
+					<xp:panel id="panel5" xp:key="extra0" style="width: 65%;">
+						<xp:text escape="false">
+							<xp:this.value><![CDATA[#{javascript:return topic.getContent();}]]></xp:this.value>
+						</xp:text>
+					</xp:panel>
+				</xp:this.facets>
+			</xe:dataView>
+		</xe:djContentPane>
+		<xe:djContentPane id="commFilesPanel">
+			<xe:this.rendered>
+				<![CDATA[#{javascript:
+					return isConnectionsEnabled();
+				}]]>
+			</xe:this.rendered>
+			<xe:this.dojoAttributes>
+				<xp:dojoAttribute name="label" value="Community Files">
+				</xp:dojoAttribute>
+				<xp:dojoAttribute name="icon1" value="mblDomButtonBlackRightArrow16">
+				</xp:dojoAttribute>
+				<xp:dojoAttribute name="icon2" value="mblDomButtonBlackDownArrow16">
+				</xp:dojoAttribute>
+			</xe:this.dojoAttributes>
+			<xe:dataView id="commFilesDataView" var="file" rows="5" styleClass="commFilesDataView">
+				<xp:this.value>
+					<![CDATA[#{javascript:
+						try{
+							var url = getConnectionsURL();
+							var communityId = getCommunityId();
+							if("" == url || "" == communityId) {
+								return null;
+							}
+							
+							var endpoint = BeanFactory.getSSOBean("connections");
+							if(endpoint == null) {
+								endpoint = BeanFactory.createSSOBean("connections", url);
+							}
+							if(!endpoint.isAuthenticated()) {
+								endpoint.authenticate(true);
+							}
+							
+							var filesService = new com.ibm.sbt.services.client.connections.files.FileService(endpoint); 
+							var communityFiles = filesService.getCommunityFiles(communityId);
+							
+							//getCommunitySharedFiles has just been added to SBT api
+							//incorporate into this control when available on the server
+							//var sharedFiles = filesService.getCommunitySharedFiles(communityId);
+							//println("Shared Files: " + sharedFiles);
+							//communityFiles.addAll(sharedFiles);
+							return communityFiles;
+						}catch(exception){
+							println("Community Files value error: " + exception);
+							return null;
+						}}]]>
+				</xp:this.value>
+				
+				<xe:this.extraColumns>
+					<xe:viewExtraColumn columnTitle="Filetype">
+					</xe:viewExtraColumn>
+					<xe:viewExtraColumn columnTitle="Size">
+					</xe:viewExtraColumn>
+				</xe:this.extraColumns>
+
+				<xe:this.summaryColumn>
+					<xe:viewSummaryColumn columnTitle="Filename">
+					</xe:viewSummaryColumn>
+				</xe:this.summaryColumn>
+				
+				<xp:this.facets>
+					<xp:panel xp:key="noRows">
+						<xp:div styleClass="xlEmptyFacet">
+							<xp:label value="No community files found"></xp:label>
+						</xp:div>
+					</xp:panel>
+					<xp:panel id="summaryPanel" xp:key="summary" style="white-space:nowrap;">
+						<xp:link escape="true" id="link7" target="_blank" text="#{javascript:return file.getTitle();}">
+							<xp:this.value><![CDATA[#{javascript:return file.getContentUrl();}]]>
+							</xp:this.value>
+						</xp:link>
+					</xp:panel>
+					<xp:panel id="typePanel" xp:key="extra0" style="width: 20%;white-space:nowrap;">
+						<xp:text>
+							<xp:this.value><![CDATA[#{javascript:return file.getType();}]]></xp:this.value>
+						</xp:text>
+					</xp:panel>
+					<xp:panel id="sizePanel" xp:key="extra1" style="width: 15%;white-space:nowrap;">
+						<xp:text>
+							<xp:this.value><![CDATA[#{javascript:
+								var size = file.getSize();
+								var kilobyte = 1024;
+								var megabyte = kilobyte *1024;
+								if(size < kilobyte) {
+									return (size + " B");
+								}else if(size < megabyte) {
+									return (Math.round(size/kilobyte) + " KB");
+								}else {
+									return (Math.round(size/megabyte) + " MB");
+								}}]]>
+							</xp:this.value>
+						</xp:text>
+					</xp:panel>
+				</xp:this.facets>
+			</xe:dataView>
+		</xe:djContentPane>
+	</xp:div>
+</xp:view>

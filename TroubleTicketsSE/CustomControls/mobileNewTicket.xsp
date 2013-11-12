@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex"
+	xmlns:xc="http://www.ibm.com/xsp/custom">
+	
+	<xp:panel>
+		<xp:this.data>
+			<xp:dominoDocument var="document1" formName="ticket"
+				documentId="#{sessionScope.documentId}">
+				<xp:this.postNewDocument>
+					<![CDATA[#{javascript:// set document defaults
+					currentDocument.replaceItemValue("Status", "Draft");
+					currentDocument.replaceItemValue("Requestor", @UserName());
+					}]]>
+				</xp:this.postNewDocument>
+				<xp:this.postSaveDocument>
+					<![CDATA[#{javascript:
+						var doc:NotesDocument = currentDocument.getDocument(true); 
+						postSave(doc);}]]>
+				</xp:this.postSaveDocument>
+			</xp:dominoDocument>
+		</xp:this.data>
+		<xe:djxmHeading id="djxmHeading1" back="Cancel" moveTo="#{javascript:return ('' != sessionScope.from ? 'mWelcome' : sessionScope.from);}" label="New Ticket">
+<!--			<xp:this.facets>-->
+<!--				<xp:panel xp:key="actionFacet">-->
+<!--					<xe:toolBarButton id="submitButton" label="Submit">-->
+<!--						<xp:eventHandler event="onclick" submit="true" refreshMode="complete">-->
+<!--							<xp:this.action>-->
+<!--								<xp:actionGroup>-->
+<!--									<xp:confirm message="Submit ticket?"></xp:confirm>-->
+<!--									<xp:executeScript>-->
+<!--										<xp:this.script><![CDATA[#{javascript:-->
+<!--											var doc:NotesDocument = currentDocument.getDocument(true);-->
+<!--											currentDocument.save();-->
+<!--											submitTicket(doc);}]]></xp:this.script>-->
+<!--									</xp:executeScript>-->
+<!--									<xe:moveTo direction="Left to Right"-->
+<!--										forceFullRefresh="true" targetPage="mEmployeeHome"-->
+<!--										transitionType="slide">-->
+<!--									</xe:moveTo>-->
+<!--								</xp:actionGroup>-->
+<!--							</xp:this.action>-->
+<!--						</xp:eventHandler>-->
+<!--					</xe:toolBarButton>-->
+<!--				</xp:panel>-->
+<!--			</xp:this.facets>-->
+		</xe:djxmHeading>
+		<xe:tabBar id="tabBar1" barType="segmentedControl">
+			<xe:tabBarButton id="tabBarButton1" label="Submit" styleClass="staffBtn1">
+				<xp:this.rendered>
+					<![CDATA[#{javascript:return isDraft(document1);}]]>
+				</xp:this.rendered> 
+				<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+					<xp:this.action>
+						<xp:actionGroup>
+							<xp:confirm message="Submit ticket?"></xp:confirm>
+							<xp:executeScript>
+								<xp:this.script><![CDATA[#{javascript:
+									var doc:NotesDocument = currentDocument.getDocument(true);
+									currentDocument.save();
+									submitTicket(doc);}]]></xp:this.script>
+							</xp:executeScript>
+							<xe:moveTo direction="Right to Left"
+								forceFullRefresh="true" targetPage="mEmployeeHome"
+								transitionType="slide">
+							</xe:moveTo>
+						</xp:actionGroup>
+					</xp:this.action>
+				</xp:eventHandler>
+			</xe:tabBarButton>
+			<xe:tabBarButton id="tabBarButton2" label="Save as Draft" rendered="#{javascript:document1.isEditable();}" styleClass="staffBtn1">
+				<xp:eventHandler event="onClick" submit="true" refreshMode="complete">
+					<xp:this.action>
+						<xe:moveTo direction="Right to Left"
+							forceFullRefresh="true" targetPage="mEmployeeHome"
+							transitionType="slide" saveDocument="true">
+						</xe:moveTo>
+					</xp:this.action>
+				</xp:eventHandler>
+			</xe:tabBarButton>
+		</xe:tabBar>
+		<xe:formTable id="ticketForm" disableRowError="false">
+			<xe:formRow label="Summary:" styleClass="formRow centeredRow">
+				<xp:inputText id="summary"	value="#{document1.Summary}" required="true" autocomplete="off">
+					<xp:this.validators>
+						<xp:validateRequired message="Problem summary is required">
+						</xp:validateRequired>
+					</xp:this.validators>
+				</xp:inputText>
+			</xe:formRow>
+			<xe:formRow label="Category:" styleClass="formRow centeredRow">
+				<xp:comboBox id="categories" value="#{document1.Category}" >
+					<xp:this.validators>
+						<xp:validateRequired message="Category is required">
+						</xp:validateRequired>
+					</xp:this.validators>
+					<xp:selectItem itemLabel="Select..."></xp:selectItem>
+					<xp:selectItems>
+						<xp:this.value><![CDATA[#{javascript:@DbColumn(@DbName(), "managerCategories", 1);}]]></xp:this.value>
+					</xp:selectItems>
+				</xp:comboBox>
+			</xe:formRow>
+			<xe:formRow label="Priority:" styleClass="formRow centeredRow">
+				<xp:radioGroup id="radioGroup1" value="#{document1.Priority}" layout="lineDirection" 
+					style="border:0px; font-size:12px; padding:0px;">
+					<xp:this.validators>
+						<xp:validateRequired message="Priority is required"></xp:validateRequired>
+					</xp:this.validators>
+					<xp:selectItem itemLabel="High" itemValue="High"></xp:selectItem>
+					<xp:selectItem itemLabel="Medium" itemValue="Medium"></xp:selectItem>
+					<xp:selectItem itemLabel="Low" itemValue="Low"></xp:selectItem>
+				</xp:radioGroup>
+			</xe:formRow>
+			<xe:formRow label="Details:" styleClass="formRow detailsRow">
+				<xp:inputTextarea id="details" required="true" value="#{document1.Details}"
+					rows="8" htmlFilterIn="acf" htmlFilter="acf" styleClass="detailsTextarea">
+				</xp:inputTextarea>
+				<xp:br />
+			</xe:formRow>
+		</xe:formTable>
+	</xp:panel>
+</xp:view>

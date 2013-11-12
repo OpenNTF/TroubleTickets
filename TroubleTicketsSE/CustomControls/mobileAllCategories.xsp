@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+
+	<xe:djxmHeading id="djxmHeading1" back="Back" moveTo="mManager" label="Categories">
+		<xp:this.rendered><![CDATA[#{javascript:
+			sessionScope.from = "mAllCategories";
+			return true;}]]>
+		</xp:this.rendered>
+		<xp:this.facets>
+			<xp:panel xp:key="actionFacet" rendered="#{javascript:roles.isManager()}">
+				<xe:toolBarButton id="newCategory" label="New">
+					<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+						<xp:this.action>
+							<xe:moveTo direction="Left to Right"
+								forceFullRefresh="true" targetPage="mNewCategory"
+								transitionType="slide">
+							</xe:moveTo>
+						</xp:this.action>
+					</xp:eventHandler>
+				</xe:toolBarButton>
+			</xp:panel>
+		</xp:this.facets>
+	</xe:djxmHeading>
+
+	<xe:dataView id="catsDataView" var="catsDataView" rows="10"
+		pageName="#mViewCategory" openDocAsReadonly="true">
+		<xe:this.data>
+			<xp:dominoView var="categoriesView" viewName="xpagesCategories" expandLevel="0">
+			</xp:dominoView>
+		</xe:this.data>
+
+		<xe:this.summaryColumn>
+			<xe:viewSummaryColumn columnName="Name" columnTitle="CategoryName">
+			</xe:viewSummaryColumn>
+		</xe:this.summaryColumn>
+		<xe:this.categoryColumn>
+			<xe:viewCategoryColumn columnName="Resources" columnTitle="Resources">
+			</xe:viewCategoryColumn>
+		</xe:this.categoryColumn>
+
+		<xp:this.facets>
+			<xp:panel xp:key="noRows">
+				<xp:br />
+				<xp:div styleClass="xlEmptyFacet">
+					<xp:label value="No categories"></xp:label>
+				</xp:div>
+			</xp:panel>
+
+			<xp:panel id="panel1" xp:key="detail">
+				<xp:text escape="true" id="computedField1"
+					styleClass="mblDetailTextBold" value="Resources: ">
+				</xp:text>
+				<xp:text escape="true" id="computedField2"
+					styleClass="mblDetailTextNormal"
+					value="#{javascript: catsDataView.getColumnValue('Resources')}">
+				</xp:text>
+			</xp:panel>
+
+			<xp:link escape="true" text="More..." id="moreLink"
+				xp:key="pagerBottom">
+				<xp:this.rendered>
+					<![CDATA[#{javascript:
+						var size = getComponent("catsDataView").getRowCount();
+						return size > 10;
+					}]]>
+				</xp:this.rendered>
+				<xp:eventHandler event="onclick" submit="false">
+					<xp:this.script>
+						<xe:addRows for="catsDataView" rowCount="10"
+							disableId="moreLink" disabledFormat="hide">
+						</xe:addRows>
+					</xp:this.script>
+				</xp:eventHandler>
+			</xp:link>
+		</xp:this.facets>
+	</xe:dataView>
+</xp:view>

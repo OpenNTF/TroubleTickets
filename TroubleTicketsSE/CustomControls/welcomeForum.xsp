@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+	<div class="lotusWidget2">
+		<xp:link id="communityForumLink" target="_blank"
+			title="Open Community Forum in new window">
+			<xp:this.value>
+				<![CDATA[#{javascript:
+					var endpoint = BeanFactory.getSSOBean("connections");
+					if(null == endpoint) {
+						endpoint = BeanFactory.createSSOBean("connections", getConnectionsURL());
+					}
+					var forumSvc = new com.ibm.sbt.services.client.connections.forums.ForumService(endpoint);
+					var forumId = getForumId();
+					if("" != forumId) {
+						var forum = forumSvc.getForum(forumId);
+						var forumUrl = forum.getForumUrl();
+						return forumUrl;
+					}else{
+						return null;
+					}
+				}]]>
+			</xp:this.value>
+			<h2>Community Forum</h2>
+		</xp:link>
+		<xp:panel id="topicsPanel3">
+			<xp:div styleClass="lotusWidgetBody">			
+				<table cellpadding="0" cellspacing="0" style="width: 100%;">
+					<tr>
+						<td>
+							<xe:dataView id="dataView2" var="topic" rows="5"
+								columnTitles="true" styleClass="topicsDataView">
+								<xe:this.extraColumns>
+									<xe:viewExtraColumn columnTitle="Content">
+									</xe:viewExtraColumn>
+								</xe:this.extraColumns>
+
+								<xe:this.summaryColumn>
+									<xe:viewSummaryColumn columnTitle="Topic">
+									</xe:viewSummaryColumn>
+								</xe:this.summaryColumn>
+								<xp:this.value>
+									<![CDATA[#{javascript:
+										try{
+											var url = getConnectionsURL();
+											var forumId = getForumId();
+											if("" == url || "" == forumId) {
+												return null;
+											}
+											
+											var endpoint = BeanFactory.getSSOBean("connections");
+											if(endpoint == null) {
+												endpoint = BeanFactory.createSSOBean("connections", url);
+											}
+											
+											var forumSvc = com.ibm.sbt.services.client.connections.forums.ForumService(endpoint);	
+											var topics = forumSvc.getForum(forumId).getTopics();
+											return topics;
+										}catch(exception){
+											println("Forum value error: " + exception);
+											return null;
+										}}]]>
+								</xp:this.value>
+								<xp:this.facets>
+									<xp:panel xp:key="noRows" id="topicsPanel2">
+										<xp:div styleClass="lotusWidgetBody">
+											No topics found in Community Forum
+										</xp:div>
+									</xp:panel>
+									<xp:panel id="summaryPanel" xp:key="summary"
+										style="white-space:nowrap;">
+										<xp:link escape="true" id="link3" target="_blank"
+											text="#{javascript:return topic.getTitle();}" styleClass="dataViewLink">
+											<xp:this.value>
+												<![CDATA[#{javascript:
+													var url = topic.getTopicUrl();
+													var topicUrl = url.replace("/atom/", "/html/").replace("topic?topicUuid=", "topic?id=");
+													return topicUrl;
+													}]]>
+											</xp:this.value>
+										</xp:link>
+									</xp:panel>
+									<xp:panel id="contentPanel" xp:key="extra0" style="white-space:nowrap;">
+										<xp:text escape="false">
+											<xp:this.value><![CDATA[#{javascript:return topic.getContent();}]]></xp:this.value>
+										</xp:text>
+									</xp:panel>
+								</xp:this.facets>
+							</xe:dataView>
+						</td>
+					</tr>
+				</table>
+			</xp:div>
+		</xp:panel>
+	</div>
+</xp:view>

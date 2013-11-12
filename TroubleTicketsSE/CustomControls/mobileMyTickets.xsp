@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core" dojoParseOnLoad="true"
+	dojoTheme="true" xmlns:xe="http://www.ibm.com/xsp/coreex">
+	<xp:this.resources>
+		<xp:dojoModule name="dojox/mobile"></xp:dojoModule>
+		<xp:dojoModule name="dojox/mobile/parser"></xp:dojoModule>
+		<xp:dojoModule name="dojox/mobile/Accordion"></xp:dojoModule>
+	</xp:this.resources>
+
+	<xp:div dojoType="dojox/mobile/Accordion">
+		<xp:this.dojoAttributes>
+			<xp:dojoAttribute name="singleOpen" value="true"></xp:dojoAttribute>
+		</xp:this.dojoAttributes>
+		<xe:djContentPane id="openTicketsPane">
+			<xe:this.dojoAttributes>
+				<xp:dojoAttribute name="label" value="Open Tickets">
+				</xp:dojoAttribute>
+				<xp:dojoAttribute name="icon1" value="mblDomButtonBlackRightArrow16">
+				</xp:dojoAttribute>
+				<xp:dojoAttribute name="icon2" value="mblDomButtonBlackDownArrow16">
+				</xp:dojoAttribute>
+			</xe:this.dojoAttributes>
+			<xe:dataView id="openTicketsDataView"
+				var="openViewEntry" rows="5" pageName="mViewTicket"
+				openDocAsReadonly="true">
+				<xe:this.data>
+					<xp:dominoView var="employeeMyOpenTickets"
+						expandLevel="0" viewName="xpagesTicketsByRequestorAndStatus"
+						categoryFilter="#{javascript:session.getEffectiveUserName() + '\\Open'}">
+					</xp:dominoView>
+				</xe:this.data>
+
+				<xe:this.summaryColumn>
+					<xe:viewSummaryColumn columnName="Summary"
+						columnTitle="TicketSummary">
+					</xe:viewSummaryColumn>
+				</xe:this.summaryColumn>
+				<xp:this.facets>
+					<xp:panel xp:key="noRows">
+						<xp:div styleClass="xlEmptyFacet">
+							<xp:label value="No open tickets"></xp:label>
+						</xp:div>
+					</xp:panel>
+
+					<xp:panel id="panel2" xp:key="detail">
+						<xp:text escape="true"
+							style="font-size:12px; font-weight:normal;">
+							<xp:this.value><![CDATA[#{javascript: 
+									var status=openViewEntry.getColumnValue('Status');
+									var id=openViewEntry.getColumnValue('ID');
+									var str = "ID: " + id + " | Status: " + status;
+									return str;
+								}]]></xp:this.value>
+						</xp:text>
+						<xp:br />
+						<xp:text escape="true"
+							style="font-size:12px; font-weight:normal;">
+							<xp:this.value><![CDATA[#{javascript: 
+									//var requestor=openViewEntry.getColumnValue('Requestor');
+									//var creationDate=openViewEntry.getColumnValue('Created');
+									var category=openViewEntry.getColumnValue('Category');
+									var priority=openViewEntry.getColumnValue('Priority');
+									var str = "Category: " + category + " | Priority: " + priority;
+									return str;
+								}]]></xp:this.value>
+						</xp:text>
+					</xp:panel>
+				</xp:this.facets>
+			</xe:dataView>
+		</xe:djContentPane>
+		<xe:djContentPane id="closedTicketsPane">
+			<xe:this.dojoAttributes>
+				<xp:dojoAttribute name="label" value="Closed Tickets">
+				</xp:dojoAttribute>
+				<xp:dojoAttribute name="icon1" value="mblDomButtonBlackRightArrow16">
+				</xp:dojoAttribute>
+				<xp:dojoAttribute name="icon2" value="mblDomButtonBlackDownArrow16">
+				</xp:dojoAttribute>
+			</xe:this.dojoAttributes>
+			<xe:dataView id="closedDataView" var="closedViewEntry"
+				rows="5" pageName="mViewTicket" openDocAsReadonly="true">
+				<xe:this.data>
+					<xp:dominoView var="employeeMyClosedTickets"
+						expandLevel="0" viewName="xpagesTicketsByRequestorAndStatus"
+						categoryFilter="#{javascript:session.getEffectiveUserName() + '\\Closed'}">
+					</xp:dominoView>
+				</xe:this.data>
+
+				<xe:this.summaryColumn>
+					<xe:viewSummaryColumn columnName="Summary"
+						columnTitle="TicketSummary">
+					</xe:viewSummaryColumn>
+				</xe:this.summaryColumn>
+				<xp:this.facets>
+					<xp:panel xp:key="noRows">
+						<xp:div styleClass="xlEmptyFacet">
+							<xp:label value="No closed tickets"></xp:label>
+						</xp:div>
+					</xp:panel>
+
+					<xp:panel id="panel1" xp:key="detail">
+						<xp:text escape="true"
+							style="font-size:12px; font-weight:normal;">
+							<xp:this.value><![CDATA[#{javascript: 
+									var status=closedViewEntry.getColumnValue('Status');
+									var id=closedViewEntry.getColumnValue('ID');
+									var str = "ID: " + id + " | Status: " + status;
+									return str;
+								}]]></xp:this.value>
+						</xp:text>
+						<xp:br />
+						<xp:text escape="true"
+							style="font-size:12px; font-weight:normal;">
+							<xp:this.value><![CDATA[#{javascript: 
+									//var requestor=closedViewEntry.getColumnValue('Requestor');
+									//var creationDate=closedViewEntry.getColumnValue('Created');
+									var category=closedViewEntry.getColumnValue('Category');
+									var priority=closedViewEntry.getColumnValue('Priority');
+									var str = "Category: " + category + " | Priority: " + priority;
+									return str;
+								}]]></xp:this.value>
+						</xp:text>
+					</xp:panel>
+				</xp:this.facets>
+			</xe:dataView>
+		</xe:djContentPane>
+		<xe:djContentPane id="draftsPane">
+			<xe:this.dojoAttributes>
+				<xp:dojoAttribute name="label" value="Drafts">
+				</xp:dojoAttribute>
+				<xp:dojoAttribute name="icon1" value="mblDomButtonBlackRightArrow16">
+				</xp:dojoAttribute>
+				<xp:dojoAttribute name="icon2" value="mblDomButtonBlackDownArrow16">
+				</xp:dojoAttribute>
+			</xe:this.dojoAttributes>
+			<xe:dataView id="draftsDataView" var="draftsViewEntry"
+				rows="5" pageName="mViewTicket" openDocAsReadonly="true">
+				<xe:this.data>
+					<xp:dominoView var="employeeMyDraftTickets"
+						expandLevel="0" viewName="xpagesTicketsByRequestorAndStatus"
+						categoryFilter="#{javascript:session.getEffectiveUserName() + '\\Draft'}">
+					</xp:dominoView>
+				</xe:this.data>
+
+				<xe:this.summaryColumn>
+					<xe:viewSummaryColumn columnName="Summary"
+						columnTitle="TicketSummary">
+					</xe:viewSummaryColumn>
+				</xe:this.summaryColumn>
+				<xp:this.facets>
+					<xp:panel xp:key="noRows">
+						<xp:div styleClass="xlEmptyFacet">
+							<xp:label value="No draft tickets"></xp:label>
+						</xp:div>
+					</xp:panel>
+
+					<xp:panel id="panel3" xp:key="detail">
+						<xp:text escape="true"
+							style="font-size:12px; font-weight:normal;">
+							<xp:this.value><![CDATA[#{javascript: 
+									var status=draftsViewEntry.getColumnValue('Status');
+									var id=draftsViewEntry.getColumnValue('ID');
+									var str = "ID: " + id + " | Status: " + status;
+									return str;
+								}]]></xp:this.value>
+						</xp:text>
+						<xp:br />
+						<xp:text escape="true"
+							style="font-size:12px; font-weight:normal;">
+							<xp:this.value><![CDATA[#{javascript: 
+									//var requestor=draftsViewEntry.getColumnValue('Requestor');
+									//var creationDate=draftsViewEntry.getColumnValue('Created');
+									var category=draftsViewEntry.getColumnValue('Category');
+									var priority=draftsViewEntry.getColumnValue('Priority');
+									var str = "Category: " + category + " | Priority: " + priority;
+									return str;
+								}]]></xp:this.value>
+						</xp:text>
+					</xp:panel>
+				</xp:this.facets>
+			</xe:dataView>
+		</xe:djContentPane>
+	</xp:div>
+</xp:view>

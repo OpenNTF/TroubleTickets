@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex"
+	xmlns:xc="http://www.ibm.com/xsp/custom"
+	dojoParseOnLoad="true" dojoTheme="true">
+	<xp:this.resources>
+		<xp:script src="/xpagesTickets.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
+	<xp:this.data>
+		<xp:dominoDocument var="document1" formName="ticket"></xp:dominoDocument>
+	</xp:this.data>
+	<xe:djxmHeading id="djxmHeading1" back="#{javascript:return (!document1.isEditable() ? 'Cancel' : 'Back');}" moveTo="#{javascript:return sessionScope.from}" label="Trouble Ticket">
+		<xp:this.facets>
+			<xp:panel xp:key="actionFacet">
+				<xe:toolBarButton id="editButton" label="Edit">
+					<xe:this.rendered>
+						<![CDATA[#{javascript:return (!document1.isEditable() && isOpen(document1));}]]>
+					</xe:this.rendered>
+					<xp:eventHandler event="onClick" submit="true" refreshMode="complete">
+						<xe:this.action>
+							<xp:actionGroup>
+								<xp:changeDocumentMode mode="edit" var="document1">
+								</xp:changeDocumentMode>
+								<xe:changeDynamicContentAction
+									facetName="empty" for="dynamicContent1">
+								</xe:changeDynamicContentAction>
+							</xp:actionGroup>
+						</xe:this.action>
+					</xp:eventHandler>
+				</xe:toolBarButton>
+			</xp:panel>
+		</xp:this.facets>
+	</xe:djxmHeading>
+	<xe:tabBar id="tabBar1" barType="segmentedControl">
+		<xe:tabBarButton id="tabBarButton1" label="Assign">
+			<xe:this.rendered>
+				<![CDATA[#{javascript:return (!document1.isEditable() && isOpen(document1));}]]>
+			</xe:this.rendered>
+			<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="dynamicContent1">
+				<xp:this.action>
+					<xp:actionGroup>
+						<xe:changeDynamicContentAction
+							for="dynamicContent1" facetName="assignBar">
+						</xe:changeDynamicContentAction>
+						<xp:executeScript>
+							<xp:this.script><![CDATA[#{javascript:
+								var button = getComponent("tabBarButton1");
+								button.setSelected(true);}]]></xp:this.script>
+						</xp:executeScript>
+					</xp:actionGroup>
+				</xp:this.action>
+			</xp:eventHandler>
+		</xe:tabBarButton>
+		<xe:tabBarButton id="tabBarButton2" label="Escalate">
+			<xp:this.rendered>
+				<![CDATA[#{javascript:return (((null != sessionScope.connectionsEnabled && sessionScope.connectionsEnabled) || isConnectionsEnabled()) && !document1.isEditable() && isOpen(document1));}]]>
+			</xp:this.rendered>
+			<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="dynamicContent1">
+				<xp:this.action>
+					<xp:actionGroup>
+						<xe:changeDynamicContentAction for="dynamicContent1" facetName="escalateBar">
+						</xe:changeDynamicContentAction>
+						<xp:executeScript>
+							<xp:this.script><![CDATA[#{javascript:
+								var button = getComponent("tabBarButton2");
+								button.setSelected(true);}]]></xp:this.script>
+						</xp:executeScript>
+					</xp:actionGroup>
+				</xp:this.action>
+			</xp:eventHandler>
+		</xe:tabBarButton>
+		<xe:tabBarButton id="tabBarButton3" label="Close">
+			<xp:this.rendered>
+				<![CDATA[#{javascript:return (!document1.isEditable() && isOpen(document1));}]]>
+			</xp:this.rendered>
+			<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="dynamicContent1">
+				<xp:this.action>
+					<xp:actionGroup>
+						<xe:changeDynamicContentAction
+							for="dynamicContent1" facetName="closeBar">
+						</xe:changeDynamicContentAction>
+						<xp:executeScript>
+							<xp:this.script><![CDATA[#{javascript:
+								var button = getComponent("tabBarButton3");
+								button.setSelected(true);}]]></xp:this.script>
+						</xp:executeScript>
+					</xp:actionGroup>
+				</xp:this.action>
+			</xp:eventHandler>
+		</xe:tabBarButton>
+		<xe:tabBarButton id="tabBarButton4" label="Comment">
+			<xp:this.rendered>
+				<![CDATA[#{javascript:return (!document1.isEditable() && isOpen(document1));}]]>
+			</xp:this.rendered>
+			<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="dynamicContent1">
+				<xp:this.action>
+					<xp:actionGroup>
+						<xe:changeDynamicContentAction
+							for="dynamicContent1" facetName="commentBar">
+						</xe:changeDynamicContentAction>
+						<xp:executeScript>
+							<xp:this.script><![CDATA[#{javascript:
+								var button = getComponent("tabBarButton4");
+								button.setSelected(true);}]]></xp:this.script>
+						</xp:executeScript>
+					</xp:actionGroup>
+				</xp:this.action>
+			</xp:eventHandler>
+		</xe:tabBarButton>
+		<xe:tabBarButton id="tabBarButton5" label="Submit" styleClass="submitSaveBtn">
+			<xp:this.rendered>
+				<![CDATA[#{javascript:return isDraft(document1);}]]>
+			</xp:this.rendered> 
+			<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+				<xp:this.action>
+					<xp:actionGroup>
+						<xp:confirm message="Submit ticket?"></xp:confirm>
+						<xp:executeScript>
+							<xp:this.script><![CDATA[#{javascript:
+								var doc:NotesDocument = currentDocument.getDocument(true);
+								if(document1.isEditable()) {
+									currentDocument.save();
+								}								
+								submitTicket(doc);}]]></xp:this.script>
+						</xp:executeScript>
+						<xe:moveTo direction="Right to Left"
+							forceFullRefresh="true" targetPage="mEmployeeHome"
+							transitionType="slide">
+						</xe:moveTo>
+					</xp:actionGroup>
+				</xp:this.action>
+			</xp:eventHandler>
+		</xe:tabBarButton>
+		<xe:tabBarButton id="tabBarButton6" label="Save" rendered="#{javascript:document1.isEditable();}">
+			<xp:eventHandler event="onClick" submit="true" refreshMode="complete">
+				<xp:this.action>
+					<xp:actionGroup>
+						<xp:executeScript>
+							<xp:this.script>
+								<![CDATA[#{javascript:var doc:NotesDocument = currentDocument.getDocument(true);
+								currentDocument.save();}]]></xp:this.script>
+							</xp:executeScript>
+							<xe:changeDynamicContentAction for="dynamicContent1" facetName="empty">
+							</xe:changeDynamicContentAction>
+							<xp:changeDocumentMode mode="readOnly" var="document1">
+							</xp:changeDocumentMode>
+					</xp:actionGroup>
+				</xp:this.action>
+			</xp:eventHandler>
+		</xe:tabBarButton>
+	</xe:tabBar>
+	<xe:dynamicContent id="dynamicContent1" defaultFacet="empty">
+		<xp:this.facets>
+			<xp:panel xp:key="empty" id="empty">
+			</xp:panel>
+			<xp:panel xp:key="assignBar" id="assignBar" styleClass="dynamicPanel">
+				<xp:div style="padding-bottom: 5px;">
+					<xp:div styleClass="dynamicPanelLabel">
+						<xp:label value="Category:"></xp:label>
+					</xp:div>
+					<xp:label style="padding-left: 2px;" value="#{document1.category}"></xp:label>
+				</xp:div>
+				<xp:div style="padding-bottom: 5px;">
+					<xp:div styleClass="dynamicPanelLabel"  style="padding-top: 3px;">
+						<xp:label value="Assign To:"></xp:label>
+					</xp:div>
+					<xp:comboBox id="assignee" value="#{viewScope.dialogAssignTo}">
+						<xp:selectItems>
+							<xp:this.value><![CDATA[#{javascript:
+								if((null != sessionScope.connectionsEnabled && sessionScope.connectionsEnabled) || isConnectionsEnabled()) {
+									var result = [];
+									try{
+										var url = getConnectionsURL();
+										if("" == url) {
+											return null;
+										}
+										
+										var endpoint = BeanFactory.getSSOBean("connections");
+										if(endpoint == null) {
+											endpoint = BeanFactory.createSSOBean("connections", url);
+										}
+										if(!endpoint.isAuthenticated()) {
+											endpoint.authenticate(true);
+										}
+										
+										var myEmail = "";
+										var userId = context.getUser().getFullName();
+										if("" != userId) {
+											myEmail = nsf.XPagesTickets.getInternetEmail(userId);
+										}
+										if("" != myEmail) {
+											var profileService = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);
+											var colleagues = profileService.getColleagues(myEmail);
+											
+											result.push('Select...|');
+											for(var i=0;i < colleagues.length;i++){
+												result.push(colleagues[i].getName() + '|' + colleagues[i].getEmail());
+											}
+											//return colleagues;
+										}else{
+											return null;
+										}
+									}catch(exception){
+										println("my colleagues defaultFacet error: " + exception);
+										return null;
+									}
+									//result.push('fadams@renovations.com');
+									//result.push('aadmin/IBM');
+									//result.push('buser/IBM');
+									return result;
+								}else{
+									var category = currentDocument.getItemValueString("Category");
+									@DbLookup(@DbName(), "managerCategories", category, "resources");									
+								}}]]>
+							</xp:this.value>
+						</xp:selectItems>
+					</xp:comboBox>
+				</xp:div>
+				<xp:div style="padding-left:5px;">
+					<xp:button value="Confirm" styleClass="dynamicPanelButton" id="confirmAssign">
+						<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+							<xp:this.action>
+								<xp:actionGroup>
+									<xp:sendMail
+										to="#{javascript:viewScope.dialogAssignTo}"
+										subject="A new trouble ticket was assigned to you."
+										bodyPlain="#{javascript:nsf.XPagesTickets.createTextPart()}"
+										embeddedFormat="json"
+										bodyHtml="#{javascript:nsf.XPagesTickets.createHTMLPart()}"
+										embeddedJson="#{javascript:nsf.XPagesTickets.createJSONPart()}">
+									</xp:sendMail>
+									<xp:executeScript>
+										<xp:this.script><![CDATA[#{javascript:
+											var assignTo = viewScope.dialogAssignTo;
+											if (assignTo && assignTo.length > 0) {
+												var doc = currentDocument.getDocument(true);
+												assignTicket(doc, assignTo);
+												viewScope.mobileMessage = "Ticket has been assigned to " + assignTo;
+											}}]]></xp:this.script>
+									</xp:executeScript>
+									<xe:changeDynamicContentAction for="dynamicContent1" facetName="msgBar">
+									</xe:changeDynamicContentAction>
+								</xp:actionGroup>
+							</xp:this.action>
+						</xp:eventHandler>
+					</xp:button>
+					<xp:button value="Cancel" styleClass="dynamicPanelButton" id="cancelAssign">
+						<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+							<xp:this.action>
+								<xe:changeDynamicContentAction for="dynamicContent1" facetName="empty">
+								</xe:changeDynamicContentAction>
+							</xp:this.action>
+						</xp:eventHandler>
+					</xp:button>
+				</xp:div>
+			</xp:panel>
+			<xp:panel xp:key="escalateBar" id="escalateBar" styleClass="dynamicPanel">
+				<xp:div style="padding-bottom: 5px;">
+					<xp:div styleClass="dynamicPanelLabel">
+						<xp:label value="Priority:"></xp:label>
+					</xp:div>
+					<xp:label style="padding-left: 2px;" value="#{document1.Priority}"></xp:label>
+				</xp:div>
+				<xp:div style="padding-bottom: 5px;">
+					<xp:div styleClass="dynamicPanelLabel"  style="padding-top: 3px;">
+						<xp:label value="Escalate To:"></xp:label>
+					</xp:div>
+					<xp:comboBox id="comboBox1" value="#{viewScope.escalateTo}">
+						<xp:selectItems>
+							<xp:this.value><![CDATA[#{javascript:
+								var result = [];
+								try{
+									var url = getConnectionsURL();
+									if("" == url) {
+										return null;
+									}
+									
+									var endpoint = BeanFactory.getSSOBean("connections");
+									if(endpoint == null) {
+										endpoint = BeanFactory.createSSOBean("connections", url);
+									}
+									if(!endpoint.isAuthenticated()) {
+										endpoint.authenticate(true);
+									}
+									
+									var myEmail = "";
+									var userId = context.getUser().getFullName();
+									if("" != userId) {
+										myEmail = nsf.XPagesTickets.getInternetEmail(userId);
+									}
+									if("" != myEmail) {
+										var profileService = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);
+										var managers = profileService.getReportChain(myEmail);
+										
+										result.push('Select...|');
+										for(var i=0;i < managers.length;i++){
+											result.push(managers[i].getName() + '|' + managers[i].getEmail());
+										}
+									}else{
+										return null;
+									}
+								}catch(exception){
+									println("my colleagues defaultFacet error: " + exception);
+									return null;
+								}
+								//result.push('Select...|');
+								//result.push('fadams@renovations.com');
+								//result.push('aadmin/IBM');
+								//result.push('buser/IBM');
+								return result;
+								}]]>
+							</xp:this.value>
+						</xp:selectItems>
+					</xp:comboBox>
+				</xp:div>
+				<xp:div style="padding-left:5px;">
+					<xp:button value="Confirm" styleClass="dynamicPanelButton" id="confirmEscalate">
+						<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+							<xp:this.action>
+								<xp:actionGroup>
+									<xp:sendMail
+										to="#{javascript:viewScope.escalateTo}"
+										subject="A new trouble ticket was escalated to you."
+										bodyPlain="#{javascript:nsf.XPagesTickets.createTextPart()}"
+										embeddedFormat="json"
+										bodyHtml="#{javascript:nsf.XPagesTickets.createHTMLPart()}"
+										embeddedJson="#{javascript:nsf.XPagesTickets.createJSONPart()}">
+									</xp:sendMail>
+									<xp:executeScript>
+										<xp:this.script><![CDATA[#{javascript:
+											var escalateTo = viewScope.escalateTo;
+											if (escalateTo && escalateTo.length > 0) {
+											
+												var manager = getComponent("comboBox1").getValue();
+												//var profileService = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);
+												//var managerProfile = profileService.getProfile(manager);
+												var managerName = escalateTo ;//managerProfile.getName();
+												var doc = currentDocument.getDocument(true);
+												escalateTicket(doc, managerName);
+												
+												//Update message box text
+												var msg = "Ticket has been escalated to " + managerName;
+												viewScope.mobileMessage = msg;
+												addComment(doc, msg);
+											}}]]></xp:this.script>
+									</xp:executeScript>
+									<xe:changeDynamicContentAction for="dynamicContent1" facetName="msgBar">
+									</xe:changeDynamicContentAction>
+								</xp:actionGroup>
+							</xp:this.action>
+						</xp:eventHandler>
+					</xp:button>
+					<xp:button value="Cancel" styleClass="dynamicPanelButton" id="cancelEscalate">
+						<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+							<xp:this.action>
+								<xe:changeDynamicContentAction for="dynamicContent1" facetName="empty">
+								</xe:changeDynamicContentAction>
+							</xp:this.action>
+						</xp:eventHandler>
+					</xp:button>
+				</xp:div>
+			</xp:panel>
+			<xp:panel xp:key="closeBar" id="panel1" styleClass="dynamicPanel">
+				<xp:panel style="padding-bottom: 5px;">
+					<xp:div styleClass="dynamicPanelLabel" style="padding-top: 3px;">
+						<xp:label value="Reason:"></xp:label>
+					</xp:div>
+					<xp:inputTextarea style="width:60%;max-width:60%" id="reason" readonly="false" value="#{viewScope.closeReason}" rows="3">
+					</xp:inputTextarea>
+				</xp:panel>
+				<xp:div style="padding-left:5px;">
+					<xp:button value="Confirm" styleClass="dynamicPanelButton" id="confirmClose">
+						<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+							<xp:this.action>
+								<xp:actionGroup>
+									<xp:sendMail
+										to="#{javascript:viewScope.dialogAssignTo}"
+										subject="A new trouble ticket was assigned to you."
+										bodyPlain="#{javascript:nsf.XPagesTickets.createTextPart()}"
+										embeddedFormat="json"
+										bodyHtml="#{javascript:nsf.XPagesTickets.createHTMLPart()}"
+										embeddedJson="#{javascript:nsf.XPagesTickets.createJSONPart()}">
+									</xp:sendMail>
+									<xp:executeScript>
+										<xp:this.script><![CDATA[#{javascript:
+											var closedText = viewScope.closeReason;
+											viewScope.closeReason = null;
+											if (closedText && closedText.length > 0) {
+												var msg = "Ticket ID#"  + document1.getItemValue("ID") + " has been closed";
+												viewScope.mobileMessage = msg; 
+												var doc = currentDocument.getDocument(true);												
+												closeTicket(doc, msg);
+											}}]]></xp:this.script>
+									</xp:executeScript>
+									<xe:changeDynamicContentAction for="dynamicContent1" facetName="msgBar">
+									</xe:changeDynamicContentAction>
+								</xp:actionGroup>
+							</xp:this.action>
+						</xp:eventHandler>
+					</xp:button>
+					<xp:button value="Cancel" styleClass="dynamicPanelButton" id="cancelClose">
+						<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+							<xp:this.action>
+								<xe:changeDynamicContentAction for="dynamicContent1" facetName="empty">
+								</xe:changeDynamicContentAction>
+							</xp:this.action>
+						</xp:eventHandler>
+					</xp:button>
+				</xp:div>
+			</xp:panel>
+			<xp:panel xp:key="commentBar" id="panel2" styleClass="dynamicPanel">
+				<xp:panel id="commentPanel" style="padding-bottom: 5px;">
+					<xp:this.data>
+						<xp:dominoDocument var="commentDoc" formName="dialogAddComment"></xp:dominoDocument>
+					</xp:this.data>
+					<xp:div styleClass="dynamicPanelLabel" style="padding-top: 3px;">
+						<xp:label value="Comment:"></xp:label>
+					</xp:div>
+					<xp:inputTextarea style="width:60%;max-width:60%" id="commentText" rows="3" value="#{viewScope.comment}">
+<!--					 value="#{commentDoc.Comment}"-->
+					
+					</xp:inputTextarea>
+				</xp:panel>
+				<xp:div style="padding-left:5px;">
+					<xp:button value="Add Comment" styleClass="dynamicPanelButton" id="addComment">
+						<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+							<xp:this.action>
+								<xp:actionGroup>
+									<xp:executeScript>
+										<xp:this.script><![CDATA[#{javascript:
+											//var commentBox = getComponent("commentText");
+											//var comment = commentBox.getValue();
+											var comment = viewScope.comment;
+											if (comment && comment.length > 0) {
+												viewScope.mobileMessage = "Comment added to ticket";
+												var doc = currentDocument.getDocument(true);
+												addComment(doc, comment);
+											}}]]>
+										</xp:this.script>
+									</xp:executeScript>
+									<xe:changeDynamicContentAction for="dynamicContent1" facetName="msgBar">
+									</xe:changeDynamicContentAction>
+								</xp:actionGroup>
+							</xp:this.action>
+						</xp:eventHandler>
+					</xp:button>
+					<xp:button value="Cancel" styleClass="dynamicPanelButton" id="cancelComment">
+						<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+							<xp:this.action>
+								<xe:changeDynamicContentAction for="dynamicContent1" facetName="empty">
+								</xe:changeDynamicContentAction>
+							</xp:this.action>
+						</xp:eventHandler>
+					</xp:button>
+				</xp:div>
+			</xp:panel>
+			<xp:panel xp:key="msgBar" id="msgBar">
+				<xp:div id="msgPanel" styleClass="dynamicPanel">
+		<!--		 rendered="${not empty viewScope.mobileMessage}">-->
+					<img src="images/ok_16x16.png" width="16" height="16" style="margin:0px 5px 0px 0px"/>
+					<xp:text id="messageBox" tagName="span" style="line-height: 16px">
+						<xp:this.value><![CDATA[${javascript:
+						var message = viewScope.mobileMessage;
+						viewScope.mobileMessage = null;
+						return message;}]]></xp:this.value>
+					</xp:text>
+					<xp:link styleClass="closePanelButton" text="X" id="link1">
+						<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+							<xp:this.action>
+								<xe:changeDynamicContentAction
+									for="dynamicContent1" facetName="empty">
+								</xe:changeDynamicContentAction>
+							</xp:this.action>
+						</xp:eventHandler>
+					</xp:link>
+				</xp:div>
+			</xp:panel>
+		</xp:this.facets>
+	</xe:dynamicContent>
+	
+	<xp:panel id="ticketContent">
+		<xe:formTable id="formTable1">
+			<xe:formRow id="formRow1" label="Summary" styleClass="formRow centeredRow viewTicket">
+				<xp:inputText id="summary" value="#{document1.Summary}" required="true" autocomplete="off"
+					style="#{javascript:return (document1.isEditable() ? 'border-bottom-width:1px;border-bottom-color:#000000;border-bottom-style:dashed;' : 'border-width:0px;')}">
+					<xp:this.validators>
+						<xp:validateRequired message="Problem summary is required">
+						</xp:validateRequired>
+					</xp:this.validators>
+				</xp:inputText>
+			</xe:formRow>
+			<xe:formRow id="formRow2" label="Category" styleClass="formRow centeredRow viewTicket">
+				<xp:comboBox id="categories" value="#{document1.Category}" >
+					<xp:this.validators>
+						<xp:validateRequired message="Category is required">
+						</xp:validateRequired>
+					</xp:this.validators>
+					<xp:selectItem itemLabel="Select..."></xp:selectItem>
+					<xp:selectItems>
+						<xp:this.value><![CDATA[#{javascript:@DbColumn(@DbName(), "managerCategories", 1);}]]></xp:this.value>
+					</xp:selectItems>
+				</xp:comboBox>
+			</xe:formRow>
+			<xe:formRow id="formRow3" label="Priority" styleClass="formRow centeredRow viewTicket">
+				<xp:radioGroup id="radioGroup1" value="#{document1.Priority}" layout="lineDirection" 
+					style="border:0px; font-size:12px; padding:0px;">
+					<xp:this.validators>
+						<xp:validateRequired message="Priority is required"></xp:validateRequired>
+					</xp:this.validators>
+					<xp:selectItem itemLabel="High" itemValue="High"></xp:selectItem>
+					<xp:selectItem itemLabel="Medium" itemValue="Medium"></xp:selectItem>
+					<xp:selectItem itemLabel="Low" itemValue="Low"></xp:selectItem>
+				</xp:radioGroup>
+			</xe:formRow>
+			<xe:formRow id="formRow4" label="Requestor" styleClass="formRow centeredRow viewTicket">
+				<xp:text value="#{javascript:return currentDocument.getItemValueString('Requestor');}" />
+			</xe:formRow>
+			<xe:formRow id="formRow5" label="Status" styleClass="formRow centeredRow viewTicket">
+				<xp:text>
+					<xp:this.value><![CDATA[#{javascript:
+					var status = currentDocument.getItemValueString("Status");
+					status == "Draft" ? "Draft, last updated " + formatDate(currentDocument.getItemValueDateTime("Updated")) :
+					status == "Submitted" ? "Submitted on " + formatDate(currentDocument.getItemValueDateTime("Updated")) + " by " + @Name("[CN]", currentDocument.getItemValueString("SubmittedBy")) :
+					status == "Assigned" ? "Assigned to " + @Name("[CN]", currentDocument.getItemValueString("AssignedTo")) + " on " + formatDate(currentDocument.getItemValueDateTime("Assigned")) :
+					status == "Closed" ? "Closed on " + formatDate(currentDocument.getItemValueDateTime("Closed")) + " by " + @Name("[CN]", currentDocument.getItemValueString("ClosedBy")) + @NewLine() + "resolution: " + currentDocument.getItemValueString("Resolution")
+					: "--unknown--"
+					 return status;}]]>
+					</xp:this.value>
+				</xp:text>
+			</xe:formRow>
+			<xe:formRow id="formRow6" label="ID" styleClass="formRow centeredRow viewTicket">
+				<xp:text value="#{document1.ID}" />
+			</xe:formRow>
+			<xe:formRow id="formRow7" styleClass="formRow centeredRow viewTicket detailsRow" labelPosition="none">
+				<xp:label styleClass="labelCell" value="Details" id="detailsLabel"></xp:label>
+				<xp:inputRichText rendered="#{javascript:!document1.isEditable();}" styleClass="detailsTextarea" id="detailsRead" 
+					value="#{document1.Details}" readonly="true"></xp:inputRichText>
+				<xp:inputTextarea rendered="#{javascript:document1.isEditable();}" styleClass="detailsTextarea" id="detailsEdit"
+					required="true" value="#{document1.Details}" rows="8" htmlFilterIn="acf" htmlFilter="acf"></xp:inputTextarea>
+			</xe:formRow>
+		</xe:formTable>
+		<xe:formTable id="formTable2" style="font-weight:bold; font-size:20px;"
+			formDescription="#{javascript: return (roles.isManager() ? 'Manager' : roles.isStaff() ? 'Staff' : '') + ' Info'}">
+			<xe:formRow id="formRow8" label="Last Updated"
+				styleClass="formRow centeredRow viewTicket">
+				<xp:text id="inputTextarea1" value="#{document1.Updated}">
+					<xp:this.rendered><![CDATA[#{javascript:
+							return (roles.isStaff() || roles.isManager());
+						}]]>
+					</xp:this.rendered>
+				</xp:text>
+			</xe:formRow>
+			<xe:formRow id="formRow9" label="Last Activity"
+				styleClass="formRow centeredRow viewTicket">
+				<xp:text id="inputTextarea2" value="#{document1.LastActivity}">
+					<xp:this.rendered><![CDATA[#{javascript:
+							return (roles.isStaff() || roles.isManager());
+						}]]>
+					</xp:this.rendered>
+				</xp:text>
+			</xe:formRow>
+		</xe:formTable>
+	</xp:panel>
+</xp:view>

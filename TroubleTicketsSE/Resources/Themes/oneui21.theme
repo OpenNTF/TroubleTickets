@@ -22,6 +22,11 @@
 		<content-type>text/css</content-type>
 		<href>custom.css</href>
 	</resource>
+	
+	<resource>
+		<content-type>text/css</content-type>
+		<href>mobile.css</href>
+	</resource>
 
 	<!--
 		Use this pattern to define property name/value pairs for controls

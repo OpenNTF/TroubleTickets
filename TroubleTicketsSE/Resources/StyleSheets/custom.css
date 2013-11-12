@@ -9,3 +9,38 @@
 	background: -webkit-gradient(linear, left top, left bottom, from(#525252), to(#000) );
 	background: -moz-linear-gradient(top, #525252, #000);
 }
+
+.lotusFormTable .formRow > td{
+	padding: 5px !important;
+}
+
+.lotusui30 .lotusWidgetBody .filesDataView .lotusTable .lotusFirstCell{
+	width: 65% !important;
+}
+
+.lotusui30 .lotusWidgetBody .topicsDataView .lotusTable .lotusFirstCell{
+	width: 35% !important;
+}
+
+.lotusui30 .lotusWidgetBody .membersDataView .lotusTable .lotusFirstCell{
+	width: 55% !important;
+}
+
+.lotusui30 .lotusWidgetBody .membersDataView .lotusTable .dataViewLink,
+.lotusui30 .lotusWidgetBody .topicsDataView .lotusTable .dataViewLink,
+.lotusui30 .lotusWidgetBody .filesDataView .lotusTable .dataViewLink{
+	font-size: 14px;
+	font-weight:bold;
+}
+
+.lotusui30 .lotusWidget2 .xspLink > h2 {
+	cursor: pointer;
+}
+
+.lotusui30 .lotusWidget2 > h2 > a {
+	float:right;
+	font-size:20pt;
+	height:16px;
+	line-height:16px;
+	color: gray;
+}

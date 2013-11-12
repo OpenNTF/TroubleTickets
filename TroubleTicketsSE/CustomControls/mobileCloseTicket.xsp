@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex"
+	xmlns:xc="http://www.ibm.com/xsp/custom">
+	
+	<xp:this.data>
+		<xp:dominoDocument var="openDoc" documentId="#{sessionScope.documentId}"/>
+		<xp:dominoDocument formName="dialogCloseTicket" var="closeDoc" />
+	</xp:this.data>
+	
+	<xe:djxmHeading id="djxmHeading1" back="Cancel" moveTo="mViewTicket" label="Close Ticket">
+		<xp:this.facets>
+			<xp:panel xp:key="actionFacet">
+				<xe:toolBarButton id="button1" label="Save">
+					<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+						<xp:this.action>
+							<xp:actionGroup>
+								<xp:executeScript>
+									<xp:this.script>
+										<![CDATA[#{javascript:var resolution = getComponent("reason").getValue();
+											if (resolution && resolution.length > 0) {
+												var doc = openDoc.getDocument(true);
+												closeTicket(doc, resolution);
+											}}]]>
+									</xp:this.script>
+								</xp:executeScript>
+								<xe:moveTo direction="Left to Right"
+									forceFullRefresh="true" targetPage="mViewTicket"
+									transitionType="slide">
+								</xe:moveTo>
+							</xp:actionGroup>
+						</xp:this.action>
+					</xp:eventHandler>
+				</xe:toolBarButton>
+			</xp:panel>
+		</xp:this.facets>
+	</xe:djxmHeading>
+	
+	<xe:formTable id="formTable1">
+		<xe:formRow id="formRow1" label="Problem Summary" styleClass="formRow centeredRow viewTicket">
+			<xp:inputText id="summary" value="#{openDoc.Summary}" readonly="true"></xp:inputText>
+		</xe:formRow>
+		<xe:formRow id="formRow2" label="ID" styleClass="formRow centeredRow viewTicket">
+			<xp:inputText readonly="true" value="#{openDoc.ID}" />
+		</xe:formRow>
+		<xe:formRow id="formRow3" label="Status" styleClass="formRow centeredRow viewTicket">
+			<xp:inputText readonly="true" value="#{openDoc.Status}" />
+		</xe:formRow>
+	</xe:formTable>
+	
+	<xe:formTable id="closeForm" disableRowError="false">
+		<xe:formRow label="Reason:" styleClass="formRow detailsRow">
+			<xp:inputTextarea id="reason" required="true" value="#{closeDoc.Resolution}" rows="8">
+			</xp:inputTextarea>
+			<xp:br />
+		</xe:formRow>
+	</xe:formTable>	
+</xp:view>

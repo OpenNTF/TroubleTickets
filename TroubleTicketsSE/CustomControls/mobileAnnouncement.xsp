@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex"
+	xmlns:xc="http://www.ibm.com/xsp/custom">
+	<xp:this.data>
+		<xp:dominoDocument var="document1" formName="announcement"></xp:dominoDocument>
+	</xp:this.data>
+	<xe:djxmHeading id="djxmHeading1" back="#{javascript:return (!document1.isEditable() ? 'Cancel' : 'Back');}" moveTo="#{javascript:sessionScope.from}" label="Announcement">
+		<xp:this.facets>
+			<xp:panel xp:key="actionFacet">
+				<xe:toolBarButton id="editButton" label="Edit">
+					<xp:this.rendered><![CDATA[#{javascript:return !document1.isEditable();}]]>
+						</xp:this.rendered>
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="complete">
+						<xe:this.action>
+							<xp:actionGroup>
+								<xp:changeDocumentMode mode="edit" var="document1">
+								</xp:changeDocumentMode>
+							</xp:actionGroup>
+						</xe:this.action>
+					</xp:eventHandler>
+				</xe:toolBarButton>
+				<xe:toolBarButton id="saveButton" label="Save">
+					<xp:this.rendered><![CDATA[#{javascript:return document1.isEditable();}]]>
+					</xp:this.rendered>
+					<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+						<xe:this.action>
+							<xp:actionGroup>
+								<xp:saveDocument var="#{javascript:println('savedoc'); return 'document1';}"></xp:saveDocument>
+								<xp:changeDocumentMode mode="readOnly"	var="#{javascript:println('savedoc'); return 'document1';}">
+								</xp:changeDocumentMode>
+							</xp:actionGroup>
+						</xe:this.action>
+					</xp:eventHandler>
+				</xe:toolBarButton>
+			</xp:panel>
+		</xp:this.facets>
+	</xe:djxmHeading>
+	
+	<xp:panel id="announcementContent">
+		<xe:formTable id="formTable1">
+			<xe:formRow id="formRow1" label="Summary" styleClass="formRow centeredRow viewTicket">
+				<xp:inputText id="summary" value="#{document1.Summary}" required="true" autocomplete="off"
+					style="#{javascript:return (document1.isEditable() ? 'border-bottom-width:1px;border-bottom-color:#000000;border-bottom-style:dashed;' : 'border-width:0px;')}">
+					<xp:this.validators>
+						<xp:validateRequired message="Announcement summary is required">
+						</xp:validateRequired>
+					</xp:this.validators>
+				</xp:inputText>
+			</xe:formRow>
+			<xe:formRow id="formRow2" label="Date" styleClass="formRow centeredRow viewTicket">
+				<xp:text id="date" value="#{document1.Date}"></xp:text>
+			</xe:formRow>
+			<xe:formRow id="formRow3" styleClass="formRow centeredRow viewTicket detailsRow" labelPosition="none">
+				<xp:label styleClass="labelCell" value="Content" id="detailsLabel"></xp:label>
+				<xp:inputRichText rendered="#{javascript:!document1.isEditable();}" styleClass="detailsTextarea" id="contentRead" 
+					value="#{document1.Content}" readonly="true"></xp:inputRichText>
+				<xp:inputTextarea rendered="#{javascript:document1.isEditable();}" styleClass="detailsTextarea" id="contentEdit"
+					required="true" value="#{document1.Content}" rows="8" htmlFilterIn="acf" htmlFilter="acf"></xp:inputTextarea>
+			</xe:formRow>
+		</xe:formTable>
+	</xp:panel>
+</xp:view>

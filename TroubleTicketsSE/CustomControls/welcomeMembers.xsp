@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+	<div class="lotusWidget2">
+		<xp:link id="membersLink" target="_blank"
+			title="Open Community Members page in new window">
+			<xp:this.value>
+				<![CDATA[#{javascript:
+					var endpoint = BeanFactory.getSSOBean("connections");
+					if(null == endpoint) {
+						endpoint = BeanFactory.createSSOBean("connections", getConnectionsURL());
+					}
+					var commSvc = new com.ibm.sbt.services.client.connections.communities.CommunityService(endpoint);
+					var commId = getCommunityId();
+					if("" != commId) {
+						var comm = commSvc.getCommunity(commId);
+						var commUrl = comm.getCommunityUrl();
+						var commFilesUrl = commUrl + "#fullpageWidgetId=Members";
+						return commFilesUrl;
+					}else{
+						return null;
+					}
+				}]]>
+			</xp:this.value>
+			<h2>Community Members</h2>
+		</xp:link>
+		<xp:panel id="membersPanel">
+			<xp:div styleClass="lotusWidgetBody">			
+				<table cellpadding="0" cellspacing="0" style="width: 100%;">
+					<tr>
+						<td>
+							<xe:dataView id="membersDataView" var="member" rows="5"
+								columnTitles="true" styleClass="membersDataView">
+								<xe:this.extraColumns>
+									<xe:viewExtraColumn columnTitle="Email"></xe:viewExtraColumn>
+								</xe:this.extraColumns>
+								<xe:this.summaryColumn>
+									<xe:viewSummaryColumn columnTitle="Member">
+									</xe:viewSummaryColumn>
+								</xe:this.summaryColumn>
+								<xp:this.value>
+									<![CDATA[#{javascript:
+										try{
+											var url = getConnectionsURL();
+											var communityId = getCommunityId();
+											if("" == url || "" == communityId) {
+												return null;
+											}
+											
+											var endpoint = BeanFactory.getSSOBean("connections");
+											if(endpoint == null) {
+												endpoint = BeanFactory.createSSOBean("connections", url);
+											}
+											if(!endpoint.isAuthenticated()) {
+												endpoint.authenticate(true);
+											}
+											
+											var commSvc = new com.ibm.sbt.services.client.connections.communities.CommunityService(endpoint);
+											var members = commSvc.getMembers(communityId);
+											return members;
+										}catch(exception){
+											println("Community Members value error: " + exception);
+											return null;
+										}}]]>
+								</xp:this.value>
+								<xp:this.facets>
+									<xp:panel xp:key="noRows" id="noMembersPanel">
+										<xp:div styleClass="lotusWidgetBody">
+											No Community Members found.
+										</xp:div>
+									</xp:panel>
+									<xp:panel id="summaryPanel" xp:key="summary"
+										style="white-space:nowrap;">
+										<xp:link escape="true" id="memberLink" target="_blank"
+											text="#{javascript:return member.getName();}" styleClass="dataViewLink">
+											<xp:this.value><![CDATA[#{javascript:
+												try{
+													//var endpoint = BeanFactory.getSSOBean("connections");
+													
+													var profileService = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);
+													var memberId = member.getUserid();
+													var profile = profileService.getProfile(memberId);
+													var profileUrl = profile.getProfileUrl().replace("/atom/profile.do", "/html/profileView.do");
+													
+													return profileUrl;
+												}catch(exception){
+													println("Member Profile error: " + exception);
+													return null;
+												}
+												}]]>
+											</xp:this.value>
+										</xp:link>
+									</xp:panel>
+									<xp:panel id="emailPanel" xp:key="extra0" style="width:45%;white-space:nowrap;">
+										<xp:link escape="true" id="link1" target="_blank"
+											text="#{javascript:return profile.getEmail();}">
+											<xp:this.value><![CDATA[#{javascript:
+												try{
+													//var endpoint = BeanFactory.getSSOBean("connections");
+													//var profileService = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);
+													//var memberId = member.getUserid();
+													//var profile = profileService.getProfile(memberId);
+													
+													return "mailto:" + profile.getEmail();
+												}catch(exception){
+													println("Colleague Profile error: " + exception);
+													return null;
+												}
+												}]]>
+											</xp:this.value>
+										</xp:link>
+									</xp:panel>
+								</xp:this.facets>
+							</xe:dataView>
+						</td>
+					</tr>
+				</table>
+			</xp:div>
+		</xp:panel>
+	</div>
+</xp:view>
+

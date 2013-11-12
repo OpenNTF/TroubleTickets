@@ -3,6 +3,9 @@
 	<xp:this.resources>
 		<xp:script src="/xpagesTickets.jss" clientSide="false"></xp:script>
 	</xp:this.resources>
+	<xp:this.resources>
+		<xp:script src="/xpagesCommon.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
 	<xp:this.data>
 		<xp:dominoDocument var="document1" formName="ticket">
 			<xp:this.postNewDocument><![CDATA[#{javascript:// set document defaults

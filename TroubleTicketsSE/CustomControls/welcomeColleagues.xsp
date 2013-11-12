@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+	<div class="lotusWidget2">
+		<xp:link id="colleaguesLink" target="_blank"
+			title="Open user's Connections Network page in new window">
+			<xp:this.value>
+				<![CDATA[#{javascript:
+					var endpoint = BeanFactory.getSSOBean("connections");
+					if(null == endpoint) {
+						endpoint = BeanFactory.createSSOBean("connections", getConnectionsURL());
+					}
+					var profileSvc = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);
+					
+					//no SBT SDK functionality available to link to user's network
+					
+					return null;
+				}]]>
+			</xp:this.value>
+			<h2>My Colleagues</h2>
+		</xp:link>		
+		<xp:panel id="colleaguesPanel">
+			<xp:div styleClass="lotusWidgetBody">			
+				<table cellpadding="0" cellspacing="0" style="width: 100%;">
+					<tr>
+						<td>
+							<xe:dataView id="colleaguesDataView" var="colleague" rows="5"
+								columnTitles="true" styleClass="membersDataView">
+								<xe:this.extraColumns>
+									<xe:viewExtraColumn columnTitle="Email"></xe:viewExtraColumn>
+								</xe:this.extraColumns>
+								<xe:this.summaryColumn>
+									<xe:viewSummaryColumn columnTitle="Colleague"></xe:viewSummaryColumn>
+								</xe:this.summaryColumn>
+								<xp:this.value>
+									<![CDATA[#{javascript:
+										try{
+											var url = getConnectionsURL();
+											if("" == url) {
+												return null;
+											}
+											
+											var endpoint = BeanFactory.getSSOBean("connections");
+											if(endpoint == null) {
+												endpoint = BeanFactory.createSSOBean("connections", url);
+											}
+											if(!endpoint.isAuthenticated()) {
+												endpoint.authenticate(true);
+											}
+											
+											var myEmail = "";
+											var userId = context.getUser().getFullName();
+											if("" != userId) {
+												myEmail = nsf.XPagesTickets.getInternetEmail(userId);
+											}
+											if("" != myEmail) {
+												var profileService = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);
+												var colleagues = profileService.getColleagues(myEmail);
+												return colleagues;
+											}else{
+												return null;
+											}
+										}catch(exception){
+											println("my colleagues defaultFacet error: " + exception);
+											return null;
+										}
+									}]]>
+								</xp:this.value>
+								<xp:this.facets>
+									<xp:panel xp:key="noRows" id="noMembersPanel">
+										<xp:div styleClass="xlEmptyFacet">
+											No colleagues found
+										</xp:div>
+									</xp:panel>
+									<xp:panel id="namePanel" xp:key="summary"
+										style="white-space:nowrap;">
+										<xp:link escape="true" id="memberLink" target="_blank"
+											text="#{javascript:return colleague.getName();}"
+											styleClass="dataViewLink">
+											<xp:this.value><![CDATA[#{javascript:
+												try{
+													//var endpoint = BeanFactory.getSSOBean("connections");
+													
+													//var profileService = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);
+													var colleagueId = colleague.getUserid();
+													var profile = profileService.getProfile(colleagueId);
+													var profileUrl = profile.getProfileUrl().replace("/atom/profile.do", "/html/profileView.do");
+													
+													return profileUrl;
+												}catch(exception){
+													println("Colleague Profile error: " + exception);
+													return null;
+												}
+												}]]>
+											</xp:this.value>
+										</xp:link>
+										<xp:br />
+										<xp:text escape="true" id="jobLabel" value="Job Title: ">
+										</xp:text>						
+										<xp:text escape="true" id="jobValue" value="#{javascript:return colleague.getJobTitle();}">
+										</xp:text>
+									</xp:panel>
+									<xp:panel id="emailPanel" xp:key="extra0" style="width:45%;white-space:nowrap;">
+										<xp:link escape="true" id="link1" target="_blank"
+											text="#{javascript:return colleague.getEmail();}">
+											<xp:this.value><![CDATA[#{javascript:return "mailto:" + colleague.getEmail();}]]></xp:this.value>
+										</xp:link>
+									</xp:panel>
+								</xp:this.facets>
+							</xe:dataView>
+						</td>
+					</tr>
+				</table>
+			</xp:div>
+		</xp:panel>
+	</div>
+</xp:view>
+

@@ -1,0 +1,5 @@
+<theme extends="oneuiv3.0.2">
+	<resources>
+		<styleSheet href="/custom.css"></styleSheet>
+	</resources>
+</theme>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+	<div class="lotusWidget2">
+		<xp:link id="communityFilesLink" target="_blank"
+			title="Open Community Files page in new window">
+			<xp:this.value>
+				<![CDATA[#{javascript:
+					var endpoint = BeanFactory.getSSOBean("connections");
+					if(null == endpoint) {
+						endpoint = BeanFactory.createSSOBean("connections", getConnectionsURL());
+					}
+					var commSvc = new com.ibm.sbt.services.client.connections.communities.CommunityService(endpoint);
+					var commId = getCommunityId();
+					if("" != commId) {
+						var community = commSvc.getCommunity(commId);
+						var commFilesUrl = community.getCommunityUrl() + "#fullpageWidgetId=Files";
+						return commFilesUrl;
+					} 
+					return null;
+				}]]>
+			</xp:this.value>
+			<h2>Community Files</h2>
+		</xp:link>
+		
+<!--		<h2>-->	
+<!--			<xp:link id="addCommunityFile" text="+" styleClass="addLink">-->
+<!--				<xp:eventHandler event="onclick" submit="true" refreshMode="complete">-->
+<!--					<xp:this.action>-->
+<!--						<xp:executeScript>-->
+<!--							<xp:this.script><![CDATA[#{javascript:XSP.showDialog("uploadDialog");}]]></xp:this.script>-->
+<!--						</xp:executeScript>-->
+<!--					</xp:this.action>-->
+<!--				</xp:eventHandler>-->
+<!--			</xp:link>		-->
+<!--		</h2>-->
+		<xp:panel id="panel3">
+			<xp:div styleClass="lotusWidgetBody">			
+				<table cellpadding="0" cellspacing="0" style="width: 100%;">
+					<tr>
+						<td>
+							<xe:dataView id="commFilesDataView" var="file" rows="5"
+								columnTitles="true" styleClass="filesDataView">
+								<xe:this.extraColumns>
+									<xe:viewExtraColumn columnTitle="Filetype">
+									</xe:viewExtraColumn>
+									<xe:viewExtraColumn columnTitle="Size">
+									</xe:viewExtraColumn>
+								</xe:this.extraColumns>
+
+								<xe:this.summaryColumn>
+									<xe:viewSummaryColumn columnTitle="Filename">
+									</xe:viewSummaryColumn>
+								</xe:this.summaryColumn>
+								<xp:this.value>
+									<![CDATA[#{javascript:
+										try{
+											var url = getConnectionsURL();
+											var communityId = getCommunityId();
+											if("" == url || "" == communityId) {
+												return null;
+											}
+											
+											var endpoint = BeanFactory.getSSOBean("connections");
+											if(endpoint == null) {
+												endpoint = BeanFactory.createSSOBean("connections", url);
+											}
+											if(!endpoint.isAuthenticated()) {
+												endpoint.authenticate(true);
+											}
+											
+											var filesService = new com.ibm.sbt.services.client.connections.files.FileService(endpoint); 
+											var communityFiles = filesService.getCommunityFiles(communityId);
+											
+											//getCommunitySharedFiles has just been added to SBT api
+											//incorporate into this control when available on the server
+											//var sharedFiles = filesService.getCommunitySharedFiles(communityId);
+											//println("Shared Files: " + sharedFiles);
+											//communityFiles.addAll(sharedFiles);
+											return communityFiles;
+										}catch(exception){
+											println("Community Files value error: " + exception);
+											return null;
+										}}]]>
+								</xp:this.value>
+								<xp:this.facets>
+									<xp:panel xp:key="noRows" id="emptyCommFilesPanel">
+										<xp:div styleClass="lotusWidgetBody">
+											No Community files found
+										</xp:div>
+									</xp:panel>
+									<xp:panel id="summaryPanel" xp:key="summary"
+										style="white-space:nowrap;">
+										<xp:link escape="true" id="link7" target="_blank"
+											text="#{javascript:return file.getTitle();}" styleClass="dataViewLink">
+											<xp:this.value><![CDATA[#{javascript:return file.getContentUrl();}]]>
+											</xp:this.value>
+										</xp:link>
+									</xp:panel>
+									<xp:panel id="typePanel" xp:key="extra0" style="width: 20%;white-space:nowrap;">
+										<xp:text>
+											<xp:this.value><![CDATA[#{javascript:return file.getType();}]]></xp:this.value>
+										</xp:text>
+									</xp:panel>
+									<xp:panel id="sizePanel" xp:key="extra1"
+										style="width: 15%;white-space:nowrap;">
+										<xp:text>
+											<xp:this.value><![CDATA[#{javascript:
+												var size = file.getSize();
+												var kilobyte = 1024;
+												var megabyte = kilobyte *1024;
+												if(size < kilobyte) {
+													return (size + " B");
+												}else if(size < megabyte) {
+													return (Math.round(size/kilobyte) + " KB");
+												}else {
+													return (Math.round(size/megabyte) + " MB");
+												}}]]>
+											</xp:this.value>
+										</xp:text>
+									</xp:panel>
+									
+									<!--<xp:button value="Cancel" id="button13" styleClass="lotusFormButton">-->
+<!--										<xp:eventHandler event="onclick" submit="false">-->
+<!--											<xp:this.script><![CDATA[XSP.closeDialog('#{id:closeTicketDialog}')]]></xp:this.script>-->
+<!--										</xp:eventHandler>-->
+<!--									</xp:button>-->
+								</xp:this.facets>
+							</xe:dataView>
+							<xp:button id="uploadCommsLink" style="padding:1px:height:18px;font-size:10px;font-weight:bold;" value="Upload File">
+								<xp:eventHandler event="onclick" submit="false">
+									<xp:this.script><![CDATA[XSP.openDialog('#{id:uploadDialog1}')]]></xp:this.script>
+								</xp:eventHandler>
+							</xp:button>
+						</td>
+					</tr>
+				</table>
+			</xp:div>
+		</xp:panel>
+	</div>
+	<xe:dialog id="uploadDialog1" title="Upload File">
+		<xe:dialogContent id="pnl1" style="width:300px">
+			<xp:table>
+				<xp:tr>
+					<xp:td>
+						<xp:label value="Select File:" id="selectFileLabel" for="fileUpload1">
+						</xp:label>
+					</xp:td>
+					<xp:td>
+						<xp:fileUpload id="fileUpload1"></xp:fileUpload>
+					</xp:td>
+				</xp:tr>
+			</xp:table>
+		</xe:dialogContent>
+		<xe:dialogButtonBar id="buttons">
+			<xp:button value="Upload" id="button9" styleClass="lotusFormButton">
+				<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="commFilesDataView">
+					<xp:this.action>
+						<xp:executeScript>
+							<xp:this.script>
+								<![CDATA[#{javascript:
+									//upload file
+									var file = getComponent("fileUpload1").getValue();
+									var url = getConnectionsURL();
+									var communityId = getCommunityId();
+									
+									var endpoint = BeanFactory.getSSOBean("connections");
+									if(endpoint == null) {
+										endpoint = BeanFactory.createSSOBean("connections", url);
+									}
+									if(!endpoint.isAuthenticated()) {
+										endpoint.authenticate(true);
+									}
+											
+									if(file != null && null != communityId) {
+										var svc = new com.ibm.sbt.services.client.connections.communities.CommunityService(endpoint);
+										var is = new java.io.FileInputStream(file.getServerFile());
+										var fileId = svc.uploadFile(is,communityId,file.getClientFileName(),file.getServerFile().length());
+									}
+									context.redirectToPage("welcome.xsp");
+									}]]>
+							</xp:this.script>
+						</xp:executeScript>
+					</xp:this.action>
+				</xp:eventHandler>
+			</xp:button>
+			<xp:button value="Cancel" id="button10" styleClass="lotusFormButton">
+				<xp:eventHandler event="onclick" submit="false">
+					<xp:this.script><![CDATA[XSP.closeDialog('#{id:uploadDialog1}')]]></xp:this.script>
+				</xp:eventHandler>
+			</xp:button>
+		</xe:dialogButtonBar>
+	</xe:dialog>
+</xp:view>

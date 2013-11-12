@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex"
+	xmlns:xc="http://www.ibm.com/xsp/custom">
+	<xp:this.data>
+		<xp:dominoDocument var="document1" formName="announcement"></xp:dominoDocument>
+	</xp:this.data>
+	<xe:djxmHeading id="djxmHeading1" back="Cancel" moveTo="#{javascript:return sessionScope.from}" label="New Announcement">
+		<xp:this.facets>
+			<xp:panel xp:key="actionFacet">
+				<xe:toolBarButton id="save" rendered="#{javascript:document1.isEditable()}" label="Save">
+					<xp:eventHandler event="onClick" submit="true" refreshMode="complete">
+						<xe:this.action>
+							<xp:actionGroup>
+								<xe:moveTo saveDocument="true"
+									targetPage="mAllAnnouncements" transitionType="slide"
+									direction="Right to Left">
+								</xe:moveTo>
+							</xp:actionGroup>
+						</xe:this.action>
+					</xp:eventHandler>
+				</xe:toolBarButton>
+			</xp:panel>
+		</xp:this.facets>
+	</xe:djxmHeading>
+	<xp:panel id="announcementContent">
+		<xe:formTable id="announcementForm" disableRowError="false">
+			<xe:formRow label="Summary:" styleClass="formRow centeredRow">
+				<xp:inputText id="summary"	value="#{document1.Summary}" required="true" autocomplete="off">
+					<xp:this.validators>
+						<xp:validateRequired message="Summary is required">
+						</xp:validateRequired>
+					</xp:this.validators>
+				</xp:inputText>
+			</xe:formRow>
+			<xe:formRow label="Date:" styleClass="formRow centeredRow">
+				<xp:text id="date" value="#{document1.Date}">
+					<xp:this.converter>
+						<xp:convertDateTime type="both" dateStyle="short" timeStyle="short">
+						</xp:convertDateTime>
+					</xp:this.converter>
+				</xp:text>
+			</xe:formRow>
+			<xe:formRow label="Details:" styleClass="formRow detailsRow">
+				<xp:inputTextarea id="details" required="true" value="#{document1.Content}"
+					rows="8" htmlFilterIn="acf" htmlFilter="acf" styleClass="detailsTextarea">
+				</xp:inputTextarea>
+				<xp:br />
+			</xe:formRow>
+		</xe:formTable>
+	</xp:panel>
+</xp:view>

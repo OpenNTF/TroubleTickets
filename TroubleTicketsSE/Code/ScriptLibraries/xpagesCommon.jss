@@ -112,3 +112,7 @@ function setConfirmationMessage(message) {
 function setInformationMessage(message) {
 	sessionScope.infoMessage = message;
 }
+
+function isConnectionsEnabled() {
+	return (context.getProperty("xsp.sbt.connections.enabled") == "true");
+}

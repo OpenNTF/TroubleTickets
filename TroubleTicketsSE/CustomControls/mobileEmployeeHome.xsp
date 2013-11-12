@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex"
+	xmlns:xc="http://www.ibm.com/xsp/custom" dojoParseOnLoad="true"
+	dojoTheme="true">
+
+	<xp:this.data>
+		<xp:dominoView var="employeeMyClosedTickets"
+			viewName="xpagesTicketsByRequestorAndStatus"
+			categoryFilter="#{javascript:session.getEffectiveUserName() + '\\Closed'}">
+		</xp:dominoView>
+		<xp:dominoView var="employeeMyDraftTickets"
+			viewName="xpagesTicketsByRequestorAndStatus"
+			categoryFilter="#{javascript:session.getEffectiveUserName() + '\\Draft'}">
+		</xp:dominoView>
+	</xp:this.data>
+
+	<xe:djxmHeading id="djxmHeading1" back="Menu" moveTo="mMenu"
+		label="My Tickets">
+		<xp:this.rendered><![CDATA[#{javascript:
+			sessionScope.from = "mEmployeeHome";
+			return true;
+		}]]></xp:this.rendered>
+		<xp:this.facets>
+			<xp:panel xp:key="actionFacet">
+				<xc:mobileAddButton></xc:mobileAddButton>
+			</xp:panel>
+		</xp:this.facets>
+	</xe:djxmHeading>	
+	<xc:mobileMyTickets></xc:mobileMyTickets>
+<!--	<xp:br></xp:br>-->
+<!--	<xe:dataView id="ticketsDataView" collapsibleCategory="false" collapsibleDetail="true" -->
+<!--		var="viewEntry" rows="10" pageName="mViewTicket" openDocAsReadonly="true">-->
+<!--		<xe:this.data>-->
+<!--			<xp:dominoView var="employeeMyTickets" expandLevel="0"-->
+<!--				viewName="xpagesTicketsByRequestorAndStatus"-->
+<!--				categoryFilter="#{javascript:session.getEffectiveUserName()}"-->
+<!--				sortOrder="descending" sortColumn="Open">-->
+<!--			</xp:dominoView>-->
+<!--		</xe:this.data>-->
+<!---->
+<!--		<xe:this.summaryColumn>-->
+<!--			<xe:viewSummaryColumn columnName="Summary" columnTitle="TicketSummary">-->
+<!--			</xe:viewSummaryColumn>-->
+<!--		</xe:this.summaryColumn>-->
+<!--		<xe:this.categoryColumn>-->
+<!--			<xe:viewCategoryColumn columnName="Open" columnTitle="TicketStatus">-->
+<!--			</xe:viewCategoryColumn>-->
+<!--		</xe:this.categoryColumn>-->
+<!--		<xp:this.facets>-->
+<!--			<xp:panel xp:key="noRows">-->
+<!--				<xp:br />-->
+<!--				<xp:div styleClass="xlEmptyFacet">-->
+<!--					<xp:label value="No tickets"></xp:label>-->
+<!--				</xp:div>-->
+<!--			</xp:panel>-->
+<!---->
+<!--			<xp:panel id="panel2" xp:key="detail">-->
+<!--				<xp:text escape="true"-->
+<!--					style="font-size:12px; font-weight:normal;">-->
+<!--					<xp:this.value><![CDATA[#{javascript: -->
+<!--							var status=viewEntry.getColumnValue('Status');-->
+<!--							var id=viewEntry.getColumnValue('ID');-->
+<!--							var str = "ID: " + id + " | Status: " + status;-->
+<!--							return str;-->
+<!--						}]]></xp:this.value>-->
+<!--				</xp:text>-->
+<!--				<xp:br />-->
+<!--				<xp:text escape="true"-->
+<!--					style="font-size:12px; font-weight:normal;">-->
+<!--					<xp:this.value><![CDATA[#{javascript: -->
+<!--							//var requestor=viewEntry.getColumnValue('Requestor');-->
+<!--							//var creationDate=viewEntry.getColumnValue('Created');-->
+<!--							var category=viewEntry.getColumnValue('Category');-->
+<!--							var priority=viewEntry.getColumnValue('Priority');-->
+<!--							var str = "Category: " + category + " | Priority: " + priority;-->
+<!--							return str;-->
+<!--						}]]></xp:this.value>-->
+<!--				</xp:text>-->
+<!--			</xp:panel>-->
+<!--		</xp:this.facets>-->
+<!--	</xe:dataView>-->
+</xp:view>

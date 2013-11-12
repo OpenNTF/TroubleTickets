@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="1.0" replicaid="85257AEF001FEE0D" version="9.0" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="2a6" sequence="210" unid="69ECB0D747B746C285257AEF001FEF39">
-<created><datetime>20130110T004848,57-05</datetime></created>
-<modified><datetime dst="true">20131018T031347,88+01</datetime></modified>
-<revised><datetime dst="true">20131018T031347,87+01</datetime></revised>
-<lastaccessed><datetime dst="true">20131018T031347,88+01</datetime></lastaccessed>
-<addedtofile><datetime>20130110T004851,47-05</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=admin/O=social</name><name>CN=notes/O=renovations</name></updatedby>
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="1.0" replicaid="85257C2000385D78" version="9.0" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="31e" sequence="6" unid="C0B7DCEDBDC104D185257C20003865C5">
+<created><datetime>20131111T051600,69-05</datetime></created>
+<modified><datetime>20131112T103032,39-05</datetime></modified>
+<revised><datetime>20131112T103032,38-05</datetime></revised>
+<lastaccessed><datetime>20131112T103032,39-05</datetime></lastaccessed>
+<addedtofile><datetime>20131111T051600,71-05</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Frank Adams/O=renovations</name></updatedby>
+<wassignedby><name>CN=Frank Adams/O=renovations</name></wassignedby>
 <item name="$Flags"><text>34567Cg~[</text></item>
 <item name="$TITLE"><text>nsf/XPagesTickets.java</text></item>
 
