@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE form SYSTEM 'xmlschemas/domino_9_0_1.dtd'>
+<form name='idStore' alias='ids' xmlns='http://www.lotus.com/dxl' version='9.0'
+ maintenanceversion='1.0' replicaid='80257C0D003C8F64' nocompose='true' publicaccess='false'
+ designerversion='8.5.3'>
+<noteinfo noteid='33a' unid='BC29D14B13E0D3E880257C0C003EBB21' sequence='13'>
+<created><datetime dst='true'>20131022T122511,37+01</datetime></created>
+<modified><datetime>20131104T120436,24-05</datetime></modified>
+<revised><datetime>20131104T120436,23-05</datetime></revised>
+<lastaccessed><datetime>20131104T120436,24-05</datetime></lastaccessed>
+<addedtofile><datetime dst='true'>20131023T120131,26+01</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Frank Adams/O=renovations</name></updatedby>
+<wassignedby><name>CN=Frank Adams/O=renovations</name></wassignedby>
+<body><richtext>
+<pardef id='1'/>
+<par def='1'><field type='text' kind='editable' name='URL'/><compositedata
+ type='98' prevtype='65418' nexttype='222' afterparcount='7' containertype='65418'
+ aftercontainercount='1' afterbegincount='3'>
+Yg4BAIQAAAAAAAAAAAA=
+</compositedata><field type='text'
+ kind='editable' name='communityId'/><compositedata type='98' prevtype='65418'
+ nexttype='222' afterparcount='13' containertype='65418' aftercontainercount='1'
+ afterbegincount='3'>
+Yg4BAIQAAAAAAAAAAAA=
+</compositedata><field type='text' kind='editable' name='forumId'/><compositedata
+ type='98' prevtype='65418' nexttype='222' afterparcount='19' containertype='65418'
+ aftercontainercount='1' afterbegincount='3'>
+Yg4BAIQAAAAAAAAAAAA=
+</compositedata></par></richtext></body>
+<item name='$$ScriptName' summary='false' sign='true'><text>ids</text></item></form>
+

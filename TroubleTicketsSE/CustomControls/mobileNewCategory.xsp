@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex"
+	xmlns:xc="http://www.ibm.com/xsp/custom">
+	<xp:this.data>
+		<xp:dominoDocument var="document1" formName="category"></xp:dominoDocument>
+	</xp:this.data>
+	<xe:djxmHeading id="djxmHeading1" back="Cancel" moveTo="#{javascript:return sessionScope.from}" label="New Category">
+		<xp:this.facets>
+			<xp:panel xp:key="actionFacet">
+				<xe:toolBarButton id="save" rendered="#{javascript:document1.isEditable()}" label="Save">
+					<xp:eventHandler event="onClick" submit="true" refreshMode="complete">
+						<xe:this.action>
+							<xp:actionGroup>
+								<xe:moveTo saveDocument="true"
+									targetPage="mAllCategories" transitionType="slide"
+									direction="Right to Left">
+								</xe:moveTo>
+							</xp:actionGroup>
+						</xe:this.action>
+					</xp:eventHandler>
+				</xe:toolBarButton>
+			</xp:panel>
+		</xp:this.facets>
+	</xe:djxmHeading>
+	<xp:panel id="categoryContent">
+		<xe:formTable id="categoryForm" disableRowError="false">
+			<xe:formRow label="Name:" styleClass="formRow centeredRow">
+				<xp:inputText id="name"	value="#{document1.Name}" required="true" autocomplete="off">
+					<xp:this.validators>
+						<xp:validateRequired message="Name is required">
+						</xp:validateRequired>
+					</xp:this.validators>
+				</xp:inputText>
+			</xe:formRow>
+			<xe:formRow label="Resources:" styleClass="formRow detailsRow">
+				<xp:inputTextarea id="resources" required="true" value="#{document1.Resources}"
+					rows="3" styleClass="detailsTextarea">
+				</xp:inputTextarea>
+				<xp:br />
+			</xe:formRow>
+		</xe:formTable>
+	</xp:panel>
+</xp:view>

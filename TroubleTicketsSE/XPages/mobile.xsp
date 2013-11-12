@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex"
+	xmlns:xc="http://www.ibm.com/xsp/custom">
+	<xp:this.resources>
+		<xp:script src="/xpagesTickets.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
+	<xp:this.resources>
+		<xp:script src="/xpagesCommon.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
+	
+	<xp:this.beforePageLoad><![CDATA[#{javascript:sessionScope.connectionsEnabled = isConnectionsEnabled();}]]></xp:this.beforePageLoad>
+	<xe:singlePageApp id="mobileApp1" selectedPageName="mMenu">
+		<xe:appPage resetContent="false" id="mMenu" pageName="mMenu">
+			<xe:djxmHeading id="djxmHeading1" label="Trouble Tickets">
+				<xp:this.facets>
+					<xp:panel xp:key="actionFacet">
+						<xe:toolBarButton id="loginButton"
+							label="Login">
+							<xe:this.href>
+								<![CDATA[#{javascript:
+									if(userBean.canonicalName === 'Anonymous'){
+										return facesContext.getExternalContext().getRequestContextPath() + "?opendatabase&login";
+									}}]]></xe:this.href>
+							<xp:this.rendered><![CDATA[#{javascript: 
+								return ('' != userBean && '' != userBean.getDisplayName() && userBean.getDisplayName() == 'Anonymous');}]]>
+							</xp:this.rendered>
+						</xe:toolBarButton>
+						<xc:mobileAddButton></xc:mobileAddButton>
+					</xp:panel>
+				</xp:this.facets>
+			</xe:djxmHeading>
+			<xe:outline>
+				<xe:this.treeNodes>
+					<xe:basicLeafNode href="#mWelcome"
+						label="Welcome">
+					</xe:basicLeafNode>
+					<xe:basicLeafNode href="#mEmployeeHome"
+						label="My Tickets">
+					</xe:basicLeafNode>
+					<xe:basicLeafNode href="#mStaff" label="Staff"
+						rendered="#{javascript:roles.isStaff()}">
+					</xe:basicLeafNode>
+					<xe:basicLeafNode href="#mManager" label="Manager"
+						rendered="#{javascript:roles.isManager()}">
+					</xe:basicLeafNode>
+				</xe:this.treeNodes>
+			</xe:outline>
+		</xe:appPage>
+
+		<xe:appPage resetContent="true" id="mWelcome"
+			pageName="mWelcome">
+			<xc:mobileWelcome></xc:mobileWelcome>
+		</xe:appPage>
+		<xe:appPage resetContent="true" id="mEmployeeHome"
+			pageName="mEmployeeHome">
+			<xc:mobileEmployeeHome></xc:mobileEmployeeHome>
+		</xe:appPage>
+		<xe:appPage resetContent="true" id="mNewTicket"
+			pageName="mNewTicket">
+			<xc:mobileNewTicket></xc:mobileNewTicket>
+		</xe:appPage>
+		<xe:appPage resetContent="true" id="mViewTicket"
+			pageName="mViewTicket">
+			<xc:mobileViewTicket></xc:mobileViewTicket>
+		</xe:appPage>
+		<xe:appPage resetContent="true" id="mCloseTicket"
+			pageName="mCloseTicket">
+			<xc:mobileCloseTicket></xc:mobileCloseTicket>
+		</xe:appPage>
+		<xe:appPage resetContent="true" id="mAllAnnouncements"
+			pageName="mAllAnnouncements">
+			<xc:mobileAllAnnouncements></xc:mobileAllAnnouncements>
+		</xe:appPage>
+		<xe:appPage resetContent="true" id="mAnnouncement"
+			pageName="mAnnouncement">
+			<xc:mobileAnnouncement></xc:mobileAnnouncement>
+		</xe:appPage>
+		<xe:appPage rendered="#{javascript:roles.isManager();}"
+			resetContent="true" id="mNewAnnouncement"
+			pageName="mNewAnnouncement">
+			<xc:mobileNewAnnouncement></xc:mobileNewAnnouncement>
+		</xe:appPage>
+		<xe:appPage rendered="#{javascript:roles.isManager();}"
+			resetContent="true" id="mNewCategory" pageName="mNewCategory">
+			<xc:mobileNewCategory></xc:mobileNewCategory>
+		</xe:appPage>
+		<xe:appPage rendered="#{javascript:roles.isManager();}"
+			resetContent="true" id="mViewCategory" pageName="mViewCategory">
+			<xc:mobileViewCategory></xc:mobileViewCategory>
+		</xe:appPage>
+		<xe:appPage rendered="#{javascript:roles.isManager();}"
+			resetContent="true" id="mAllCategories" pageName="mAllCategories">
+			<xc:mobileAllCategories></xc:mobileAllCategories>
+		</xe:appPage>
+		<xe:appPage rendered="#{javascript:roles.isStaff();}"
+			resetContent="true" id="mStaff" pageName="mStaff">
+			<xc:mobileStaff></xc:mobileStaff>
+		</xe:appPage>
+		<xe:appPage rendered="#{javascript:roles.isManager();}"
+			resetContent="true" id="mManager" pageName="mManager">
+			<xc:mobileManager></xc:mobileManager>
+		</xe:appPage>
+
+	</xe:singlePageApp>
+</xp:view>

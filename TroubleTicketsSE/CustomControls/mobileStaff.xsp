@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex"
+	xmlns:xc="http://www.ibm.com/xsp/custom">
+	<xe:djxmHeading id="djxmHeading1" back="Menu" moveTo="mMenu" label="Staff">
+		<xp:this.rendered><![CDATA[#{javascript:
+			sessionScope.from = "mStaff";
+			return true;
+		}]]></xp:this.rendered>
+		<xp:this.facets>
+			<xp:panel xp:key="actionFacet">
+				<xc:mobileAddButton></xc:mobileAddButton>
+			</xp:panel>
+		</xp:this.facets>
+	</xe:djxmHeading>
+	<xe:tabBar id="tabBar1" barType="segmentedControl">
+		<xe:tabBarButton id="tabBarButton1" label="All Tickets"
+			styleClass="staffBtn1" selected="true">
+			<xp:eventHandler event="onClick" submit="true"
+				refreshMode="complete">
+				<xp:this.action>
+					<xp:actionGroup>
+						<xe:changeDynamicContentAction facetName="allTickets" for="dynamicContent1">
+						</xe:changeDynamicContentAction>
+						<xp:executeScript>
+							<xp:this.script>
+								<![CDATA[#{javascript:
+									getComponent("tabBarButton1").setSelected(true);	
+									getComponent("tabBarButton2").setSelected(false);	
+									getComponent("tabBarButton3").setSelected(false);
+								}]]>
+							</xp:this.script>
+						</xp:executeScript>
+					</xp:actionGroup>
+				</xp:this.action>
+			</xp:eventHandler>
+		</xe:tabBarButton>
+		<xe:tabBarButton id="tabBarButton2" label="Assigned To Me" styleClass="staffBtn2">
+			<xp:eventHandler event="onClick" submit="true" refreshMode="complete">
+				<xe:this.action>
+					<xp:actionGroup>
+						<xe:changeDynamicContentAction
+							facetName="assignedMe" for="dynamicContent1">
+						</xe:changeDynamicContentAction>
+						<xp:executeScript>
+							<xp:this.script>
+								<![CDATA[#{javascript:
+									getComponent("tabBarButton1").setSelected(false);	
+									getComponent("tabBarButton2").setSelected(true);	
+									getComponent("tabBarButton3").setSelected(false);
+								}]]>
+							</xp:this.script>
+						</xp:executeScript>
+					</xp:actionGroup>
+				</xe:this.action>
+			</xp:eventHandler>
+		</xe:tabBarButton>
+		<xe:tabBarButton id="tabBarButton3" label="Unassigned" styleClass="staffBtn3">
+			<xp:eventHandler event="onClick" submit="true" refreshMode="complete">
+				<xe:this.action>
+					<xp:actionGroup>
+						<xe:changeDynamicContentAction facetName="unassigned" for="dynamicContent1">
+						</xe:changeDynamicContentAction>
+						<xp:executeScript>
+							<xp:this.script>
+								<![CDATA[#{javascript:
+									getComponent("tabBarButton1").setSelected(false);	
+									getComponent("tabBarButton2").setSelected(false);	
+									getComponent("tabBarButton3").setSelected(true);
+								}]]>
+							</xp:this.script>
+						</xp:executeScript>
+					</xp:actionGroup>
+				</xe:this.action>
+			</xp:eventHandler>
+		</xe:tabBarButton>
+	</xe:tabBar>
+	<xe:dynamicContent id="dynamicContent1" defaultFacet="allTickets">
+		<xp:this.facets>
+			<xp:panel xp:key="allTickets">
+				<xe:dataView id="allTicketsDataView"
+					var="allTicketsDataView" openDocAsReadonly="true" rows="10"
+					pageName="#mViewTicket">
+					<xp:this.data>
+						<xp:dominoView var="view1" viewName="staffAllTickets" expandLevel="0">
+						</xp:dominoView>
+					</xp:this.data>
+					<xe:this.summaryColumn>
+						<xe:viewSummaryColumn columnName="Summary" columnTitle="Summary">
+						</xe:viewSummaryColumn>
+					</xe:this.summaryColumn>
+					<xp:this.facets>
+						<xp:panel xp:key="noRows">
+							<xp:div styleClass="xlEmptyFacet">
+								<xp:label value="No tickets"></xp:label>
+							</xp:div>
+						</xp:panel>
+
+						<xp:panel id="panel2" xp:key="detail">
+							<xp:text escape="true" style="font-size:12px; font-weight:normal;">
+								<xp:this.value><![CDATA[#{javascript: 
+										var status=allTicketsDataView.getColumnValue('Status');
+										var requestor=allTicketsDataView.getColumnValue('Requestor');
+										var lastUpdated=allTicketsDataView.getColumnValue('Last Updated');
+										var lastActivity=allTicketsDataView.getColumnValue('Last Activity');
+										var id=allTicketsDataView.getColumnValue('ID');
+										//var category=allTicketsDataView.getColumnValue('Category');
+										//var priority=allTicketsDataView.getColumnValue('Priority');
+										var str = "ID: " + id + " | Status: " + status + " | Requestor: " + requestor;
+												//+ "\n\rLast Updated: " + lastUpdated + "\n\rLast Activity: " + lastActivity;
+										return str;}]]>
+								</xp:this.value>
+							</xp:text>
+							<xp:br />
+							<xp:text escape="true" style="font-size:12px; font-weight:normal;">
+								<xp:this.value><![CDATA[#{javascript: 
+										var lastUpdated=allTicketsDataView.getColumnValue('Last Updated');
+										var lastActivity=allTicketsDataView.getColumnValue('Last Activity');
+										var str = "Last Updated: " + lastUpdated ;//+ "\n\rLast Activity: " + lastActivity;
+										return str;}]]>
+								</xp:this.value>
+							</xp:text>
+						</xp:panel>
+						<xp:panel id="panel1" xp:key="detail2">
+							
+						</xp:panel>
+						<xp:link escape="true" text="More..." id="moreTickets" xp:key="pagerBottom">
+							<xp:this.rendered>
+								<![CDATA[#{javascript:
+									var size = getComponent("allTicketsDataView").getRowCount();
+									return size > 10;
+								}]]>
+							</xp:this.rendered>
+							
+							<xp:eventHandler event="onclick" submit="false">
+								<xp:this.script>
+									<xe:addRows for="allTicketsDataView"
+										rowCount="10" disableId="moreTickets" disabledFormat="hide">
+									</xe:addRows>
+								</xp:this.script>
+							</xp:eventHandler>
+						</xp:link>
+					</xp:this.facets>
+				</xe:dataView>
+			</xp:panel>
+			<xp:panel xp:key="assignedMe">
+				<xe:dataView id="assignedMeDataView"
+					var="assignedMeDataView" openDocAsReadonly="true" rows="10"
+					pageName="#mViewTicket">
+					<xp:this.data>
+						<xp:dominoView var="view2" viewName="staffMyAssigned" expandLevel="0" categoryFilter="#{javascript:session.getEffectiveUserName()}">
+						</xp:dominoView>
+					</xp:this.data>
+					<xe:this.summaryColumn>
+						<xe:viewSummaryColumn columnName="Summary" columnTitle="Summary">
+						</xe:viewSummaryColumn>
+					</xe:this.summaryColumn>
+					<xp:this.facets>
+						<xp:panel xp:key="noRows">
+							<xp:div styleClass="xlEmptyFacet">
+								<xp:label value="No assigned tickets"></xp:label>
+							</xp:div>
+						</xp:panel>
+
+						<xp:panel id="panel3" xp:key="detail">
+							<xp:text escape="true" style="font-size:12px; font-weight:normal;">
+								<xp:this.value><![CDATA[#{javascript: 
+										var status=assignedMeDataView.getColumnValue('Status');
+										var requestor=assignedMeDataView.getColumnValue('Requestor');
+										var id=assignedMeDataView.getColumnValue('ID');
+										//var category=assignedMeDataView.getColumnValue('Category');
+										//var priority=assignedMeDataView.getColumnValue('Priority');
+										var str = "ID: " + id + " | Status: " + status + " | Requestor: " + requestor;
+										return str;}]]>
+								</xp:this.value>
+							</xp:text>
+							<xp:br />
+							<xp:text escape="true" style="font-size:12px; font-weight:normal;">
+								<xp:this.value><![CDATA[#{javascript: 
+										var lastUpdated=assignedMeDataView.getColumnValue('Updated');
+										var lastActivity=assignedMeDataView.getColumnValue('Last Activity');
+										var str = "Last Updated: " + lastUpdated ;//+ "\n\rLast Activity: " + lastActivity;
+										return str;}]]>
+								</xp:this.value>
+							</xp:text>
+						</xp:panel>
+						<xp:link escape="true" text="More..." id="moreAssigned" xp:key="pagerBottom">
+							<xp:this.rendered>
+								<![CDATA[#{javascript:
+									var size = getComponent("assignedMeDataView").getRowCount();
+									return size > 10;
+								}]]>
+							</xp:this.rendered>
+							<xp:eventHandler event="onclick" submit="false" refreshMode="none">
+								<xp:this.script>
+									<xe:addRows for="assignedMeDataView" rowCount="10" disableId="moreTickets" disabledFormat="hide">
+									</xe:addRows>
+								</xp:this.script>
+							</xp:eventHandler>
+						</xp:link>
+					</xp:this.facets>
+				</xe:dataView>
+			</xp:panel>
+			<xp:panel xp:key="unassigned">
+				<xe:dataView id="unassignedDataView"
+					var="unassignedDataView" openDocAsReadonly="true" rows="10"
+					pageName="#mViewTicket">
+					<xp:this.data>
+						<xp:dominoView var="view2" viewName="staffUnassigned" expandLevel="0" categoryFilter="#{javascript:session.getEffectiveUserName()}">
+						</xp:dominoView>
+					</xp:this.data>
+					<xe:this.summaryColumn>
+						<xe:viewSummaryColumn columnName="Summary" columnTitle="Summary">
+						</xe:viewSummaryColumn>
+					</xe:this.summaryColumn>
+					<xp:this.facets>
+						<xp:panel xp:key="noRows">
+							<xp:div styleClass="xlEmptyFacet">
+								<xp:label value="No assigned tickets"></xp:label>
+							</xp:div>
+						</xp:panel>
+
+						<xp:panel id="panel5" xp:key="detail">
+							<xp:text escape="true" style="font-size:12px; font-weight:normal;">
+								<xp:this.value><![CDATA[#{javascript: 
+										var requestor=unassignedDataView.getColumnValue('Requestor');
+										var id=unassignedDataView.getColumnValue('ID');
+										//var category=unassignedDataView.getColumnValue('Category');
+										//var priority=unassignedDataView.getColumnValue('Priority');
+										var str = "ID: " + id + " | Requestor: " + requestor;
+										return str;}]]>
+								</xp:this.value>
+							</xp:text>
+						</xp:panel>
+						<xp:link escape="true" text="More..." id="link2" xp:key="pagerBottom">
+							<xp:this.rendered>
+								<![CDATA[#{javascript:
+									var size = getComponent("unassignedDataView").getRowCount();
+									return size > 10;
+								}]]>
+							</xp:this.rendered>
+							<xp:eventHandler event="onclick" submit="false" refreshMode="none">
+								<xp:this.script>
+									<xe:addRows for="unassignedDataView" rowCount="10" disableId="moreTickets" disabledFormat="hide">
+									</xe:addRows>
+								</xp:this.script>
+							</xp:eventHandler>
+						</xp:link>
+					</xp:this.facets>
+				</xe:dataView>
+			</xp:panel>
+		</xp:this.facets>
+	</xe:dynamicContent>
+</xp:view>

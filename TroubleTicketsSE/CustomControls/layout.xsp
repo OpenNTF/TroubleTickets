@@ -35,6 +35,13 @@ return message;}]]></xp:this.value>
 				</xe:this.titleBarTabs>
 				<xe:this.bannerUtilityLinks>
 					<xe:pageTreeNode label="New Ticket" page="/editTicket.xsp"></xe:pageTreeNode>
+					<xe:pageTreeNode label="Setup" page="/managerSetup.xsp">
+						<xp:this.rendered>
+							<![CDATA[#{javascript:
+								return isConnectionsEnabled() && roles.isManager();
+							}]]>
+						</xp:this.rendered>
+					</xe:pageTreeNode>
 					<xe:userTreeNode>
 						<xe:this.label><![CDATA[#{javascript:var userRoles = roles.getRoles(); 
 userRoles = @ReplaceSubstring(userRoles, ["[", "]"], ["", ""]);

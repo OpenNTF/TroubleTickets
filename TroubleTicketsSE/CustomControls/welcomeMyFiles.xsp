@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+	<div class="lotusWidget2">
+		<xp:link id="myFilesLink" target="_blank"
+			title="Open My Files in new window">
+			<xp:this.value>
+				<![CDATA[#{javascript:
+					var url = getConnectionsURL();
+					if("" != url) {
+						var fullUrl = url + "/files/app";
+						return fullUrl;
+					}else{
+						return null;
+					}
+				}]]>
+			</xp:this.value>
+			<h2>My Files</h2>
+		</xp:link>
+		<xp:panel xp:key="myFilesPanel" id="myFilesPanel">
+			<xp:div styleClass="lotusWidgetBody">			
+				<table cellpadding="0" cellspacing="0" style="width: 100%;">
+					<tr>
+						<td>
+							<xe:dataView id="dataView1" var="file" rows="5"
+								columnTitles="true" styleClass="filesDataView">
+								<xe:this.extraColumns>
+									<xe:viewExtraColumn columnTitle="Filetype">
+									</xe:viewExtraColumn>
+									<xe:viewExtraColumn columnTitle="Size">
+									</xe:viewExtraColumn>
+								</xe:this.extraColumns>
+
+								<xe:this.summaryColumn>
+									<xe:viewSummaryColumn columnTitle="Filename">
+									</xe:viewSummaryColumn>
+								</xe:this.summaryColumn>
+								<xp:this.value>
+									<![CDATA[#{javascript:
+										try{
+											var url = "";
+											var idStoreView:NotesView = database.getView("idStoreLookup");
+						                	if(null != idStoreView){
+						                    	var idStoreDoc = idStoreView.getFirstDocument();
+						                        if(null != idStoreDoc){
+						                      		url = idStoreDoc.getItemValueString("URL");
+												}
+												if("" == url) {
+													return null;
+												}
+											}else{
+												return null;
+											}
+											
+											var endpoint = BeanFactory.getSSOBean("connections");
+											if(endpoint == null || url != endpoint.getUrl()) {
+												endpoint = BeanFactory.createSSOBean("connections", url);
+											}
+											
+											var filesService = new com.ibm.sbt.services.client.connections.files.FileService(endpoint); 
+											var myFiles = filesService.getMyFiles();
+											return myFiles;
+										}catch(exception){
+											println("My Files value error: " + exception);
+											return null;
+										}}]]>
+								</xp:this.value>
+								<xp:this.facets>
+									<xp:panel xp:key="noRows" id="topicsPanel2">
+										<xp:div styleClass="lotusWidgetBody">
+											No files found.
+										</xp:div>
+									</xp:panel>
+									<xp:panel id="summaryPanel" xp:key="summary"
+										style="width:50%;white-space:nowrap;">
+										<xp:link styleClass="dataViewLink"
+											escape="true" id="link7" target="_blank"
+											text="#{javascript:return file.getTitle();}">
+											<xp:this.value><![CDATA[#{javascript:return file.getContentUrl();}]]>
+											</xp:this.value>
+										</xp:link>
+									</xp:panel>
+									<xp:panel id="typePanel" xp:key="extra0" style="width: 20%;white-space:nowrap;">
+										<xp:text>
+											<xp:this.value><![CDATA[#{javascript:return file.getType();}]]></xp:this.value>
+										</xp:text>
+									</xp:panel>
+									<xp:panel id="sizePanel" xp:key="extra1"
+										style="width: 15%;white-space:nowrap;">
+										<xp:text>
+											<xp:this.value><![CDATA[#{javascript:
+												var size = file.getSize();
+												var kilobyte = 1024;
+												var megabyte = kilobyte *1024;
+												if(size < kilobyte) {
+													return (size + " B");
+												}else if(size < megabyte) {
+													return (Math.round(size/kilobyte) + " KB");
+												}else {
+													return (Math.round(size/megabyte) + " MB");
+												}}]]>
+											</xp:this.value>
+										</xp:text>
+									</xp:panel>
+								</xp:this.facets>
+							</xe:dataView>
+							<xp:button id="uploadMyFilesLink" style="padding:1px:height:18px;font-size:10px;font-weight:bold;" value="Upload File">
+								<xp:eventHandler event="onclick" submit="false">
+									<xp:this.script><![CDATA[XSP.openDialog('#{id:uploadDialog2}')]]></xp:this.script>
+								</xp:eventHandler>
+							</xp:button>
+						</td>
+					</tr>
+				</table>
+			</xp:div>
+		</xp:panel>
+	</div>
+	<xe:dialog id="uploadDialog2" title="Upload File">
+		<xe:dialogContent id="pnl1" style="width:300px">
+			<xp:table>
+				<xp:tr>
+					<xp:td>
+						<xp:label value="Select File:" id="selectFileLabel" for="fileUpload2">
+						</xp:label>
+					</xp:td>
+					<xp:td>
+						<xp:fileUpload id="fileUpload2"></xp:fileUpload>
+					</xp:td>
+				</xp:tr>
+			</xp:table>
+		</xe:dialogContent>
+		<xe:dialogButtonBar id="buttonsBar">
+			<xp:button value="Upload" id="button11" styleClass="lotusFormButton">
+				<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="dataView1">
+					<xp:this.action>
+						<xp:executeScript>
+							<xp:this.script>
+								<![CDATA[#{javascript:
+									//upload file
+									var file = getComponent("fileUpload2").getValue();
+									var url = getConnectionsURL();
+									var communityId = getCommunityId();
+									
+									var endpoint = BeanFactory.getSSOBean("connections");
+									if(endpoint == null) {
+										endpoint = BeanFactory.createSSOBean("connections", url);
+									}
+									if(!endpoint.isAuthenticated()) {
+										endpoint.authenticate(true);
+									}
+											
+									if(file != null && null != communityId) {
+										var svc = new com.ibm.sbt.services.client.connections.files.FileService(endpoint);
+										var is = new java.io.FileInputStream(file.getServerFile());
+										var fileId = svc.uploadFile(is,file.getClientFileName(),file.getServerFile().length());
+									}
+									context.redirectToPage("welcome.xsp");
+									}]]>
+							</xp:this.script>
+						</xp:executeScript>
+					</xp:this.action>
+				</xp:eventHandler>
+			</xp:button>
+			<xp:button value="Cancel" id="button12" styleClass="lotusFormButton">
+				<xp:eventHandler event="onclick" submit="false">
+					<xp:this.script><![CDATA[XSP.closeDialog('#{id:uploadDialog2}')]]></xp:this.script>
+				</xp:eventHandler>
+			</xp:button>
+		</xe:dialogButtonBar>
+	</xe:dialog>
+</xp:view>

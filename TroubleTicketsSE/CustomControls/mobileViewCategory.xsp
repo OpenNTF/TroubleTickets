@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex"
+	xmlns:xc="http://www.ibm.com/xsp/custom">
+	<xp:this.data>
+		<xp:dominoDocument var="document1" formName="category"></xp:dominoDocument>
+	</xp:this.data>
+	<xe:djxmHeading id="djxmHeading1" back="Cancel" moveTo="#{javascript:return sessionScope.from}" label="Category">
+		<xp:this.facets>
+			<xp:panel xp:key="actionFacet">
+				<xe:toolBarButton id="editButton" label="Edit">
+					<xp:this.rendered><![CDATA[#{javascript:return !document1.isEditable();}]]>
+						</xp:this.rendered>
+					<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+						<xe:this.action>
+							<xp:actionGroup>
+								<xp:changeDocumentMode mode="edit" var="document1">
+								</xp:changeDocumentMode>
+							</xp:actionGroup>
+						</xe:this.action>
+					</xp:eventHandler>
+				</xe:toolBarButton>
+				<xe:toolBarButton id="saveButton" rendered="#{javascript:document1.isEditable()}" label="Save">
+					<xp:eventHandler event="onClick" submit="true" refreshMode="complete">
+						<xe:this.action>
+							<xp:actionGroup>
+								<xe:moveTo saveDocument="true"
+									targetPage="mAllCategories" transitionType="slide"
+									direction="Right to Left">
+								</xe:moveTo>
+							</xp:actionGroup>
+						</xe:this.action>
+					</xp:eventHandler>
+				</xe:toolBarButton>
+			</xp:panel>
+		</xp:this.facets>
+	</xe:djxmHeading>
+	<xp:panel id="categoryContent">
+		<xe:formTable id="categoryForm" disableRowError="false">
+			<xe:formRow label="Summary:" styleClass="formRow centeredRow">
+				<xp:inputText id="summary"	value="#{document1.Name}" required="true" autocomplete="off"
+					style="#{javascript:return (document1.isEditable() ? 'border-bottom-width:1px;border-bottom-color:#000000;border-bottom-style:dashed;' : 'border-width:0px;')}">
+					<xp:this.validators>
+						<xp:validateRequired message="Name is required">
+						</xp:validateRequired>
+					</xp:this.validators>
+				</xp:inputText>
+			</xe:formRow>
+			<xe:formRow label="Resources:" styleClass="formRow centeredRow detailsRow" labelPosition="none">
+				<xp:label styleClass="labelCell" value="Resources:" id="resourcesLabel"></xp:label>
+				<xp:inputRichText rendered="#{javascript:!document1.isEditable();}" styleClass="detailsTextarea" id="resourcesRead" 
+					value="#{document1.Resources}" readonly="true"></xp:inputRichText>
+				<xp:inputTextarea rendered="#{javascript:document1.isEditable();}" id="resourcesEdit" required="true" value="#{document1.Resources}"
+					rows="3" styleClass="detailsTextarea">
+				</xp:inputTextarea>
+			</xe:formRow>
+		</xe:formTable>
+	</xp:panel>
+</xp:view>

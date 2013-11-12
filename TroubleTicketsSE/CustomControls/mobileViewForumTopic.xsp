@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex"
+	xmlns:xc="http://www.ibm.com/xsp/custom"
+	dojoParseOnLoad="true" dojoTheme="true">
+	<xp:this.resources>
+		<xp:script src="/xpagesTickets.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
+	<xp:this.beforePageLoad><![CDATA[#{javascript:
+		var forumTopicId = context.getUrlParameter("topicId")
+		if(null != forumTopicId && "" != forumTopicId) {
+			viewScope.readMode = true;
+			viewScope.id = forumTopicId;
+		}}]]>
+	</xp:this.beforePageLoad>
+	<xe:djxmHeading id="djxmHeading1" back="#{javascript:return 'Back';}" moveTo="mWelcome" label="Trouble Ticket">
+	</xe:djxmHeading>	
+	<xp:panel id="ticketContent">
+		<xe:formTable id="formTable1">
+			<xe:formRow id="formRow1" label="Summary" styleClass="formRow centeredRow viewTicket">
+				<xp:inputText id="summary" required="true" autocomplete="off" disabled="true">
+					<xp:this.value>
+						<![CDATA[#{javascript:
+							if(viewScope.id != null){
+								var forumService = new com.ibm.sbt.services.client.connections.forums.ForumService("connections");
+								var openTopic = forumService.getForumTopic(viewScope.id);	
+								return openTopic.getTitle();				
+							}
+						}]]>
+					</xp:this.value>
+				</xp:inputText>
+			</xe:formRow>
+			<xe:formRow id="formRow7" styleClass="formRow centeredRow viewTicket detailsRow" labelPosition="none">
+				<xp:label styleClass="labelCell" value="Details" id="detailsLabel"></xp:label>
+				<xp:inputRichText styleClass="detailsTextarea" id="detailsRead" readonly="true">
+					<xp:this.value>
+						<![CDATA[#{javascript:
+							if(viewScope.id != null){
+								var forumService = new  com.ibm.sbt.services.client.connections.forums.ForumService("connections");
+								var openTopic = forumService.getForumTopic(viewScope.id);	
+								return openTopic.getContent();			
+							}
+						}]]>
+					</xp:this.value>
+				</xp:inputRichText>
+			</xe:formRow>
+			<xe:formRow id="formRow8" styleClass="formRow centeredRow viewTicket detailsRow" label="Link">
+				<xp:link id="topicLink" text="Open topic in Connections Forum" target="_blank">
+					<xp:this.value>
+						<![CDATA[#{javascript:
+							var forumService = new  com.ibm.sbt.services.client.connections.forums.ForumService("connections");
+							var openTopic = forumService.getForumTopic(viewScope.id);	
+							var url = openTopic.getTopicUrl();
+							var topicUrl = url.replace("/atom/", "/html/").replace("topic?topicUuid=", "topic?id=");
+							return topicUrl;
+						}]]>
+					</xp:this.value>
+				</xp:link>
+			</xe:formRow>
+		</xe:formTable>
+	</xp:panel>
+</xp:view>

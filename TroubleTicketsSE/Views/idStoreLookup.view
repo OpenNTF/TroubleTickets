@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE view SYSTEM 'xmlschemas/domino_9_0_1.dtd'>
+<view name='idStoreLookup' xmlns='http://www.lotus.com/dxl' version='9.0'
+ maintenanceversion='1.0' replicaid='80257C0D003C8F64' showinmenu='false'
+ noreplace='true' publicaccess='false' designerversion='8.5.3' unreadmarks='none'
+ onopengoto='lastopened' onrefresh='displayindicator' headers='beveled' opencollapsed='false'
+ showresponsehierarchy='true' showmargin='true' shrinkrows='false' extendlastcolumn='false'
+ showhierarchies='false' unreadcolor='black' rowlinecount='1' headerlinecount='1'
+ rowspacing='1' bgcolor='white' totalscolor='black' headerbgcolor='white'
+ boldunreadrows='false' evaluateactions='false' allownewdocuments='false'
+ allowcustomizations='true' hidemarginborder='false' marginwidth='0px' marginbgcolor='white'
+ uniquekeys='false' launchframeset='main' launchframe='NotesView' formatnoteid='16C0AFF0CA166F5D85257AEF001FEEB6'>
+<noteinfo noteid='342' unid='C42CB1AE27C5374480257C0C004EB066' sequence='20'>
+<created><datetime dst='true'>20131022T151929,66+01</datetime></created>
+<modified><datetime>20131104T120436,58-05</datetime></modified>
+<revised><datetime>20131104T120436,57-05</datetime></revised>
+<lastaccessed><datetime>20131104T120436,58-05</datetime></lastaccessed>
+<addedtofile><datetime dst='true'>20131023T120131,30+01</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Frank Adams/O=renovations</name></updatedby>
+<wassignedby><name>CN=Frank Adams/O=renovations</name></wassignedby><code
+ event='selection'><formula>SELECT form = "idStore"</formula></code>
+<actionbar bgcolor='#ffefce' bordercolor='black'>
+<actionbuttonstyle bgcolor='none'/><font color='system'/><border style='solid'
+ width='0px 0px 1px'/></actionbar>
+<column hidedetailrows='false' itemname='URL' width='10' resizable='true'
+ separatemultiplevalues='false' sortnoaccent='false' sortnocase='true' showaslinks='false'><columnheader
+ title='URL'><font size='9pt' style='bold'/></columnheader></column>
+<column hidedetailrows='false' itemname='communityId' width='10' resizable='true'
+ separatemultiplevalues='false' sortnoaccent='false' sortnocase='true' showaslinks='false'><columnheader
+ title='communityId'><font size='9pt' style='bold'/></columnheader></column>
+<column hidedetailrows='false' itemname='forumId' width='10' resizable='true'
+ separatemultiplevalues='false' sortnoaccent='false' sortnocase='true' showaslinks='false'><columnheader
+ title='forumId'><font size='9pt' style='bold'/></columnheader></column></view>
+

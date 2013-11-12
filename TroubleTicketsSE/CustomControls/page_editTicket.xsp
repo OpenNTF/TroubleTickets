@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
 	<div class="lotusForm">
-		<table class="lotusFormTable" cellpadding="0" cellspacing="0" border="0" role="presentation">
+		<table class="lotusFormTable" cellpadding="0" cellspacing="0"
+			border="0" role="presentation">
 			<tbody>
 				<tr>
 					<td colspan="2" class="lotusFormTitle">
-						<xp:text value="#{javascript:currentDocument.isNewNote() ? 'New Ticket' : 'Edit Ticket'}" tagName="h2"></xp:text>
+						<xp:text
+							value="#{javascript:currentDocument.isNewNote() ? 'New Ticket' : 'Edit Ticket'}"
+							tagName="h2">
+						</xp:text>
 					</td>
 				</tr>
 				<tr>
@@ -22,9 +28,12 @@
 						</xp:label>
 					</td>
 					<td>
-						<xp:inputText value="#{document1.Summary}" id="summary1" styleClass="lotusText" required="true">
+						<xp:inputText value="#{document1.Summary}"
+							id="summary1" styleClass="lotusText" required="true">
 							<xp:this.validators>
-								<xp:validateRequired message="Problem summary is required"></xp:validateRequired>
+								<xp:validateRequired
+									message="Problem summary is required">
+								</xp:validateRequired>
 							</xp:this.validators>
 						</xp:inputText>
 					</td>
@@ -37,9 +46,12 @@
 						</xp:label>
 					</td>
 					<td>
-						<xp:comboBox value="#{document1.Category}" id="category1">
+						<xp:comboBox value="#{document1.Category}"
+							id="category1">
 							<xp:this.validators>
-								<xp:validateRequired message="Category is required"></xp:validateRequired>
+								<xp:validateRequired
+									message="Category is required">
+								</xp:validateRequired>
 							</xp:this.validators>
 							<xp:selectItem itemLabel=""></xp:selectItem>
 							<xp:selectItems>
@@ -56,17 +68,27 @@
 						</xp:label>
 					</td>
 					<td>
-						<xp:radioGroup id="radioGroup1" value="#{document1.Priority}" layout="lineDirection">
+						<xp:radioGroup id="radioGroup1"
+							value="#{document1.Priority}" layout="lineDirection">
 							<xp:this.validators>
-								<xp:validateRequired message="Priority is required"></xp:validateRequired>
+								<xp:validateRequired
+									message="Priority is required">
+								</xp:validateRequired>
 							</xp:this.validators>
-							<xp:selectItem itemLabel="High" itemValue="High"></xp:selectItem>
-							<xp:selectItem itemLabel="Medium" itemValue="Medium"></xp:selectItem>
-							<xp:selectItem itemLabel="Low" itemValue="Low"></xp:selectItem>
+							<xp:selectItem itemLabel="High"
+								itemValue="High">
+							</xp:selectItem>
+							<xp:selectItem itemLabel="Medium"
+								itemValue="Medium">
+							</xp:selectItem>
+							<xp:selectItem itemLabel="Low"
+								itemValue="Low">
+							</xp:selectItem>
 						</xp:radioGroup>
 					</td>
 				</tr>
-				<xp:tr rendered="#{not empty currentDocument.ID}" styleClass="lotusFormFieldRow">
+				<xp:tr rendered="#{not empty currentDocument.ID}"
+					styleClass="lotusFormFieldRow">
 					<td width="15%" class="lotusFormLabel">
 						<label for="description">Ticket ID:</label>
 					</td>
@@ -77,13 +99,90 @@
 				<tr class="lotusFormFieldRow">
 					<td width="15%" class="lotusFormLabel">Details:</td>
 					<td>
-						<xp:inputRichText id="inputRichText1" value="#{document1.Details}" styleClass="lotusText"></xp:inputRichText>
+						<xp:inputRichText id="inputRichText1" value="#{document1.Details}" styleClass="lotusText">
+						</xp:inputRichText>
+					</td>
+				</tr>
+				<tr class="lotusFormFieldRow">
+					<td width="15%" class="lotusFormLabel">
+						<xp:label value="Community Forum:" id="label1">
+							<xp:this.rendered>
+								<![CDATA[#{javascript:
+									return isConnectionsEnabled();
+								}]]>
+							</xp:this.rendered>
+						</xp:label>
+					</td>
+					<td>
+						<xp:checkBox id="shareOnForum"
+							text="Create accompanying community forum topic?"
+							defaultChecked="false"
+							title="If selected a new forum topic will be posted to the Connections community when the ticket is submitted">
+							<xp:this.rendered>
+								<![CDATA[#{javascript:
+									return isConnectionsEnabled();
+								}]]>
+							</xp:this.rendered>
+						</xp:checkBox>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="3" class="lotusFormFooter">
-						<xp:button value="Save" id="button1" styleClass="lotusFormButton">
+						<xp:button value="Save and Submit" id="button1" styleClass="lotusFormButton">
 							<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+								<xp:this.action>
+									<xp:actionGroup>
+										<xp:confirm message="Submit ticket?">
+										</xp:confirm>
+										<xp:executeScript>
+											<xp:this.script><![CDATA[#{javascript:
+												var doc:NotesDocument = currentDocument.getDocument(true);
+												currentDocument.save();
+												submitTicket(doc);
+												setConfirmationMessage("Ticket has been submitted to help desk");
+												
+												if((null != sessionScope.connectionsEnabled && sessionScope.connectionsEnabled) || isConnectionsEnabled()) {
+													//Fetch the connections bean
+													var endpoint = BeanFactory.getSSOBean("connections");
+													if(endpoint == null) {
+														endpoint = BeanFactory.createSSOBean("connections", getConnectionsURL());
+													}
+													
+													//Post the new ticket as an activity on the community activityStream
+													try{
+														var userId = context.getUser().getFullName();
+														postCommunityUpdate(doc, userId);
+													}catch(exc) {
+														println("Community update failure: " + exc);
+													}
+													
+													//Create forum topic in community if checkbox is selected
+													if(getComponent("shareOnForum") && getComponent("shareOnForum").getValue()) {
+														try{
+															var forumSvc = new com.ibm.sbt.services.client.connections.forums.ForumService(endpoint);
+															var topic = new com.ibm.sbt.services.client.connections.forums.ForumTopic(forumSvc);
+															topic.setTitle(currentDocument.getItemValueString("Summary"));
+															topic.setContent("" + currentDocument.getValue("Details"));//getComponent("inputRichText1").value);//currentDocument.getItemValueString("Details"));
+															forumSvc.createForumTopic(topic, getForumId());														
+														}catch(exc) {
+															println("Community forum post failure: " + exc);
+														}
+													}
+												}}]]></xp:this.script>
+										</xp:executeScript>
+											<xp:openPage
+												name="#{javascript:compositeData.viewTicketPage}"
+												target="openDocument"
+												documentId="#{javascript:currentDocument.getNoteID()}">
+											</xp:openPage>
+									</xp:actionGroup>
+								</xp:this.action>
+							</xp:eventHandler>
+						</xp:button>
+						<xp:button value="Save as Draft" id="button2"
+							styleClass="lotusFormButton">
+							<xp:eventHandler event="onclick"
+								submit="true" refreshMode="complete">
 								<xp:this.action>
 									<xp:actionGroup>
 										<xp:actionGroup>
@@ -115,15 +214,18 @@
 										target="openDocument"
 										documentId="#{javascript:currentDocument.getNoteID()}">
 									</xp:openPage>
-								</xp:this.action></xp:eventHandler>
+								</xp:this.action>
+							</xp:eventHandler>
 						</xp:button>
 						<xp:button value="Cancel" id="newCancel" styleClass="lotusFormButton" rendered="#{javascript:currentDocument.isNewNote()}">
-							<xp:eventHandler event="onclick" submit="true" refreshMode="complete" immediate="true">
+							<xp:eventHandler event="onclick"
+								submit="true" refreshMode="complete" immediate="true">
 								<xp:this.action>
 									<xp:openPage
 										name="#{javascript:compositeData.homePage}">
 									</xp:openPage>
-								</xp:this.action></xp:eventHandler>
+								</xp:this.action>
+							</xp:eventHandler>
 						</xp:button>
 					</td>
 				</tr>

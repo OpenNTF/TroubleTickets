@@ -1,9 +1,8 @@
 package nsf;
 
-import java.io.IOException;
 import java.util.HashMap;
-
 import javax.faces.context.FacesContext;
+import java.io.IOException;
 
 import lotus.domino.Base;
 import lotus.domino.Database;
@@ -14,20 +13,22 @@ import lotus.domino.NotesException;
 import lotus.domino.Session;
 import lotus.domino.View;
 
-import com.ibm.commons.util.io.json.JsonException;
-import com.ibm.commons.util.io.json.JsonGenerator;
-import com.ibm.commons.util.io.json.JsonJavaFactory;
 import com.ibm.commons.util.io.json.JsonJavaObject;
 import com.ibm.sbt.services.client.ClientServicesException;
-import com.ibm.sbt.services.client.SBTServiceException;
+//import com.ibm.sbt.services.client.SBTServiceException;
 import com.ibm.sbt.services.client.connections.activitystreams.ActivityStreamService;
 import com.ibm.sbt.services.client.connections.activitystreams.ActivityStreamServiceException;
 import com.ibm.sbt.services.client.connections.profiles.Profile;
 import com.ibm.sbt.services.client.connections.profiles.ProfileService;
 import com.ibm.sbt.services.client.connections.profiles.ProfileServiceException;
-import com.ibm.sbt.services.endpoints.ConnectionsOAuth2Endpoint;
-import com.ibm.sbt.services.endpoints.EndpointFactory;
+//import com.ibm.sbt.services.endpoints.ConnectionsOAuth2Endpoint;
+//import com.ibm.sbt.services.endpoints.ConnectionsSSOEndpoint;
+//import com.ibm.sbt.services.endpoints.EndpointFactory;
+import com.ibm.sbt.services.endpoints.SSOEndpoint;
 import com.ibm.xsp.extlib.util.ExtLibUtil;
+import com.ibm.commons.util.io.json.JsonException;
+import com.ibm.commons.util.io.json.JsonGenerator;
+import com.ibm.commons.util.io.json.JsonJavaFactory;
 
 public class XPagesTickets {
 	
@@ -57,10 +58,9 @@ public class XPagesTickets {
 		}
 		return true;
 	}
-
+	
 	public static String getInternetEmail(String canonical) {
-		Session session = ExtLibUtil.getCurrentSession(FacesContext
-				.getCurrentInstance());
+		Session session = ExtLibUtil.getCurrentSession(FacesContext.getCurrentInstance());
 		Database db = null;
 		View usersView = null;
 		Document personDoc = null;
@@ -97,18 +97,15 @@ public class XPagesTickets {
 	 */
 	public static String getConUserId(String email) {
 		String result = "";
-
 		try {
-
-			com.ibm.sbt.services.client.connections.profiles.ProfileService profileService = new ProfileService(
-					"connections");
-
+			SSOEndpoint endpoint = ConnectionsBean.getSSOBean("connections");
+			com.ibm.sbt.services.client.connections.profiles.ProfileService profileService = new ProfileService(endpoint);
+			
 			/*
 			 * Gets the Profile Information
 			 */
 			Profile profile = profileService.getProfile(email);
 			result = profile.getUserid();
-
 		} catch (ProfileServiceException e) {
 			e.printStackTrace();
 		}
@@ -201,20 +198,66 @@ public class XPagesTickets {
 		header.put("Content-Type", "application/json");
 		String activityId = null;
 		try {
-			ActivityStreamService svc = new ActivityStreamService(
-					"connections");
-
-			activityId = svc.postEntry("@me", "@public","@all", activity);
-
+			SSOEndpoint endpoint = ConnectionsBean.getSSOBean("connections");
+			ActivityStreamService svc = new ActivityStreamService(endpoint);
+			activityId=svc.postEntry("@me", "@public", "@all", activity);
 		} catch (ActivityStreamServiceException e) {
 			e.printStackTrace();
 		}
-		System.out.println("post successful"+activityId);
 		if(activityId!=null)
-			activityId=activityId.replace("urn:lsid:lconn.ibm.com:activitystreams:", "" );
+			activityId=activityId.replace("urn:lsid:lconn.ibm.com:activitystreams.story:", "" );
 		return activityId;
 	}
-
+	
+	public static void generateEscalationPost(String summary, String submitterId, String managerName) {
+		SSOEndpoint endpoint = ConnectionsBean.getSSOBean("connections");
+		if(endpoint !=null) {
+			
+			JsonJavaObject postPayload = new JsonJavaObject();
+			JsonJavaObject actor =new JsonJavaObject();
+			JsonJavaObject object =new JsonJavaObject();
+			actor.put("id", submitterId);
+			object.put("summary", "A Trouble Ticket has been escalated to " +managerName);
+			object.put("objectType", "post");
+			java.util.Random randomGen = new java.util.Random(19580427);
+			int randomNum = randomGen.nextInt();
+			object.put("id", randomNum);
+			object.put("displayName", "Escalated Trouble Ticket");
+			object.put("url", getEEUrl());
+			
+			postPayload.put("actor", actor);
+			postPayload.put("verb", "post");
+			postPayload.put("title", "Trouble Ticket escalated to "+managerName);
+					
+			postPayload.put("content", summary );
+			postPayload.put("updated", new java.util.Date().getTime());
+			postPayload.put("object", object);
+			
+			JsonJavaObject embed = new JsonJavaObject();
+			embed.putJsonProperty("url", nsf.XPagesTickets.getEEUrl());
+			JsonJavaObject opensocial = new JsonJavaObject();
+			opensocial.putJsonProperty("embed", embed);
+		
+			postPayload.putJsonProperty("openSocial", opensocial);
+		
+			object.putJsonProperty("summary", summary);
+			object.putJsonProperty("objectType", "ticket");
+			object.putJsonProperty("id", randomNum);
+			object.putJsonProperty("displayName", "Trouble Ticket");
+			object.putJsonProperty("url", getTicketUrl());
+		
+			postPayload.putJsonProperty("object", object);
+			try{
+				ActivityStreamService svc = new ActivityStreamService(endpoint);		
+				svc.postEntry("@me", "@public", "@all", postPayload);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}else{
+			//report error in escalation
+		}
+	}
+	
 	public static String getHomePageUrl() {
 		try {
 			return ExtLibUtil.getCurrentDatabase().getHttpURL();

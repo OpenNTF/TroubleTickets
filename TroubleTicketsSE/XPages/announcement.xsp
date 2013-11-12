@@ -84,7 +84,7 @@
 				<div class="lotusWidget2">
 					<h2>Details</h2>
 					<div class="lotusWidgetBody">
-						<xp:inputRichText id="inputRichText1" value="#{document1.Contnet}"></xp:inputRichText>
+						<xp:inputRichText id="inputRichText1" value="#{document1.Content}"></xp:inputRichText>
 					</div>
 				</div>
 			</xp:panel>

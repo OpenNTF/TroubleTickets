@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xe="http://www.ibm.com/xsp/coreex">
-
-	<xp:this.beforePageLoad><![CDATA[#{javascript:if(!@Endpoint("connections").isAuthenticated()) {
-										@Endpoint("connections").authenticate(true);
-								}}]]>
-	</xp:this.beforePageLoad>
 	<div class="lotusWidget2">
 		<h2>View Ticket</h2>
 	</div>
@@ -25,76 +20,61 @@
 					<xp:actionGroup>
 						<xp:confirm message="Submit ticket?"></xp:confirm>
 						<xp:executeScript>
-							<xp:this.script><![CDATA[#{javascript:var doc:NotesDocument = currentDocument.getDocument(true);
-submitTicket(doc);
-setConfirmationMessage("Ticket has been submitted to help desk");	
-context.reloadPage();}]]></xp:this.script>
+							<xp:this.script><![CDATA[#{javascript:
+								var doc:NotesDocument = currentDocument.getDocument(true);
+								submitTicket(doc);
+								setConfirmationMessage("Ticket has been submitted to help desk");	
+								context.reloadPage();
+							}]]></xp:this.script>
 						</xp:executeScript>
 					</xp:actionGroup>
 				</xp:this.action>
 			</xp:eventHandler>
 		</xp:button>
-		<xp:button value="Assign" id="assignButton"
-			styleClass="lotusBtn lotusBtnAction">
-			<xp:this.rendered><![CDATA[#{javascript:var status = currentDocument.getItemValueString("Status");
-var conn=context.getUrlParameter("platform");
-if(conn != "connections")
-	roles.isStaff() && (status == "Submitted" || status == "Assigned");
-else
-	return false	}]]></xp:this.rendered>
+		
+		<xp:button value="Assign" id="assignButton" styleClass="lotusBtn lotusBtnAction">
+			<xp:this.rendered><![CDATA[#{javascript:
+				var status = currentDocument.getItemValueString("Status");
+				roles.isStaff() && (status == "Submitted" || status == "Assigned");}
+			]]></xp:this.rendered>
 			<xp:eventHandler event="onclick" submit="false">
 				<xp:this.script><![CDATA[XSP.openDialog("#{id:assignTicketDialog}");]]></xp:this.script>
 			</xp:eventHandler>
 		</xp:button>
+		
 		<xp:button value="Escalate" id="button1" styleClass="lotusBtn lotusBtnAction">
-			<xp:this.rendered><![CDATA[#{javascript:var status = currentDocument.getItemValueString("Status");
-var conn=context.getUrlParameter("platform");
-if(conn != "connections")
-	roles.isStaff() && (status == "Submitted" || status == "Assigned");
-else
-	return false	}]]></xp:this.rendered>
+			<xp:this.rendered><![CDATA[#{javascript:
+				if((null != sessionScope.connectionsEnabled && sessionScope.connectionsEnabled) || isConnectionsEnabled()) {
+					var status = currentDocument.getItemValueString("Status");
+					roles.isStaff() && (status == "Submitted" || status == "Assigned");
+				}else{
+					return false;
+				}}]]></xp:this.rendered>
 			<xp:eventHandler event="onclick" submit="false">
 				<xp:this.script><![CDATA[XSP.openDialog("#{id:escalateTicketDialog}");]]></xp:this.script>
 			</xp:eventHandler>
 		</xp:button>
 				
 		
-		<xp:button value="Close" id="button5"
-			styleClass="lotusBtn lotusBtnAction">
-			<xp:this.rendered><![CDATA[#{javascript:var conn=context.getUrlParameter("platform");
-if(conn== null)
-	getComponent("assignButton").isRendered()
-else
-	return true}]]></xp:this.rendered>
-			<xp:eventHandler event="onclick" submit="true"
-				refreshMode="complete">
-				<xp:this.action>
-
-					<xp:actionGroup>
-						<xp:openPage target="editDocument"
-							name="/closeTicket.xsp">
-						</xp:openPage>					
-					</xp:actionGroup>
-				</xp:this.action>
+		<xp:button value="Close" id="button5" styleClass="lotusBtn lotusBtnAction">
+			<xp:this.rendered><![CDATA[#{javascript:getComponent("assignButton").isRendered()}]]></xp:this.rendered>
+			<xp:eventHandler event="onclick" submit="false">
+				<xp:this.script><![CDATA[XSP.openDialog("#{id:closeTicketDialog}");]]></xp:this.script>
 			</xp:eventHandler>
 		</xp:button>
 		<xp:button value="Comment" id="button6" styleClass="lotusBtn lotusBtnAction" rendered="#{currentDocument.status != 'Draft'}">
-			<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
-				<xp:this.action>
-					<xp:openPage target="editDocument" name="/commentTicket.xsp"></xp:openPage>
-				</xp:this.action>
+			<xp:eventHandler event="onclick" submit="false">
+				<xp:this.script><![CDATA[XSP.openDialog("#{id:addCommentDialog}");]]></xp:this.script>
 			</xp:eventHandler>
 		</xp:button>
 		<xp:button value="Back" id="button7" styleClass="lotusBtn lotusBtnAction">
-			
-		<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
-			<xp:this.action>
-				<xp:openPage
-					name="#{javascript:compositeData.homePage}">
-				</xp:openPage>
-			</xp:this.action></xp:eventHandler>
+			<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+				<xp:this.action>
+					<xp:openPage name="#{javascript:compositeData.homePage}"></xp:openPage>
+				</xp:this.action>
+			</xp:eventHandler>
 		</xp:button>
-</div>
+	</div>
 	<br/>
 	<table class="lotusVertTable">
 		<tr class="lotusFirst">
@@ -126,11 +106,12 @@ else
 			<td>
 				<xp:inputTextarea readonly="true">
 					<xp:this.value><![CDATA[#{javascript:var status = currentDocument.getItemValueString("Status");
-status == "Draft" ? "Draft, last updated " + formatDate(currentDocument.getItemValueDateTime("Updated")) :
-status == "Submitted" ? "Submitted on " + formatDate(currentDocument.getItemValueDateTime("Updated")) + " by " + @Name("[CN]", currentDocument.getItemValueString("SubmittedBy")) :
-status == "Assigned" ? "Assigned to " + @Name("[CN]", currentDocument.getItemValueString("AssignedTo")) + " on " + formatDate(currentDocument.getItemValueDateTime("Assigned")) :
-status == "Closed" ? "Closed on " + formatDate(currentDocument.getItemValueDateTime("Closed")) + " by " + @Name("[CN]", currentDocument.getItemValueString("ClosedBy")) + @NewLine() + "resolution: " + currentDocument.getItemValueString("Resolution") :
-"--unknown--"}]]></xp:this.value>
+						status == "Draft" ? "Draft, last updated " + formatDate(currentDocument.getItemValueDateTime("Updated")) :
+						status == "Submitted" ? "Submitted on " + formatDate(currentDocument.getItemValueDateTime("Updated")) + " by " + @Name("[CN]", currentDocument.getItemValueString("SubmittedBy")) :
+						status == "Assigned" ? "Assigned to " + @Name("[CN]", currentDocument.getItemValueString("AssignedTo")) + " on " + formatDate(currentDocument.getItemValueDateTime("Assigned")) :
+						status == "Closed" ? "Closed on " + formatDate(currentDocument.getItemValueDateTime("Closed")) + " by " + @Name("[CN]", currentDocument.getItemValueString("ClosedBy")) + @NewLine() + "resolution: " + currentDocument.getItemValueString("Resolution") :
+						"--unknown--"}]]>
+					</xp:this.value>
 				</xp:inputTextarea>
 			</td>
 		</tr>
@@ -144,6 +125,26 @@ status == "Closed" ? "Closed on " + formatDate(currentDocument.getItemValueDateT
 			<th>Activity&#160;ID:</th>
 			<td>
 				<xp:text value="#{document1.ActivityId}"></xp:text>
+			</td>
+		</xp:tr>
+		<xp:tr>
+			<xp:this.rendered>
+				<![CDATA[#{javascript:
+					return ((null != sessionScope.connectionsEnabled && sessionScope.connectionsEnabled) || isConnectionsEnabled()) && currentDocument.isEdit;
+				}]]>
+			</xp:this.rendered>
+			<th>Community Forum:</th>
+			<td>
+				<xp:checkBox id="shareOnForum"
+							text="Create accompanying community forum topic?"
+							defaultChecked="false"
+							title="If selected a new forum topic will be posted to the Connections community when the ticket is submitted">
+					<xp:this.rendered>
+						<![CDATA[#{javascript:
+							return ((null != sessionScope.connectionsEnabled && sessionScope.connectionsEnabled) || isConnectionsEnabled()) && currentDocument.isEditable();
+						}]]>
+					</xp:this.rendered>
+				</xp:checkBox>
 			</td>
 		</xp:tr>
 	</table>
@@ -172,29 +173,48 @@ status == "Closed" ? "Closed on " + formatDate(currentDocument.getItemValueDateT
 					<td>
 						<xp:comboBox id="dialogAssignTo" value="#{viewScope.dialogAssignTo}">
 							<xp:selectItem itemLabel=""></xp:selectItem>
-<!--							<xp:selectItems>-->
-<!--								<xp:this.value><![CDATA[#{javascript:var category = currentDocument.getItemValueString("Category");-->
-<!--@DbLookup(@DbName(), "managerCategories", category, "resources");}]]></xp:this.value>-->
-<!--							</xp:selectItems>-->
-			<xp:selectItems>
-		<xp:this.value><![CDATA[#{javascript:	
-		
-var ps = new com.ibm.sbt.services.client.connections.profiles.ProfileService();
-var userId = context.getUser().getFullName();
-var email= nsf.XPagesTickets.getInternetEmail(userId);
-var profiles;
-var result=[]; 
-try{
-	profiles = ps.getColleagues(email);
-	for(var i=0;i < profiles.length;i++){
-	result.push(profiles[i].getEmail());
-}
-}
-catch(e){
-	result.push("Please configure your connections endPoint");	
-}
-return result;}]]></xp:this.value>
-</xp:selectItems>
+							<xp:selectItems>
+								<xp:this.value><![CDATA[#{javascript:
+									if((null != sessionScope.connectionsEnabled && sessionScope.connectionsEnabled) || isConnectionsEnabled()) {
+										var url = "";
+										var communityId = "";
+										var idStoreView:NotesView = database.getView("idStoreLookup");
+					                    if(null != idStoreView){
+					                    	var idStoreDoc = idStoreView.getFirstDocument();
+					                    	if(null != idStoreDoc){
+					                    		url = idStoreDoc.getItemValueString("URL");
+											}
+											if("" == url) {
+												return "empty url";
+											}
+										}else{
+											return "null notes view";
+										}
+										
+										var endpoint = BeanFactory.getSSOBean("connections");
+										if(endpoint == null) {
+											endpoint = BeanFactory.createSSOBean("connections", url);
+											println("new endpoint: " + endpoint);
+										}
+										
+										var ps = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);
+										var userId = context.getUser().getFullName();
+										var email= nsf.XPagesTickets.getInternetEmail(userId);
+										var profiles = ps.getColleagues(email);
+										var result=[]; 
+										for(var i=0;i < profiles.length;i++){
+											result.push(profiles[i].getName() + "|" + profiles[i].getEmail());
+										}
+										//result.push('fadams@renovations.com');
+										//result.push('aadmin/IBM');
+										//result.push('buser/IBM');
+										return result;
+									}else{
+										var category = currentDocument.getItemValueString("Category");
+										@DbLookup(@DbName(), "managerCategories", category, "resources");									
+									}}]]>
+								</xp:this.value>
+							</xp:selectItems>
 						</xp:comboBox>
 					</td>
 				</tr>
@@ -216,15 +236,14 @@ return result;}]]></xp:this.value>
 							</xp:sendMail>
 							<xp:executeScript>
 								<xp:this.script><![CDATA[#{javascript:var assignTo = viewScope.dialogAssignTo;
-if (assignTo && assignTo.length > 0) {
-	var doc = currentDocument.getDocument(true);
-	assignTicket(doc, assignTo);
-	setConfirmationMessage("Ticket has been assigned to " + assignTo);	
-	context.reloadPage();
-}}]]></xp:this.script>
+									if (assignTo && assignTo.length > 0) {
+										var doc = currentDocument.getDocument(true);
+										assignTicket(doc, assignTo);
+										setConfirmationMessage("Ticket has been assigned to " + assignTo);	
+										context.reloadPage();
+									}}]]>
+								</xp:this.script>
 							</xp:executeScript>
-
-
 						</xp:actionGroup>
 					</xp:this.action>
 				</xp:eventHandler>
@@ -242,7 +261,7 @@ if (assignTo && assignTo.length > 0) {
 				<tr>
 					<td style="vertical-align:top; width:10em">Reason for closing:</td>
 					<td>
-						<xp:inputTextarea value="#{viewScope.dialogResolution}" style="width: 100%" rows="5"></xp:inputTextarea>
+						<xp:inputTextarea id="closeReason" value="#{viewScope.dialogResolution}" style="width: 100%" rows="5"></xp:inputTextarea>
 					</td>
 				</tr>
 			</table>
@@ -250,13 +269,15 @@ if (assignTo && assignTo.length > 0) {
 		<xe:dialogButtonBar id="dialogButtonBar1">
 			<xp:button value="Close" id="button4" styleClass="lotusFormButton">
 				<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
-					<xp:this.action><![CDATA[#{javascript:var resolution = viewScope.dialogResolution;
-if (resolution && resolution.length > 0) {
-	var doc = currentDocument.getDocument(true);
-	closeTicket(doc, resolution);
-	setConfirmationMessage("Ticket has been closed");
-	context.reloadPage();
-}}]]></xp:this.action>
+					<xp:this.action>
+					<![CDATA[#{javascript:var resolution = getComponent("closeReason").getValue();
+						if (resolution && resolution.length > 0) {
+							var doc = currentDocument.getDocument(true);
+							closeTicket(doc, resolution);
+							var documentId=doc.getUniversalID(); 
+							context.reloadPage();
+						}}]]>
+					</xp:this.action>
 				</xp:eventHandler>
 			</xp:button>
 			<xp:button value="Cancel" id="button8" styleClass="lotusFormButton">
@@ -285,25 +306,33 @@ if (resolution && resolution.length > 0) {
 					<td>
 						<xp:comboBox id="comboboxManager">
 							<xp:selectItems>
-								<xp:this.value><![CDATA[#{javascript:
-var ps = new com.ibm.sbt.services.client.connections.profiles.ProfileService("connections");
-var assignedId = currentDocument.getItemValueString("assignedTo");
-var assigneesChain;
-var managers=[];
-try{
-assigneesChain=ps.getReportingChain(assignedId);
-for(var i=0;i<assigneesChain.size();i++){
-	var email=assigneesChain.get(i).getEmail();
-	if(email!=assignedId)
-		managers.push(assigneesChain.get(i).getEmail());	
-  }
-}
-catch(e){
-		managers.push("PLease configure your connections EndPoint");
-}
-
-return managers;
-}]]></xp:this.value>
+								<xp:this.value><![CDATA[#{javascript:	
+									if((null != sessionScope.connectionsEnabled && sessionScope.connectionsEnabled) || isConnectionsEnabled()) {
+										var url = getConnectionsURL();
+										
+										var endpoint = BeanFactory.getSSOBean("connections");
+										if(endpoint == null) {
+											endpoint = BeanFactory.createSSOBean("connections", url);
+										}
+										var ps = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);
+										var userId = context.getUser().getFullName();
+										var email= nsf.XPagesTickets.getInternetEmail(userId);
+										var managers = ps.getReportingChain(email);
+										var result=[]; 
+										for(var i=0;i < managers.length;i++){
+											if(managers[i].getEmail() != email) {
+												result.push(managers[i].getName() + "|" + managers[i].getEmail());
+											}
+										}
+										//result.push('fadams@renovations.com');
+										//result.push('aadmin/IBM');
+										//result.push('buser/IBM');
+										return result;
+									}else{
+										var category = currentDocument.getItemValueString("Category");
+										@DbLookup(@DbName(), "managerCategories", category, "resources");									
+									}}]]>
+								</xp:this.value>
 							</xp:selectItems>
 						</xp:comboBox>
 					</td>
@@ -311,12 +340,10 @@ return managers;
 			</table>
 		</xe:dialogContent>
 		<xe:dialogButtonBar id="dialogButtonBar4">
-						<xp:button value="Escalate" id="button3" styleClass="lotusFormButton">
-				<xp:eventHandler event="onclick" submit="true"
-					refreshMode="complete">
+			<xp:button value="Escalate" id="button3" styleClass="lotusFormButton">
+				<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
 					<xp:this.action>
 						<xp:actionGroup>
-
 							<xp:sendMail
 								subject="Attention: A trouble ticket was escalated"
 								bodyPlain="#{javascript:nsf.XPagesTickets.createEscalatedTextPart()}"
@@ -324,79 +351,46 @@ return managers;
 								bodyHtml="#{javascript:nsf.XPagesTickets.createEscalatedHTMLPart()}"
 								embeddedJson="#{javascript:nsf.XPagesTickets.createJSONPart()}">
 								<xp:this.cc><![CDATA[#{javascript:
-var submittedId = currentDocument.getItemValueString("SubmittedBy");
-var requestedChain=ps.getReportingChain(submittedId);
-var managers=[];
-for(var i=0;i<requestedChain.size();i++){
-	var email=requestedChain.get(i).getEmail();
-	if(email!=assignedId)
-		managers.push(requestedChain.get(i).getEmail());	
-}
-if(requestedChain.size()>0)
-	return managers[1];
-else
-	return null;
-}]]></xp:this.cc>
+									if((null != sessionScope.connectionsEnabled && sessionScope.connectionsEnabled) || isConnectionsEnabled()) {
+										var url = getConnectionsURL();
+										var endpoint = BeanFactory.getSSOBean("connections");
+										if(endpoint == null && null != url) {
+											endpoint = BeanFactory.createSSOBean("connections", url);
+										}	
+										
+										var ps = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);
+										var userId = context.getUser().getFullName();
+										var submittedEmail= nsf.XPagesTickets.getInternetEmail(userId);
+										var requestedChain=ps.getReportingChain(submittedEmail);
+										var managers=[];
+										for(var i=0;i<requestedChain.size();i++){
+											var email=requestedChain.get(i).getEmail();
+											if(email != submittedEmail && email != getComponent("comboboxManager").getValue()) {
+												managers.push(requestedChain.get(i).getEmail());
+											}	
+										}
+										if(requestedChain.size() > 0){
+											return managers[1];
+										}else{
+											return null;
+										}
+									}}]]>
+								</xp:this.cc>
 								<xp:this.to><![CDATA[#{javascript:
-var value= getComponent("comboboxManager").getValue();
-return value;}]]></xp:this.to>
+									var value= getComponent("comboboxManager").getValue();
+									return value;}]]>
+								</xp:this.to>
 							</xp:sendMail>
 							<xp:executeScript>
 								<xp:this.script><![CDATA[#{javascript:
-	var manager= getComponent("comboboxManager").getValue()
-	setInformationMessage("Trouble Ticket has been escalated to " + manager);	
-	var doc = currentDocument.getDocument(true);
-	
-	addComment(doc, "Ticket has been escalated to "+manager);
-	
-	var svc = new com.ibm.sbt.services.client.connections.activitystreams.ActivityStreamService();
-	var postPayload = new com.ibm.commons.util.io.json.JsonJavaObject();
-	var actor =new com.ibm.commons.util.io.json.JsonJavaObject();
-	var object =new com.ibm.commons.util.io.json.JsonJavaObject();
-	actor.put("id", "@self");
-	object.put("summary", "A Trouble Ticket has been escalated to s" +manager);
-	object.put("objectType", "post");
-	var randomGen = java.util.Random(19580427);
-	var randomNum = randomGen.nextInt();
-	object.put("id", randomNum);
-	object.put("displayName", "Escalated Trouble Ticket");
-	object.put("url", nsf.XPagesTickets.getEEUrl());
-	
-	postPayload.put("actor", actor);
-	postPayload.put("verb", "post");
-	postPayload.put("title", "Trouble Ticket escalated to "+manager);
-			
-	postPayload.put("content",currentDocument.getItemValueString("Summary") );
-	postPayload.put("updated", new java.util.Date().getTime());
-	postPayload.put("object", object);
-	
-	var embed = new com.ibm.commons.util.io.json.JsonJavaObject();
-	embed.putJsonProperty("url", nsf.XPagesTickets.getEEUrl());
-	
-	var opensocial = new com.ibm.commons.util.io.json.JsonJavaObject();
-	opensocial.putJsonProperty("embed", embed);
-
-	postPayload.putJsonProperty("openSocial", opensocial);
-
-	var object = new com.ibm.commons.util.io.json.JsonJavaObject();
-	object.putJsonProperty("summary", currentDocument.getItemValueString("Summary"));
-	object.putJsonProperty("objectType", "ticket");
-	object.putJsonProperty("id", randomNum);
-	object.putJsonProperty("displayName", "Trouble Ticket");
-	object.putJsonProperty("url", nsf.XPagesTickets.getTicketUrl());
-
-	postPayload.putJsonProperty("object", object);
-
-	var header = new java.util.HashMap();
-	header.put("Content-Type", "application/json");
-			
-	svc.postEntry("@me", "@public","@all", postPayload);
-	
-	context.reloadPage();
-}]]></xp:this.script>
+									var manager= getComponent("comboboxManager").getValue()
+									setInformationMessage("Trouble Ticket has been escalated to " + manager);	
+									var doc = currentDocument.getDocument(true);
+									addComment(doc, "Ticket has been escalated to "+manager);
+									escalateTicket(doc, manager);
+									context.reloadPage();}]]>
+								</xp:this.script>
 							</xp:executeScript>
-
-
 						</xp:actionGroup>
 					</xp:this.action>
 				</xp:eventHandler>
@@ -409,36 +403,31 @@ return value;}]]></xp:this.to>
 			</xp:button>
 		</xe:dialogButtonBar>
 	</xe:dialog>
-	
-	<xe:dialog id="addCommentDialog" style="width:200px"
-		title="Comment">
-		<xe:dialogContent id="dialogContent2" style="width:200px">
-			<table width="200px">
+	<xe:dialog id="addCommentDialog" title="Comment">
+		<xe:dialogContent id="dialogContent2">
+			<table>
 				<tr>
-					<td style="vertical-align:top; width:6em">
-						Comment:
-					</td>
+					<td style="vertical-align:top; width:6em">Comment:</td>
 					<td>
-						<xp:inputTextarea
-							value="#{viewScope.dialogComment}" style="width: 100%"
-							rows="5">
+						<xp:inputTextarea id="commentText" value="#{viewScope.dialogComment}" style="width: 100%" rows="5">
 						</xp:inputTextarea>
 					</td>
 				</tr>
 			</table>
 		</xe:dialogContent>
-		<xe:dialogButtonBar id="dialogButtonBar3" style="width:200px">
+		<xe:dialogButtonBar id="dialogButtonBar3">
 			<xp:button value="Add Comment" id="button9"
 				styleClass="lotusFormButton">
-				<xp:eventHandler event="onclick" submit="true"
-					refreshMode="complete">
-					<xp:this.action><![CDATA[#{javascript:var comment = viewScope.dialogComment;
-if (comment && comment.length > 0) {
-	var doc = currentDocument.getDocument(true);
-	addComment(doc, comment);
-	setConfirmationMessage("Comment has been added to ticket history");
-	context.reloadPage();
-}}]]></xp:this.action>
+				<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+					<xp:this.action><![CDATA[#{javascript:var comment = getComponent("commentText").getValue();
+						if (comment && comment.length > 0) {
+							var doc = currentDocument.getDocument(true);
+							addComment(doc, comment);
+							setConfirmationMessage("Ticket has been closed.");
+							var documentId=doc.getUniversalID(); 
+							context.reloadPage();
+						}}]]>
+					</xp:this.action>
 				</xp:eventHandler>
 			</xp:button>
 			<xp:button value="Cancel" id="button10"
@@ -448,4 +437,38 @@ if (comment && comment.length > 0) {
 				</xp:eventHandler>
 			</xp:button>
 		</xe:dialogButtonBar>
-	</xe:dialog></xp:view>
+	</xe:dialog>
+	<xe:dialog id="addCommentDialog2" title="Close Ticket">
+		<xe:dialogContent id="commentDialogContent" style="width:400px">
+			<table width="100%">
+				<tr>
+					<td style="vertical-align:top; width:10em">Reason for closing:</td>
+					<td>
+						<xp:inputTextarea id="inputTextarea1" value="#{viewScope.dialogResolution}" style="width: 100%" rows="5"></xp:inputTextarea>
+					</td>
+				</tr>
+			</table>
+		</xe:dialogContent>
+		<xe:dialogButtonBar id="dialogButtonBar5">
+			<xp:button value="Close" id="button12" styleClass="lotusFormButton">
+				<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+					<xp:this.action>
+					<![CDATA[#{javascript:var resolution = getComponent("closeReason").getValue();
+						if (resolution && resolution.length > 0) {
+							var doc = currentDocument.getDocument(true);
+							closeTicket(doc, resolution);
+							setConfirmationMessage("A comment has been added to the ticket.");
+							var documentId=doc.getUniversalID(); 
+							context.reloadPage();
+						}}]]>
+					</xp:this.action>
+				</xp:eventHandler>
+			</xp:button>
+			<xp:button value="Cancel" id="button13" styleClass="lotusFormButton">
+				<xp:eventHandler event="onclick" submit="false">
+					<xp:this.script><![CDATA[XSP.closeDialog('#{id:closeTicketDialog}')]]></xp:this.script>
+				</xp:eventHandler>
+			</xp:button>
+		</xe:dialogButtonBar>
+	</xe:dialog>
+</xp:view>

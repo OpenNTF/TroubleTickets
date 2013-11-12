@@ -1,26 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xc="http://www.ibm.com/xsp/custom" createForm="false">
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+	<xp:this.resources>
+		<xp:script src="/xpagesTickets.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
+	<xp:this.resources>
+		<xp:script src="/xpagesCommon.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
 	<xp:this.data>
-		<xp:dominoView var="announcementsView" viewName="xpagesAnnouncements"></xp:dominoView>
+		<xp:dominoView var="announcementsView"
+			viewName="xpagesAnnouncements">
+		</xp:dominoView>
 	</xp:this.data>
-	<xp:this.beforePageLoad><![CDATA[#{javascript:navUtil.setBackPage()}]]></xp:this.beforePageLoad>
+	<xp:this.beforePageLoad>
+		<![CDATA[#{javascript:
+			navUtil.setBackPage();
+			sessionScope.connectionsEnabled = isConnectionsEnabled();
+			//viewScope.pageLoaded = false;
+			//println("vs.loaded1=" + viewScope.pageLoaded);
+		}]]></xp:this.beforePageLoad>
+	<xp:this.afterPageLoad>
+		<![CDATA[#{javascript:
+			var version = session.getNotesVersion();
+			//Set the theme depending on server version
+			if(version.contains("9.0.1")) {				
+				if(deviceBean.isMobile() || deviceBean.isTablet()){
+					context.redirectToPage("/mobile.xsp", true);
+				}
+	        }else if(version.contains("9.0")) {
+	            var uAgent = context.getUserAgent().getUserAgent();
+				if((uAgent.match("iPhone") !== null || param.platform=="iphone") ||
+				   (uAgent.match("Android") !== null || param.platform=="android") ||
+				    uAgent.match("iPad") !== null){
+					context.redirectToPage("/mobile.xsp", true);
+				}
+			}
+			
+			//var loadingForum = getComponent("loadingTopics");
+			//var forumCC = getComponent("forumCC");
+			//var forumPanel = getComponent("forumPanel");
+			
+			//println("got here");
+			//loadingForum.setRendered(false);
+			//forumCC.setRendered(true);
+			
+			}]]>
+	</xp:this.afterPageLoad>
+	<xp:eventHandler event="onClientLoad" submit="false">
+		<xp:this.script><![CDATA[
+			function switchVisible(setVisible, setInvisible) {
+				setInvisible.style.display = "none"; 
+				setVisible.style.display = "";
+			}
+			var loadingAnnounce = dojo.byId("#{id:loadingAnnounce}");
+			var announcements = dojo.byId("#{id:announcements}");
+			var announcePanel = dojo.byId("#{id:announcePanel}");
+				
+			
+			if(#{javascript:isConnectionsEnabled()}) {
+				var loadingForum = dojo.byId("#{id:loadingTopics}");
+				var forumCC = dojo.byId("#{id:forumCC}");
+				var forumPanel = dojo.byId("#{id:forumPanel}");
+				
+				var loadingMyFiles = dojo.byId("#{id:loadingMyFiles}");
+				var myFilesCC = dojo.byId("#{id:myFilesCC}");
+				var myFilesPanel = dojo.byId("#{id:myFiles}");
+				
+				var loadingCommFiles = dojo.byId("#{id:loadingCommFiles}");
+				var commFilesCC = dojo.byId("#{id:commFilesCC}");
+				var commFilesPanel = dojo.byId("#{id:commFiles}");
+				
+				var loadingMyColleagues = dojo.byId("#{id:loadingMyColleagues}");
+				var myColleaguesCC = dojo.byId("#{id:myColleaguesCC}");
+				var myColleaguesPanel = dojo.byId("#{id:myColleaguesPanel}");
+				
+				var loadingCommMembers = dojo.byId("#{id:loadingCommMembers}");
+				var commMembersCC = dojo.byId("#{id:commMembersCC}");
+				var commMembersPanel = dojo.byId("#{id:commMembersPanel}");
+				
+			
+				//setForumVisible(true);
+				switchVisible(forumCC,loadingForum);
+				switchVisible(myFilesCC,loadingMyFiles);
+				switchVisible(commFilesCC,loadingCommFiles);
+				switchVisible(myColleaguesCC,loadingMyColleagues);
+				switchVisible(commMembersCC,loadingCommMembers);
+				
+				//XSP.partialRefreshPost(forumPanel, {});
+			}
+			switchVisible(announcements,loadingAnnounce);
+			]]>
+		</xp:this.script>
+	</xp:eventHandler>
 	<xp:this.resources>
 		<xp:script src="/xpagesCommon.jss" clientSide="false"></xp:script>
 	</xp:this.resources>
 	<xc:layout>
 		<xp:this.facets>
 			<xp:panel xp:key="content">
-				<div class="lotusWelcomeBox">
+				<div class="lotusWelcomeBox" style="padding: 10px;">
 					<h2>Trouble Tickets Demo</h2>
-					<p> Lorem Ipsum dolor sit amet, consectetuer adipiscingelit. Duis tellus. Donec ante dolor, iaculis nec, gravidaac, cursus in, eros. Mauris vestibulum, felis et egestasullamcorper, purus nibh
-						vehicula sem, non justo. Fusce tincidunt, lorem nev dapibusconsectetuer, leo orci mollis ipsum, eget suscipit erospurus in ante.</p>
+					<p>
+						Lorem Ipsum dolor sit amet, consectetuer
+						adipiscingelit. Duis tellus. Donec ante dolor,
+						iaculis nec, gravidaac, cursus in, eros. Mauris
+						vestibulum, felis et egestasullamcorper, purus
+						nibh vehicula sem, eu egestas antenisl non
+						justo. Fusce tincidunt, lorem nev
+						dapibusconsectetuer, leo orci mollis ipsum, eget
+						suscipit erospurus in ante.
+					</p>
 					<ul>
 						<li>Donec sapien ante, accumsan ut</li>
 						<li>Maecenas a elitlacinia urna posuere</li>
 					</ul>
 					<div class="lotusBtnContainer">
 						<span class="lotusBtn lotusBtnSpecial">
-							<a href="employeeHome.xsp">View My Tickets</a>
+							<a href="employeeHome.xsp">
+								View My Tickets
+							</a>
 						</span>
 						<span class="lotusBtn lotusBtnSpecial">
 							<a href="editTicket.xsp">New Ticket</a>
@@ -29,85 +128,193 @@
 				</div>
 				<br />
 				<table width="100%" cellpadding="0" cellspacing="0">
-		<tr>
-			<td valign="top" width="50%">
-					<div class="lotusWidget2">
-					<h2>Announcements</h2>
-					<div class="lotusWidgetBody">
-					<table cellpadding="0" cellspacing="0" class="lotusTable">
-							<xp:repeat id="repeat1" rows="5" value="#{announcementsView}" var="entry" indexVar="index">
-								<tr class="#{javascript: index == 0 ? 'lotusFirst' : ''}">
-									<td>
-										<h4>
-											<xp:link escape="true" text="#{entry.Summary}" id="link1">
-												<xp:this.value><![CDATA[#{javascript:"announcement.xsp?action=openDocument&documentId=" + entry.getNoteID()}]]></xp:this.value>
-											</xp:link>
-										</h4>
-										<div class="lotusMeta">
-											<xp:text value="#{entry.Date}"></xp:text>
-										</div>
-									</td>
-								</tr>
-							</xp:repeat>
-						</table>
-					</div>
-				</div>	
-			</td>
-			<td width="20">
-			</td>
-			<td valign="top">
-				<div class="lotusWidget2">
-					<h2>Trouble Ticket Forum</h2>
-					<div class="lotusWidgetBody">
-						<table cellpadding="0" cellspacing="0" class="lotusTable">
-							
-								<tr class="lotusFirst">
-									<td>
-	<xp:viewPanel rows="4" id="viewPanel2" var="topics">
-		<xp:this.facets>
-			<xp:pager partialRefresh="true" layout="Previous Group Next"
-				xp:key="headerPager" id="pager2">
-			</xp:pager>
-		</xp:this.facets>
-<xp:this.value><![CDATA[#{javascript:
-		var forumService = com.ibm.sbt.services.client.connections.forums.ForumService();	
-		var forumId= context.getProperty("xsp.connections.forumId");
-		if(forumId == null)
-			return null;
-		else
-			return forumService.getForum(forumId).getTopics() }]]>
-		</xp:this.value>
-		<xp:viewColumn columnName="Data" id="viewColumn1">
-			<xp:viewColumnHeader value="Forum Questions"
-				id="viewColumnHeader2" contentType="HTML">
-			</xp:viewColumnHeader>
-			<xp:link escape="true"
-				text="#{javascript:return topics.getTitle()}" id="link2"
-				target="_blank">
-				<xp:this.value><![CDATA[#{javascript:var url=topics.getTopicUrl();
-				var url=url.replace("atom","html");
-				url=url.replace("topicUuid","id");
-return url;}]]></xp:this.value>
-			</xp:link>
-		</xp:viewColumn>
-		<xp:viewColumn columnName="Summary" id="viewColumn5"
-			contentType="html">
-			<xp:this.value><![CDATA[#{javascript:topics.getContent();}]]></xp:this.value>
-			<xp:viewColumnHeader value="Summary"
-				id="viewColumnHeader1">
-			</xp:viewColumnHeader>
-		</xp:viewColumn>
-	</xp:viewPanel>
+					<tr>
+						<td valign="top" width="50%">
+							<xp:panel id="announcePanel">
+								<xp:panel id="loadingAnnounce">
+									<xp:panel styleClass="lotusWidget2">
+										<h2>Announcements</h2>
+										<xp:div styleClass="lotusWidgetBody">
+											<table cellpadding="0" cellspacing="0" style="width: 100%;">
+												<tr>
+													<td>
+														<xp:image url="/loading.gif" id="image1">
+														</xp:image>
+													</td>
+												</tr>
+											</table>
+										</xp:div>
+									</xp:panel>
+								</xp:panel>
+								<xp:panel id="announcements" style="display: none;">
+									<div class="lotusWidget2">
+										<h2>Announcements</h2>
+											<xp:div styleClass="lotusWidgetBody">
+												<xe:dataView id="announceDataView" var="announce" columnTitles="true"
+													rows="5" value="#{announcementsView}" styleClass="topicsDataView"
+													pageName="/announcement.xsp" openDocAsReadonly="true">
 
-									</td>
-								</tr>
-						</table>
-					</div>
-				</div>
-			</td>
-		</tr>
-	</table>
-	<br />
+													<xe:this.extraColumns>
+														<xe:viewExtraColumn columnTitle="Summary">
+														</xe:viewExtraColumn>
+													</xe:this.extraColumns>
+
+													<xe:this.summaryColumn>
+														<xe:viewSummaryColumn columnTitle="Date">
+														</xe:viewSummaryColumn>
+													</xe:this.summaryColumn>
+													<xe:this.facets>
+														<xp:panel xp:key="noRows" id="topicsPanel2">
+															<xp:div styleClass="lotusWidgetBody">
+																No announcements
+															</xp:div>
+														</xp:panel>
+														<xp:panel id="summaryPanel" xp:key="summary" style="white-space:nowrap;">
+															<xp:link escape="true" id="link3" target="_blank"
+																text="#{announce.Summary}" styleClass="dataViewLink">
+															</xp:link>
+														</xp:panel>
+														<xp:panel id="contentPanel" xp:key="extra0" style="white-space:nowrap;">
+															<xp:text escape="false" value="#{announce.Date}">
+															</xp:text>
+														</xp:panel>
+													</xe:this.facets>
+												</xe:dataView>
+											</xp:div>
+										</div>
+								</xp:panel>
+							</xp:panel>
+						</td>
+						<td width="20"></td>
+						<td valign="top">
+							<xp:panel id="forumPanel" rendered="#{javascript:sessionScope.connectionsEnabled;}">
+								<xp:panel id="loadingTopics">
+									<xp:panel styleClass="lotusWidget2">
+										<h2>Community Forum</h2>
+										<xp:div styleClass="lotusWidgetBody">
+											<table cellpadding="0" cellspacing="0" style="width: 100%;">
+												<tr>
+													<td>
+														<xp:image url="/loading.gif" id="loadingTopicsImg">
+														</xp:image>
+													</td>
+												</tr>
+											</table>
+										</xp:div>
+									</xp:panel>
+								</xp:panel>
+								<xp:panel id="forumCC" style="display: none;">
+									<!--									<xp:this.rendered>-->
+									<!--										<![CDATA[#{javascript:-->
+									<!--										    var forumCC = getComponent("forumCC");-->
+									<!--										    var style = forumCC.style;-->
+									<!--										   	println("style="+style.contains("none"));-->
+									<!--											return !style.contains("none"); -->
+									<!--											//return viewScope.pageLoaded;-->
+									<!--										}]]>-->
+									<!--									</xp:this.rendered>-->
+									<xc:welcomeForum></xc:welcomeForum>
+								</xp:panel>
+							</xp:panel>
+						</td>
+					</tr>
+					<tr>
+						<td valign="top" width="50%">
+							<xp:panel id="commFilesPanel" rendered="#{javascript:sessionScope.connectionsEnabled;}">
+								<xp:panel id="loadingCommFiles">
+									<xp:panel styleClass="lotusWidget2">
+										<h2>Community Files</h2>
+										<xp:div
+											styleClass="lotusWidgetBody">
+											<table cellpadding="0" cellspacing="0" style="width: 100%;">
+												<tr>
+													<td>
+														<xp:image url="/loading.gif" id="loadingCommFilesImg">
+														</xp:image>
+													</td>
+												</tr>
+											</table>
+										</xp:div>
+									</xp:panel>
+								</xp:panel>
+								<xp:panel id="commFilesCC" style="display: none;">
+									<xc:welcomeCommunityFiles></xc:welcomeCommunityFiles>
+								</xp:panel>
+							</xp:panel>
+						</td>
+						<td width="20"></td>
+						<td valign="top">
+							<xp:panel id="myFilesPanel" rendered="#{javascript:sessionScope.connectionsEnabled;}">
+								<xp:panel id="loadingMyFiles">
+									<xp:panel styleClass="lotusWidget2">
+										<h2>My Files</h2>
+										<xp:div styleClass="lotusWidgetBody">
+											<table cellpadding="0" cellspacing="0" style="width: 100%;">
+												<tr>
+													<td>
+														<xp:image url="/loading.gif" id="loadingMyFilesImg">
+														</xp:image>
+													</td>
+												</tr>
+											</table>
+										</xp:div>
+									</xp:panel>
+								</xp:panel>
+								<xp:panel id="myFilesCC" style="display: none;">
+									<xc:welcomeMyFiles></xc:welcomeMyFiles>
+								</xp:panel>
+							</xp:panel>
+						</td>
+					</tr>
+					<tr>
+						<td valign="top" width="50%">
+							<xp:panel id="commMembersPanel" rendered="#{javascript:sessionScope.connectionsEnabled;}">
+								<xp:panel id="loadingCommMembers">
+									<xp:panel styleClass="lotusWidget2">
+										<h2>Members</h2>
+										<xp:div styleClass="lotusWidgetBody">
+											<table cellpadding="0" cellspacing="0" style="width: 100%;">
+												<tr>
+													<td>
+														<xp:image url="/loading.gif" id="loadingCommMembersImg">
+														</xp:image>
+													</td>
+												</tr>
+											</table>
+										</xp:div>
+									</xp:panel>
+								</xp:panel>
+								<xp:panel id="commMembersCC" style="display: none;">
+									<xc:welcomeMembers></xc:welcomeMembers>
+								</xp:panel>
+							</xp:panel>
+						</td>
+						<td width="20"></td>
+						<td valign="top">
+							<xp:panel id="myColleaguesPanel" rendered="#{javascript:sessionScope.connectionsEnabled;}">
+								<xp:panel id="loadingMyColleagues">
+									<xp:panel styleClass="lotusWidget2">
+										<h2>My Colleagues</h2>
+										<xp:div styleClass="lotusWidgetBody">
+											<table cellpadding="0" cellspacing="0" style="width: 100%;">
+												<tr>
+													<td>
+														<xp:image url="/loading.gif" id="loadingColleaguesImg">
+														</xp:image>
+													</td>
+												</tr>
+											</table>
+										</xp:div>
+									</xp:panel>
+								</xp:panel>
+								<xp:panel id="myColleaguesCC" style="display: none;">
+									<xc:welcomeColleagues></xc:welcomeColleagues>
+								</xp:panel>
+							</xp:panel>
+						</td>
+					</tr>
+				</table>
+				<br />
 			</xp:panel>
 		</xp:this.facets>
 	</xc:layout>

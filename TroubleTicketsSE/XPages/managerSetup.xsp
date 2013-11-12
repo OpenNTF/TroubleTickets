@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+	
+	<xp:this.resources>
+		<xp:script src="/xpagesCommon.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
+	<xp:this.resources>
+		<xp:script src="/xpagesTickets.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
+	
+	<xc:layout>
+		<xp:this.facets>
+			<xp:panel xp:key="content">
+				<xp:this.data>
+					<xp:dominoDocument var="idStore" action="editDocument" formName="idStore">
+						<xp:this.documentId>
+							<![CDATA[#{javascript:
+									try{
+										var idStoreView:NotesView = database.getView("idStoreLookup");
+										if(null != idStoreView){
+											idStoreView.refresh();
+											var idStoreDoc:NotesDocument = idStoreView.getFirstDocument();
+											if(null == idStoreDoc){
+												// idStore does not exist
+												idStoreDoc = database.createDocument();
+												idStoreDoc.appendItemValue("Form", "idStore");
+												idStoreDoc.appendItemValue("communityId","");
+												idStoreDoc.appendItemValue("forumId", "");
+												idStoreDoc.save(true);
+												idStoreView.refresh();
+											}
+											return idStoreDoc.getNoteID();
+										}
+									}catch(e){
+										print("documentId exception: " + e);
+										throw e;
+									}
+									return null;
+							}]]>
+						</xp:this.documentId>
+					</xp:dominoDocument>
+				</xp:this.data>
+				<xe:formTable id="formTable1" formTitle="Connections Setup" labelWidth="25%">
+					<xe:this.facets>
+						<xp:div xp:key="footer">
+							<xp:button value="Save and Close" id="saveCloseBtn" styleClass="lotusFormButton">
+								<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+									<xp:this.action>
+										<xp:actionGroup>
+											<xp:saveDocument var="idStore"></xp:saveDocument>
+											<xp:executeScript>
+												<xp:this.script><![CDATA[#{javascript:
+													var url = getComponent("url").getValue();
+													try{
+														var ssoBean = BeanFactory.createSSOBean("connections", url);
+													}catch(e) {
+														print("bean exception: " + e);
+														throw e;
+													}}]]>
+												</xp:this.script>
+											</xp:executeScript>
+											<xp:openPage name="/welcome.xsp"></xp:openPage>
+										</xp:actionGroup>
+									</xp:this.action>
+								</xp:eventHandler>
+							</xp:button>
+							<xp:button value="Cancel" id="cancel" styleClass="lotusFormButton">
+								<xp:eventHandler event="onclick" submit="true" refreshMode="complete" immediate="true">
+									<xp:this.action>
+										<xp:openPage name="/welcome.xsp"></xp:openPage>
+									</xp:this.action>
+								</xp:eventHandler>
+							</xp:button>
+						</xp:div>
+					</xe:this.facets>
+					<xe:formRow id="formRow1" styleClass="formRow" labelPosition="none">
+						<xp:text id="infoLabel1" styleClass="lotusText" value="Set the Connections URL, Community UID and Forum ID here." /><xp:br />
+						<xp:text id="infoLabel2" styleClass="lotusText" value="ID format = XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" /><xp:br />
+					</xe:formRow>
+					<xe:formRow id="formRow2" styleClass="formRow" label="Connections URL:">
+						<xp:inputText value="#{idStore.URL}" id="url" styleClass="lotusText" style="width:100%;"></xp:inputText>
+					</xe:formRow>
+					<xe:formRow id="formRow3" styleClass="formRow" label="Connections Community UID:">
+						<xp:inputText value="#{idStore.communityId}" id="communityId" styleClass="lotusText" style="width:100%;"></xp:inputText>
+					</xe:formRow>
+					<xe:formRow id="formRow4" styleClass="formRow" label="Community Forum ID:">
+						<xp:inputText value="#{idStore.forumId}" id="forumId" styleClass="lotusText" style="width:100%;"></xp:inputText>
+					</xe:formRow>
+				</xe:formTable>
+			</xp:panel>
+		</xp:this.facets>
+	</xc:layout>
+</xp:view>

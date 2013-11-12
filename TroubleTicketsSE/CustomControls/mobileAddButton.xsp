@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+
+	<xe:toolBarButton id="newButton" label="+" style="font-size:22px;">
+		<xp:this.rendered><![CDATA[#{javascript: 
+			return ('' != userBean && '' != userBean.getDisplayName() && userBean.getDisplayName() != 'Anonymous');}]]>
+		</xp:this.rendered>
+		<xp:eventHandler event="onclick"
+			submit="true" refreshMode="complete">
+			<xp:this.action>
+				<xp:actionGroup>
+					<xe:moveTo
+						direction="Left to Right" forceFullRefresh="true"
+						targetPage="mNewTicket" transitionType="slide">
+					</xe:moveTo>
+				</xp:actionGroup>
+			</xp:this.action>
+		</xp:eventHandler>
+	</xe:toolBarButton>
+</xp:view>

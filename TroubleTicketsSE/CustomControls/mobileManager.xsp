@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core" dojoParseOnLoad="true"
+	dojoTheme="true" xmlns:xe="http://www.ibm.com/xsp/coreex">
+	<xp:this.resources>
+		<xp:dojoModule name="dojox/mobile"></xp:dojoModule>
+		<xp:dojoModule name="dojox/mobile/parser"></xp:dojoModule>
+		<xp:dojoModule name="dojox/mobile/Accordion"></xp:dojoModule>
+	</xp:this.resources>
+
+	<xe:djxmHeading id="djxmHeading1" back="Menu" moveTo="mMenu" label="Manager">
+		<xp:this.rendered><![CDATA[#{javascript:
+			sessionScope.from = "mManager";
+			return true;
+		}]]>
+		</xp:this.rendered>
+	</xe:djxmHeading>
+
+	<xp:div dojoType="dojox/mobile/Accordion" id="managerAccordion">
+		<xp:this.dojoAttributes>
+			<xp:dojoAttribute name="singleOpen" value="true"></xp:dojoAttribute>
+		</xp:this.dojoAttributes>
+		<xe:djContentPane id="announcementsPane">
+			<xe:this.dojoAttributes>
+				<xp:dojoAttribute name="label" value="Announcements">
+				</xp:dojoAttribute>
+				<xp:dojoAttribute name="icon1"
+					value="mblDomButtonBlackRightArrow16">
+				</xp:dojoAttribute>
+				<xp:dojoAttribute name="icon2"
+					value="mblDomButtonBlackDownArrow16">
+				</xp:dojoAttribute>
+			</xe:this.dojoAttributes>
+			<xe:dataView id="annsDataView" var="annsDataView" rows="5"
+				pageName="#mAnnouncement" openDocAsReadonly="true">
+				<xe:this.data>
+					<xp:dominoView var="view1"
+						viewName="xpagesAnnouncements" expandLevel="0">
+					</xp:dominoView>
+				</xe:this.data>
+
+				<xe:this.summaryColumn>
+					<xe:viewSummaryColumn columnName="Summary"
+						columnTitle="AnnouncementSummary">
+					</xe:viewSummaryColumn>
+				</xe:this.summaryColumn>
+				<xe:this.categoryColumn>
+					<xe:viewCategoryColumn columnName="Date"
+						columnTitle="Date">
+					</xe:viewCategoryColumn>
+				</xe:this.categoryColumn>
+
+				<xp:this.facets>
+					<xp:panel xp:key="noRows">
+						<xp:div styleClass="xlEmptyFacet">
+							<xp:label value="No announcements"></xp:label>
+						</xp:div>
+					</xp:panel>
+
+					<xp:panel id="panel2" xp:key="detail">
+						<xp:text escape="true" id="dateLabel"
+							styleClass="mblDetailTextBold" value="Date: ">
+						</xp:text>
+						<xp:text escape="true" id="dateValue"
+							styleClass="mblDetailTextNormal"
+							value="#{javascript: annsDataView.getColumnValue('Date')}">
+						</xp:text>
+					</xp:panel>
+
+					<xp:link escape="true" text="See All" id="moreLink"
+						xp:key="pagerBottom">
+						<xp:this.rendered>
+							<![CDATA[#{javascript:
+								var size = getComponent("annsDataView").getRowCount();
+								return size > 5;
+							}]]>
+						</xp:this.rendered>
+
+					<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+						<xp:this.action>
+							<xe:moveTo direction="Left to Right"
+								targetPage="mAllAnnouncements" transitionType="slide">
+							</xe:moveTo>
+						</xp:this.action></xp:eventHandler></xp:link>
+				</xp:this.facets>
+			</xe:dataView>
+		</xe:djContentPane>
+		<xe:djContentPane id="categoriesPane">
+			<xe:this.dojoAttributes>
+				<xp:dojoAttribute name="label" value="Categories">
+				</xp:dojoAttribute>
+				<xp:dojoAttribute name="icon1" value="mblDomButtonBlackRightArrow16">
+				</xp:dojoAttribute>
+				<xp:dojoAttribute name="icon2" value="mblDomButtonBlackDownArrow16">
+				</xp:dojoAttribute>
+			</xe:this.dojoAttributes>
+			<xe:dataView id="catsDataView" var="catsDataView" rows="5"
+				pageName="#mViewCategory" openDocAsReadonly="true">
+				<xe:this.data>
+					<xp:dominoView var="categoriesView" viewName="xpagesCategories" expandLevel="0">
+					</xp:dominoView>
+				</xe:this.data>
+
+				<xe:this.summaryColumn>
+					<xe:viewSummaryColumn columnName="Name" columnTitle="CategoryName">
+					</xe:viewSummaryColumn>
+				</xe:this.summaryColumn>
+				<xe:this.categoryColumn>
+					<xe:viewCategoryColumn columnName="Resources" columnTitle="Resources">
+					</xe:viewCategoryColumn>
+				</xe:this.categoryColumn>
+
+				<xp:this.facets>
+					<xp:panel xp:key="noRows">
+						<xp:div styleClass="xlEmptyFacet">
+							<xp:label value="No categories"></xp:label>
+						</xp:div>
+					</xp:panel>
+
+					<xp:panel id="panel1" xp:key="detail">
+						<xp:text escape="true" id="computedField1"
+							styleClass="mblDetailTextBold" value="Resources: ">
+						</xp:text>
+						<xp:text escape="true" id="computedField2"
+							styleClass="mblDetailTextNormal"
+							value="#{javascript: catsDataView.getColumnValue('Resources')}">
+						</xp:text>
+					</xp:panel>
+
+					<xp:link escape="true" text="All Categories" id="link1"
+						xp:key="pagerBottom">
+						<xp:this.rendered>
+							<![CDATA[#{javascript:
+								var size = getComponent("catsDataView").getRowCount();
+								return size > 5;
+							}]]>
+						</xp:this.rendered>
+
+					<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+						<xp:this.action>
+							<xe:moveTo direction="Left to Right"
+								targetPage="mAllCategories" transitionType="slide">
+							</xe:moveTo>
+						</xp:this.action></xp:eventHandler></xp:link>
+				</xp:this.facets>
+			</xe:dataView>
+		</xe:djContentPane>
+	</xp:div>
+</xp:view>

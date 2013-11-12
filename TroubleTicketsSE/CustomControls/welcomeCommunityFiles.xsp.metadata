@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="1.0" replicaid="85257C2000385D78" version="9.0" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="286" sequence="9" unid="59309A22AB1A0E1A85257C200038644E">
+<created><datetime>20131111T051556,94-05</datetime></created>
+<modified><datetime>20131111T053120,53-05</datetime></modified>
+<revised><datetime>20131111T053120,52-05</datetime></revised>
+<lastaccessed><datetime>20131111T053120,53-05</datetime></lastaccessed>
+<addedtofile><datetime>20131111T051556,95-05</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Frank Adams/O=renovations</name></updatedby>
+<wassignedby><name>CN=Frank Adams/O=renovations</name></wassignedby>
+<item name="$Flags"><text>gC~4;</text></item>
+<item name="$TITLE"><text>welcomeCommunityFiles.xsp</text></item>
+
+
+<item name="$FileNames" sign="true"><text>welcomeCommunityFiles.xsp</text></item>
+
+
+
+<item name="$DesignerVersion"><text>9.0.1</text></item>
+
+
+
+</note>

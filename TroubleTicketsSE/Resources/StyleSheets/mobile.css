@@ -1,0 +1,327 @@
+.mobileFormContainer .centeredRow .dataCell {
+	vertical-align: middle;
+	font-size: 14px;
+}
+
+.mobileFormContainer .viewTicket .labelCell {
+	border-right-color: #9CACC0;
+	border-right-width: 1px;
+	font-size: 16px;
+	max-width: 35%;
+}
+
+.mblView .mobileFormContainer .mobileFormTable .detailsRow {
+	border-bottom: 0px;
+}
+
+.mobileFormContainer .detailsRow .detailsTextarea {
+	width: 95%;
+	margin: 8px;
+}
+
+.mblButtonTable {
+	width: 100%;
+	padding-left: 8px;
+	padding-right: 8px;	
+}
+	
+/*.mblSmallFormFooterButton
+{
+    border-style: inset; 
+    border-color: #9CACC0; 
+    font-family: "Helvetica Neue",Roboto,"Droid Sans",sans-serif; 
+    font-size: 13px;
+    font-weight:bold;
+    color: black;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    background-color: #5877A2;
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(255, 255, 255)), to(rgb(237, 239, 243))); 
+    width: 25%;
+    font-size: 14px;
+    padding:2px 2px 2px 2px;
+}*/
+
+.mblListItem .mblFooterText a {
+    border: 1px solid #ADAAAD;
+    background-color: white;
+    -webkit-box-shadow: 1px 1px 1px #8E8E8E;
+    border-radius: 5px;
+    color: black;
+	text-decoration: none;
+	margin: 0 8px 8px;
+	font-size: 16px;
+	text-align: center;
+}
+
+.oneui .mblDataView .mblFooter{
+    background-color: white;
+}
+
+.oneui .mblListItem .mblFooterText{
+    background-color: white;
+}
+
+.mblView .mblTabBarSegmentedControl .mblTabBarButton {
+	max-width: 24%;
+}
+
+.oneui .mblView .mblTabBarSegmentedControl .mblTabBarButton {
+	background-image: -webkit-linear-gradient(top,#ffffff 0%,#e6e6e6 100%);
+}
+.oneui .mblView .mblTabBarSegmentedControl .mblTabBarButtonSelected {
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#e2e2e2),to(#a4a4a4));
+}
+
+.mblView .mblTabBarSegmentedControl .staffBtn1 {
+	width: 28%;
+	max-width: 100px;
+}
+.mblView .mblTabBarSegmentedControl .staffBtn2 {
+	width: 40%;
+	max-width: 180px;
+}
+.mblView .mblTabBarSegmentedControl .staffBtn3 {
+	width: 28%;
+	max-width: 100px;
+}
+
+.mblView .dynamicPanel {
+	font-family: "Helvetica Neue",Helvetica,Arial,"Droid Sans",sans-serif;
+	height: auto;
+	padding: 5px 5px 5px 5px;
+	font-size: 13px;
+	text-align: left;
+	white-space: nowrap;
+	color: white;
+	border: 1px solid #2d3642;
+	border-top-width: 0px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	max-width: 400px;
+	width: 80%;
+	margin: 0 auto;
+	-webkit-transition: visibility 0.3s linear;
+	transition: visibility 0.3s linear;
+}
+
+.oneui .mblView .dynamicPanel {
+	background: #f8f8f8;
+	color: black;
+	border-color: #d2d2d2;
+}
+
+.iphone .mblView .dynamicPanel {
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#b0bccd), to(#6d84a2), color-stop(0.5, #889bb3), color-stop(0.5, #8195af));
+	text-shadow: rgba(0, 0, 0, 0.6) 1px 1px 0;	
+}
+
+.iphone .mblView .dynamicPanelButton {
+	font-size: 13px;
+	font-weight: bold;
+	text-align: center;
+	line-height: 20px;
+	cursor: pointer;
+	list-style-type: none;
+	border-style: solid;
+	border-color: #2f3740 #405a7e #375073 #3a4755;
+	border-width: 1px;
+	border-left-width: 1px;
+	color: white;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#b0bccd), to(#6d84a2), color-stop(0.5, #889bb3), color-stop(0.5, #8195af));
+	border-radius: 5px;
+	text-shadow: rgba(0, 0, 0, 0.6) 1px 1px 0;	
+}
+
+.android .mblView .dynamicPanelButton {
+	border-width: 1px 1px 1px 0px;	
+	font-size: 13px;
+	font-weight: bold;
+	text-align: center;
+	line-height: 20px;
+	cursor: pointer;
+	border-style: solid;
+	border-color: #555555;
+	border-left-width: 1px;
+	color: black;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#dfdfdf), to(#a6a6a6));
+	border-top-left-radius: 5px;
+}
+
+.android .mblView .dynamicPanel {
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#9c9e9c), to(#848284));
+	text-shadow: rgba(0, 0, 0, 0.6) 1px 1px 0;
+}
+
+.oneui .mblView .dynamicPanelButton {
+	font-size: 13px;
+	font-weight: bold;
+	text-align: center;
+	line-height: 20px;
+	cursor: pointer;
+	border-style: solid;
+	border-width: 1px;
+	border-left-width: 1px;
+	color: black;
+	background-image: -webkit-linear-gradient(bottom, #e8e8e8, #ffffff);
+	border-radius: 3px;
+	border-color: silver;
+}
+
+.mblView .dynamicPanel .dynamicPanelLabel {
+	width: 20%;
+	min-width: 75px;
+	padding-left: 10px;
+	float:left;
+}
+
+.mblView .dynamicPanel .closeBarSummaryWrapper{
+	overflow: hidden;
+	text-overflow: ellipsis;	
+}
+
+.mblView .dynamicPanel .closePanelButton {
+	float:right;
+	font-weight:bold;
+	color:white;
+	text-decoration:none;
+	font-size:14px;
+	padding-right:10px;
+}
+
+.oneui .mblView .dynamicPanel .closePanelButton {
+	color:gray;
+}
+
+.mblDomButtonBlackRightArrow16 {
+	border: 6px solid;
+	border-right: 0px none;
+	border-top-color: transparent;
+	border-bottom-color: transparent;
+	border-left-color: gray;
+	margin-left: 3px;
+}
+
+.mblDomButtonBlackDownArrow16 {
+	border: 6px solid;
+	border-bottom: 0px none;
+	border-left-color: transparent;
+	border-right-color: transparent;
+	border-top-color: gray;
+	margin-top: 3px;
+}
+
+.mobileFormContainer .dataCell > fieldset {
+	height: 40px;
+}
+.mobileFormContainer .dataCell > fieldset > table {
+	margin: 0px 0px 0px -15px;
+	width: 200px;
+}
+
+.mobileFormContainer .mblRadioButton {
+	background-image: none;
+	background-color: white;
+}
+
+.mblView .xlEmptyFacet {
+	padding: 8px;
+}
+	
+.oneui .mblView .xlEmptyFacet {
+	background-color: white;
+}
+
+.oneui .android .mblView .dynamicPanel {
+	text-shadow: transparent 0px 0px 0;
+}
+
+.oneui .android .mblHeading {
+	height: 44px;
+	line-height: 44px;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+	padding: 0px;
+	background-image: -webkit-linear-gradient(bottom, #0075a3, #0075a3 1px, #008abf 1px, #008abf 3px, #1a96c6 3px, #1a96c6 4px, #00090d 4px, #00090d 5px, #131313 5px, #444444 47px, #6b6b6b 47px, #6b6b6b 48px);
+	background-image:    -moz-linear-gradient(bottom, #0075a3, #0075a3 1px, #008abf 1px, #008abf 3px, #1a96c6 3px, #1a96c6 4px, #00090d 4px, #00090d 5px, #131313 5px, #444444 47px, #6b6b6b 47px, #6b6b6b 48px);
+	background-image:         linear-gradient(bottom, #0075a3, #0075a3 1px, #008abf 1px, #008abf 3px, #1a96c6 3px, #1a96c6 4px, #00090d 4px, #00090d 5px, #131313 5px, #444444 47px, #6b6b6b 47px, #6b6b6b 48px);
+}
+
+.oneui .android .mblView {
+	padding-top: 44px !important;	
+}
+
+.oneui .android .mblHeading .mblToolBarButton{
+	font-size: 12px;
+	height: 27px;
+	line-height: 27px;
+	background-image: -webkit-linear-gradient(bottom, #121212, #464646);
+	background-image:    -moz-linear-gradient(bottom, #121212, #464646);
+	background-image:         linear-gradient(bottom, #121212, #464646);
+	font-family: "Helvetica Neue",Roboto,"Droid Sans",sans-serif;
+	border-color: #191919 #1f1f1f #696969 #1c1c1c;
+	border-width: 1px;
+	border-style: solid;
+	margin: 6px 3px 1px 3px;
+	padding: 0px 10px 0px 10px;
+}
+
+.oneui .android .mblHeading .mblHeadingSpanTitle{
+	float: none;
+}
+
+.oneui .android .mblHeading .mblToolBarButtonHasLeftArrow{
+   	border-left: none;
+   	border-top-right-radius: 3px;
+   	border-bottom-right-radius: 3px;
+	margin: 6px 0 0 15px;
+    padding: 0;
+}
+
+.oneui .android .mblHeading .mblToolBarButtonLeftArrow{
+	background-image: -webkit-linear-gradient(bottom right, #121212, #464646);
+	background-image:    -moz-linear-gradient(bottom right, #121212, #464646);
+	background-image:         linear-gradient(bottom right, #121212, #464646);
+	-webkit-transform: scale(0.6, 1.00) rotate(45deg);
+	transform: scale(0.6, 1.00) rotate(45deg);
+	box-shadow: 0px 1px 0 rgba(255,255,255,0.33);
+	left: -10px;
+	display: block;
+	top: 3px;
+	width: 18px;
+	height: 18px;
+	border: 1px solid black;
+}
+
+.oneui .android .mblHeading .mblToolBarButtonIcon{
+ 	z-index: 5;
+	position: relative;
+	background-image: -webkit-linear-gradient(bottom, #121212, #464646);
+	background-image:    -moz-linear-gradient(bottom, #121212, #464646);
+	background-image:         linear-gradient(bottom, #121212, #464646);
+    width: 3px;
+    height: 27px;
+	background-position: 0px;
+}
+
+.oneui .android .mblHeading .mblToolBarButtonLabel{
+ 	display: block;
+}
+
+.oneui .android .mblHeading .mblHeadingActionFacet{
+	right: 0px;
+}
+
+.oneui .android .mobileFormContainer .mobileFormTable{
+	color: #000000;
+	background-color: #ffffff
+}
+
+.oneui .android .mobileFormContainer .mobileFormTable .dataCell input[type="text"]{
+	color: #000000;
+}
+
+.oneui .topicsDataView .lotusTable .lotusFirstCell{
+	width: 35% !important;
+}
