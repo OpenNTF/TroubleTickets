@@ -44,3 +44,32 @@
 	line-height:16px;
 	color: gray;
 }
+
+.setupTable .formRow .segmentedButtonLeft {
+	border-radius: 5px 0px 0px 5px;
+	margin-right: 0px;
+}
+
+.setupTable .formRow .segmentedButtonRight {
+	border-radius: 0px 5px 5px 0px;
+	margin-left: 0px;
+}
+
+.setupTable .formRow .buttonSelected {
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#e2e2e2),to(#a4a4a4));
+	background-image:    -moz-linear-gradient(center top , #e2e2e2 0%, #a4a4a4 100%);
+	background-image:        -linear-gradient(center top , #e2e2e2 0%, #a4a4a4 100%);
+}
+
+.setupTable .formRow .buttonDeselected {
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#ededed),to(#e1e1e1));
+	background-image:    -moz-linear-gradient(center top , #EDEDED 0%, #E1E1E1 100%);
+	background-image:        -linear-gradient(center top , #EDEDED 0%, #E1E1E1 100%);
+}
+
+.lotusui30 .lotusBtn .uploadButton{
+	padding:1px;
+	height:18px;
+	font-size:10px;
+	font-weight:bold;
+}

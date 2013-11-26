@@ -64,6 +64,10 @@
 			pageName="mViewTicket">
 			<xc:mobileViewTicket></xc:mobileViewTicket>
 		</xe:appPage>
+		<xe:appPage resetContent="true" id="mViewForumTopic"
+			pageName="mViewForumTopic">
+			<xc:mobileViewForumTopic></xc:mobileViewForumTopic>
+		</xe:appPage>
 		<xe:appPage resetContent="true" id="mCloseTicket"
 			pageName="mCloseTicket">
 			<xc:mobileCloseTicket></xc:mobileCloseTicket>

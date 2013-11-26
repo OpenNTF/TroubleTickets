@@ -7,15 +7,20 @@
 			title="Open user's Connections Network page in new window">
 			<xp:this.value>
 				<![CDATA[#{javascript:
-					var endpoint = BeanFactory.getSSOBean("connections");
-					if(null == endpoint) {
-						endpoint = BeanFactory.createSSOBean("connections", getConnectionsURL());
+					try{
+						var endpoint = BeanFactory.getSSOBean("connections");
+						if(null == endpoint) {
+							endpoint = BeanFactory.createSSOBean("connections", getConnectionsURL());
+						}
+						var profileSvc = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);
+						
+						//no SBT SDK functionality available to link to user's network
+						
+						return null;
+					}catch(exc){ 
+						exc.printStackTrace();
+						return null;
 					}
-					var profileSvc = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);
-					
-					//no SBT SDK functionality available to link to user's network
-					
-					return null;
 				}]]>
 			</xp:this.value>
 			<h2>My Colleagues</h2>
@@ -57,12 +62,15 @@
 											if("" != myEmail) {
 												var profileService = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);
 												var colleagues = profileService.getColleagues(myEmail);
+												viewScope.myNetworkAvailable = true;
 												return colleagues;
 											}else{
 												return null;
 											}
 										}catch(exception){
-											println("my colleagues defaultFacet error: " + exception);
+											println("MyColleagues error: " + exception);
+											exception.printStackTrace();
+											viewScope.myNetworkAvailable = false;
 											return null;
 										}
 									}]]>
@@ -70,7 +78,13 @@
 								<xp:this.facets>
 									<xp:panel xp:key="noRows" id="noMembersPanel">
 										<xp:div styleClass="xlEmptyFacet">
-											No colleagues found
+											<xp:text>
+												<xp:this.value>
+													<![CDATA[#{javascript:
+														return (viewScope.mNetworkAvailable ? "No colleagues found." : "Colleagues list unavailable.");
+													}]]>
+												</xp:this.value>
+											</xp:text>
 										</xp:div>
 									</xp:panel>
 									<xp:panel id="namePanel" xp:key="summary"

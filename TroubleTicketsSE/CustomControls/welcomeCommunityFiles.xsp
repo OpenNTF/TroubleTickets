@@ -7,34 +7,27 @@
 			title="Open Community Files page in new window">
 			<xp:this.value>
 				<![CDATA[#{javascript:
-					var endpoint = BeanFactory.getSSOBean("connections");
-					if(null == endpoint) {
-						endpoint = BeanFactory.createSSOBean("connections", getConnectionsURL());
+					try{
+						var endpoint = BeanFactory.getSSOBean("connections");
+						if(null == endpoint) {
+							endpoint = BeanFactory.createSSOBean("connections", getConnectionsURL());
+						}
+						var commSvc = new com.ibm.sbt.services.client.connections.communities.CommunityService(endpoint);
+						var commId = getCommunityId();
+						if("" != commId) {
+							var community = commSvc.getCommunity(commId);
+							var commFilesUrl = community.getCommunityUrl() + "#fullpageWidgetId=Files";
+							return commFilesUrl;
+						} 
+						return null;
+					}catch(exc){ 
+						exc.printStackTrace();
+						return null;;
 					}
-					var commSvc = new com.ibm.sbt.services.client.connections.communities.CommunityService(endpoint);
-					var commId = getCommunityId();
-					if("" != commId) {
-						var community = commSvc.getCommunity(commId);
-						var commFilesUrl = community.getCommunityUrl() + "#fullpageWidgetId=Files";
-						return commFilesUrl;
-					} 
-					return null;
 				}]]>
 			</xp:this.value>
 			<h2>Community Files</h2>
 		</xp:link>
-		
-<!--		<h2>-->	
-<!--			<xp:link id="addCommunityFile" text="+" styleClass="addLink">-->
-<!--				<xp:eventHandler event="onclick" submit="true" refreshMode="complete">-->
-<!--					<xp:this.action>-->
-<!--						<xp:executeScript>-->
-<!--							<xp:this.script><![CDATA[#{javascript:XSP.showDialog("uploadDialog");}]]></xp:this.script>-->
-<!--						</xp:executeScript>-->
-<!--					</xp:this.action>-->
-<!--				</xp:eventHandler>-->
-<!--			</xp:link>		-->
-<!--		</h2>-->
 		<xp:panel id="panel3">
 			<xp:div styleClass="lotusWidgetBody">			
 				<table cellpadding="0" cellspacing="0" style="width: 100%;">
@@ -78,16 +71,24 @@
 											//var sharedFiles = filesService.getCommunitySharedFiles(communityId);
 											//println("Shared Files: " + sharedFiles);
 											//communityFiles.addAll(sharedFiles);
+											viewScope.commFilesAvailable = true;
 											return communityFiles;
 										}catch(exception){
 											println("Community Files value error: " + exception);
+											viewScope.commFilesAvailable = false;
 											return null;
 										}}]]>
 								</xp:this.value>
 								<xp:this.facets>
 									<xp:panel xp:key="noRows" id="emptyCommFilesPanel">
 										<xp:div styleClass="lotusWidgetBody">
-											No Community files found
+											<xp:text>
+												<xp:this.value>
+													<![CDATA[#{javascript:
+														return (viewScope.commFilesAvailable ? "No Community files found." : "Community Files unavailable.");
+													}]]>
+												</xp:this.value>
+											</xp:text>
 										</xp:div>
 									</xp:panel>
 									<xp:panel id="summaryPanel" xp:key="summary"
@@ -120,15 +121,9 @@
 											</xp:this.value>
 										</xp:text>
 									</xp:panel>
-									
-									<!--<xp:button value="Cancel" id="button13" styleClass="lotusFormButton">-->
-<!--										<xp:eventHandler event="onclick" submit="false">-->
-<!--											<xp:this.script><![CDATA[XSP.closeDialog('#{id:closeTicketDialog}')]]></xp:this.script>-->
-<!--										</xp:eventHandler>-->
-<!--									</xp:button>-->
 								</xp:this.facets>
 							</xe:dataView>
-							<xp:button id="uploadCommsLink" style="padding:1px:height:18px;font-size:10px;font-weight:bold;" value="Upload File">
+							<xp:button id="uploadCommsLink" styleClass="lotusBtn uploadButton" value="Upload File" rendered="#{javascript:return viewScope.commFilesAvailable;}">
 								<xp:eventHandler event="onclick" submit="false">
 									<xp:this.script><![CDATA[XSP.openDialog('#{id:uploadDialog1}')]]></xp:this.script>
 								</xp:eventHandler>

@@ -114,5 +114,22 @@ function setInformationMessage(message) {
 }
 
 function isConnectionsEnabled() {
-	return (context.getProperty("xsp.sbt.connections.enabled") == "true");
+	var enabled = false;
+	var storedValue = null;
+	var storeView:NotesView = database.getView("idStoreLookup");
+	if(null != storeView){
+		var connectionsDoc = storeView.getFirstDocument();
+		if(null != connectionsDoc){
+			storedValue = connectionsDoc.getItemValue("connectionsEnabled");
+		}
+	}
+	if(null != storedValue && "" != storedValue) {
+		if(storedValue instanceof String) {
+			enabled = (storedValue == "true");
+		}else{
+			enabled = (storedValue[0] == "true");
+		}
+		return enabled;
+	}
+	return false;
 }

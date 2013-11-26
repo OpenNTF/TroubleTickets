@@ -60,16 +60,24 @@
 											
 											var filesService = new com.ibm.sbt.services.client.connections.files.FileService(endpoint); 
 											var myFiles = filesService.getMyFiles();
+											viewScope.myFilesAvailable = true;
 											return myFiles;
 										}catch(exception){
 											println("My Files value error: " + exception);
+											viewScope.myFilesAvailable = false;
 											return null;
 										}}]]>
 								</xp:this.value>
 								<xp:this.facets>
 									<xp:panel xp:key="noRows" id="topicsPanel2">
 										<xp:div styleClass="lotusWidgetBody">
-											No files found.
+											<xp:text>
+												<xp:this.value>
+													<![CDATA[#{javascript:
+														return (viewScope.myFilesAvailable ? "No files found." : "My Files unavailable.");
+													}]]>
+												</xp:this.value>
+											</xp:text>
 										</xp:div>
 									</xp:panel>
 									<xp:panel id="summaryPanel" xp:key="summary"
@@ -105,7 +113,7 @@
 									</xp:panel>
 								</xp:this.facets>
 							</xe:dataView>
-							<xp:button id="uploadMyFilesLink" style="padding:1px:height:18px;font-size:10px;font-weight:bold;" value="Upload File">
+							<xp:button id="uploadMyFilesLink" style="lotusBtn uploadButton" value="Upload File" rendered="#{javascript:return viewScope.myFilesAvailable;}">
 								<xp:eventHandler event="onclick" submit="false">
 									<xp:this.script><![CDATA[XSP.openDialog('#{id:uploadDialog2}')]]></xp:this.script>
 								</xp:eventHandler>

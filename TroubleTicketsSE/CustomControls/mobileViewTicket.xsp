@@ -204,9 +204,6 @@
 										println("my colleagues defaultFacet error: " + exception);
 										return null;
 									}
-									//result.push('fadams@renovations.com');
-									//result.push('aadmin/IBM');
-									//result.push('buser/IBM');
 									return result;
 								}else{
 									var category = currentDocument.getItemValueString("Category");
@@ -303,10 +300,6 @@
 									println("my colleagues defaultFacet error: " + exception);
 									return null;
 								}
-								//result.push('Select...|');
-								//result.push('fadams@renovations.com');
-								//result.push('aadmin/IBM');
-								//result.push('buser/IBM');
 								return result;
 								}]]>
 							</xp:this.value>
@@ -417,8 +410,6 @@
 						<xp:label value="Comment:"></xp:label>
 					</xp:div>
 					<xp:inputTextarea style="width:60%;max-width:60%" id="commentText" rows="3" value="#{viewScope.comment}">
-<!--					 value="#{commentDoc.Comment}"-->
-					
 					</xp:inputTextarea>
 				</xp:panel>
 				<xp:div style="padding-left:5px;">

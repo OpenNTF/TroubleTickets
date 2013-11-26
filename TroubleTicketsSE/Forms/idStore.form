@@ -1,31 +1,55 @@
 <?xml version='1.0' encoding='utf-8'?>
-<!DOCTYPE form SYSTEM 'xmlschemas/domino_9_0_1.dtd'>
-<form name='idStore' alias='ids' xmlns='http://www.lotus.com/dxl' version='9.0'
- maintenanceversion='1.0' replicaid='80257C0D003C8F64' nocompose='true' publicaccess='false'
- designerversion='8.5.3'>
-<noteinfo noteid='33a' unid='BC29D14B13E0D3E880257C0C003EBB21' sequence='13'>
-<created><datetime dst='true'>20131022T122511,37+01</datetime></created>
-<modified><datetime>20131104T120436,24-05</datetime></modified>
-<revised><datetime>20131104T120436,23-05</datetime></revised>
-<lastaccessed><datetime>20131104T120436,24-05</datetime></lastaccessed>
-<addedtofile><datetime dst='true'>20131023T120131,26+01</datetime></addedtofile></noteinfo>
+<note class='form' xmlns='http://www.lotus.com/dxl' version='9.0' maintenanceversion='1.0'
+ replicaid='85257C2000385D78'>
+<noteinfo noteid='262' unid='399652C507821B7F85257C20003863EB' sequence='3'>
+<created><datetime>20131111T051555,95-05</datetime></created>
+<modified><datetime>20131126T124546,60-05</datetime></modified>
+<revised><datetime>20131126T124546,58-05</datetime></revised>
+<lastaccessed><datetime>20131126T124546,60-05</datetime></lastaccessed>
+<addedtofile><datetime>20131111T051555,96-05</datetime></addedtofile></noteinfo>
 <updatedby><name>CN=Frank Adams/O=renovations</name></updatedby>
 <wassignedby><name>CN=Frank Adams/O=renovations</name></wassignedby>
-<body><richtext>
-<pardef id='1'/>
-<par def='1'><field type='text' kind='editable' name='URL'/><compositedata
- type='98' prevtype='65418' nexttype='222' afterparcount='7' containertype='65418'
- aftercontainercount='1' afterbegincount='3'>
-Yg4BAIQAAAAAAAAAAAA=
-</compositedata><field type='text'
- kind='editable' name='communityId'/><compositedata type='98' prevtype='65418'
- nexttype='222' afterparcount='13' containertype='65418' aftercontainercount='1'
- afterbegincount='3'>
-Yg4BAIQAAAAAAAAAAAA=
-</compositedata><field type='text' kind='editable' name='forumId'/><compositedata
- type='98' prevtype='65418' nexttype='222' afterparcount='19' containertype='65418'
- aftercontainercount='1' afterbegincount='3'>
-Yg4BAIQAAAAAAAAAAAA=
-</compositedata></par></richtext></body>
-<item name='$$ScriptName' summary='false' sign='true'><text>ids</text></item></form>
+<item name='$HTMLCode' sign='true'>
+<rawitemdata type='1'>
+X/8QAAIADwAHAAAAAAAAAA==
+</rawitemdata></item>
+<item name='$TITLE'><textlist><text>idStore</text><text>ids</text></textlist></item>
+<item name='$Info' sign='true'>
+<rawitemdata type='1'>
+hhgBAIAAAAAAgAAAAQABAP///wAAAAAA
+</rawitemdata></item>
+<item name='$Flags'><text>C</text></item>
+<item name='$DesignerVersion'><text>8.5.3</text></item>
+<item name='$$ScriptName' summary='false' sign='true'><text>ids</text></item>
+<item name='URL' placeholder='true'>
+<rawitemdata type='0'>
+</rawitemdata></item>
+<item name='communityId' placeholder='true'>
+<rawitemdata type='0'>
+</rawitemdata></item>
+<item name='forumId' placeholder='true'>
+<rawitemdata type='0'>
+</rawitemdata></item>
+<item name='connectionsEnabled' placeholder='true'>
+<rawitemdata type='0'>
+</rawitemdata></item>
+<item name='$Fields'><textlist><text>connectionsEnabled</text><text>forumId</text><text
+>communityId</text><text>URL</text></textlist></item>
+<item name='$Body' sign='true'>
+<rawitemdata type='1'>
+gQKC/1oAAQAAAAAAAAAAAKAFAACgBQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAABAAAAAJSHAAAAAAAAAAAAAAAAAQAAAAQAAACDBAEAhf8IAAEAAArdBgAAiv/+/1AA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAIr/KACKAAAFADAAAAAAAAAAAAEAAAoAAAAAAAAAAAMAAAAAAFVS
+TABiDgEAhAAAAAAAAAAAAN4GAACK/4X/CAABAAAK3QYAAIr//v9QAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AACK/zAAigAABQAwAAAAAAAAAAABAAAKAAAAAAAAAAALAAAAAABjb21tdW5pdHlJZABiDgEAhAAA
+AAAAAAAAAN4GAACK/4X/CAABAAAK3QYAAIr//v9QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACK/ywAigAA
+BQAwAAAAAAAAAAABAAAKAAAAAAAAAAAHAAAAAABmb3J1bUlkAGIOAQCEAAAAAAAAAAAA3gYAAIr/
+hf8IAAEAAArdBgAAiv/+/1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AHgA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALD/FAAAAAQAAAAAAAAAAAAAAAAA
+iv82AIpCAQUCIAIAAAAAAAACAQAACgAAAAAAAAAAEgAAAAAAY29ubmVjdGlvbnNFbmFibGVk3gYA
+AIr/hf8IAAEAAAo=
+</rawitemdata></item></note>
 

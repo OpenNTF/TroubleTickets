@@ -23,8 +23,6 @@ public class ConnectionsBean {
 		if(beanName.equals("connections")) {this.connBasicBean = new ConnectionsBasicEndpoint();
 			connBasicBean.setForceTrustSSLCertificate(true);
 			connBasicBean.setUrl(URL);
-			//connBasicBean.setUser("fadams@renovations.com");
-			//connBasicBean.setPassword("passw0rd");
 			return connBasicBean;
 		}else{
 			return null;

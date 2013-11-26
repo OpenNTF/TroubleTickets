@@ -17,8 +17,6 @@ if (resolution && resolution.length > 0) {
 	var doc = currentDocument.getDocument(true);
 	closeTicket(doc, resolution);
 	var documentId=doc.getUniversalID(); 
-	currentDocument.getItemValueString("activityId");
-	//nsf.XPagesTickets.updateNotifcation(documentId)
 	context.redirectToPage("/myViewTicket.xsp?documentId=" + documentId + "&action=openDocument");
 }}]]>
 			</xp:this.action>

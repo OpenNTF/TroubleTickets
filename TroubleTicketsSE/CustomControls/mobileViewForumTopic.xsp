@@ -7,11 +7,11 @@
 		<xp:script src="/xpagesTickets.jss" clientSide="false"></xp:script>
 	</xp:this.resources>
 	<xp:this.beforePageLoad><![CDATA[#{javascript:
-		var forumTopicId = context.getUrlParameter("topicId")
-		if(null != forumTopicId && "" != forumTopicId) {
-			viewScope.readMode = true;
-			viewScope.id = forumTopicId;
-		}}]]>
+		var endpoint = BeanFactory.getSSOBean("connections");
+		if(null == endpoint) {
+			endpoint = BeanFactory.createSSOBean("connections", getConnectionsURL());
+		}
+		}]]>
 	</xp:this.beforePageLoad>
 	<xe:djxmHeading id="djxmHeading1" back="#{javascript:return 'Back';}" moveTo="mWelcome" label="Trouble Ticket">
 	</xe:djxmHeading>	
@@ -21,41 +21,36 @@
 				<xp:inputText id="summary" required="true" autocomplete="off" disabled="true">
 					<xp:this.value>
 						<![CDATA[#{javascript:
-							if(viewScope.id != null){
-								var forumService = new com.ibm.sbt.services.client.connections.forums.ForumService("connections");
-								var openTopic = forumService.getForumTopic(viewScope.id);	
-								return openTopic.getTitle();				
-							}
+							var forumService = new com.ibm.sbt.services.client.connections.forums.ForumService(endpoint);
+							var theTopic = forumService.getForumTopic(sessionScope.topicId);
+							return theTopic.getTitle();
 						}]]>
 					</xp:this.value>
 				</xp:inputText>
 			</xe:formRow>
-			<xe:formRow id="formRow7" styleClass="formRow centeredRow viewTicket detailsRow" labelPosition="none">
-				<xp:label styleClass="labelCell" value="Details" id="detailsLabel"></xp:label>
-				<xp:inputRichText styleClass="detailsTextarea" id="detailsRead" readonly="true">
-					<xp:this.value>
-						<![CDATA[#{javascript:
-							if(viewScope.id != null){
-								var forumService = new  com.ibm.sbt.services.client.connections.forums.ForumService("connections");
-								var openTopic = forumService.getForumTopic(viewScope.id);	
-								return openTopic.getContent();			
-							}
-						}]]>
-					</xp:this.value>
-				</xp:inputRichText>
-			</xe:formRow>
-			<xe:formRow id="formRow8" styleClass="formRow centeredRow viewTicket detailsRow" label="Link">
+			<xe:formRow id="formRow2" styleClass="formRow centeredRow viewTicket" label="Link">
 				<xp:link id="topicLink" text="Open topic in Connections Forum" target="_blank">
 					<xp:this.value>
 						<![CDATA[#{javascript:
-							var forumService = new  com.ibm.sbt.services.client.connections.forums.ForumService("connections");
-							var openTopic = forumService.getForumTopic(viewScope.id);	
-							var url = openTopic.getTopicUrl();
+							var url = theTopic.getTopicUrl();
 							var topicUrl = url.replace("/atom/", "/html/").replace("topic?topicUuid=", "topic?id=");
 							return topicUrl;
 						}]]>
 					</xp:this.value>
+					<xp:eventHandler event="onclick" submit="false">
+						<xp:this.script><![CDATA[XSP.openDialog('#{id:uploadDialog2}')]]></xp:this.script>
+					</xp:eventHandler>
 				</xp:link>
+			</xe:formRow>
+			<xe:formRow id="formRow3" styleClass="formRow centeredRow viewTicket detailsRow" labelPosition="none">
+				<xp:label styleClass="labelCell" value="Details" id="detailsLabel"></xp:label>
+				<xp:inputRichText styleClass="detailsTextarea" id="detailsRead" readonly="true">
+					<xp:this.value>
+						<![CDATA[#{javascript:
+							return theTopic.getContent();
+						}]]>
+					</xp:this.value>
+				</xp:inputRichText>
 			</xe:formRow>
 		</xe:formTable>
 	</xp:panel>
