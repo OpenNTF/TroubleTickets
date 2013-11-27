@@ -38,7 +38,7 @@ return message;}]]></xp:this.value>
 					<xe:pageTreeNode label="Setup" page="/managerSetup.xsp">
 						<xp:this.rendered>
 							<![CDATA[#{javascript:
-								return isConnectionsEnabled() && roles.isManager();
+								return roles.isManager();
 							}]]>
 						</xp:this.rendered>
 					</xe:pageTreeNode>

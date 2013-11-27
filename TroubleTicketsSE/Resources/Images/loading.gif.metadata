@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="1.0" replicaid="85257C2000385D78" version="9.0" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="3ba" sequence="1" unid="A3E35A76EA40F8EA85257C2F0061EAC7">
+<created><datetime>20131126T124930,95-05</datetime></created>
+<modified><datetime>20131126T124930,92-05</datetime></modified>
+<revised><datetime>20131126T124930,91-05</datetime></revised>
+<lastaccessed><datetime>20131126T124930,92-05</datetime></lastaccessed>
+<addedtofile><datetime>20131126T124930,92-05</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Frank Adams/O=renovations</name></updatedby>
+<wassignedby><name>CN=Frank Adams/O=renovations</name></wassignedby>
+<item name="$Flags"><text>34CiQ</text></item>
+<item name="$FlagsExt" sign="true"><text>D</text></item>
+<item name="$ImagesWide" sign="true"><number>1</number></item>
+<item name="$ImagesHigh" sign="true"><number>1</number></item>
+<item name="$ImagesColorize" sign="true"><number>0</number></item>
+
+
+<item name="$MimeType" sign="true"><text>image/gif</text></item>
+<item name="$FileModDT" sign="true"><datetime>20131104T120405,66+00</datetime></item>
+<item name="$ImageNames" sign="true"><text>busy.gif</text></item>
+<item name="$TITLE" sign="true"><text>loading.gif</text></item>
+<item name="$DesignerVersion" sign="true"><text>8.5.3</text></item></note>

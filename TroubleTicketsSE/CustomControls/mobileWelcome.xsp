@@ -51,8 +51,7 @@
 					</xe:viewSummaryColumn>
 				</xe:this.summaryColumn>
 				<xe:this.categoryColumn>
-					<xe:viewCategoryColumn columnName="Date"
-						columnTitle="Date">
+					<xe:viewCategoryColumn columnName="Date" columnTitle="Date">
 					</xe:viewCategoryColumn>
 				</xe:this.categoryColumn>
 
@@ -65,11 +64,8 @@
 
 					<xp:panel id="panel2" xp:key="detail">
 						<xp:text escape="true" id="dateLabel" value="Date: ">
-<!--							styleClass="mblDetailTextBold">-->
 						</xp:text>
-						<xp:text escape="true" id="dateValue"
-							value="#{javascript: annsDataView.getColumnValue('Date')}">
-<!--							styleClass="mblDetailTextNormal">-->
+						<xp:text escape="true" id="dateValue" value="#{javascript: annsDataView.getColumnValue('Date')}">
 						</xp:text>
 					</xp:panel>
 
@@ -80,13 +76,13 @@
 								return size > 5;
 							}]]>
 						</xp:this.rendered>
-
-					<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
-						<xp:this.action>
-							<xe:moveTo direction="Left to Right"
-								targetPage="mAllAnnouncements" transitionType="slide">
-							</xe:moveTo>
-						</xp:this.action></xp:eventHandler></xp:link>
+						<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+							<xp:this.action>
+								<xe:moveTo direction="Left to Right" targetPage="mAllAnnouncements" transitionType="slide">
+								</xe:moveTo>
+							</xp:this.action>
+						</xp:eventHandler>
+					</xp:link>
 				</xp:this.facets>
 			</xe:dataView>
 		</xe:djContentPane>
@@ -104,7 +100,7 @@
 				<xp:dojoAttribute name="icon2" value="mblDomButtonBlackDownArrow16">
 				</xp:dojoAttribute>
 			</xe:this.dojoAttributes>
-			<xe:dataView id="topicsDataView" var="topic" rows="5">
+			<xe:dataView id="topicsDataView" var="topic" rows="5" pageName="#mViewForumTopic" openDocAsReadonly="true">
 				<xe:this.value><![CDATA[#{javascript:
 					try{
 						var url = getConnectionsURL();
@@ -143,12 +139,18 @@
 					</xp:panel>
 					<xp:panel id="panel4" xp:key="summary" style="white-space:nowrap;">
 						<xp:link escape="true" id="link3" text="#{javascript:return topic.getTitle();}" target="_blank">
-							<xp:this.value>
-								<![CDATA[#{javascript:var url = topic.getTopicUrl();
-													var topicUrl = url.replace("/atom/", "/html/").replace("topic?topicUuid=", "topic?id=");
-													return topicUrl;}]]>
-<!--								<![CDATA[#{javascript:return "mobile.xsp#mViewTicket?topicId="+topic.getTopicUuid();}]]>-->
-							</xp:this.value>
+							<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+								<xp:this.action>
+									<xe:moveTo direction="Left to Right" transitionType="slide">
+										<xe:this.targetPage>
+											<![CDATA[#{javascript:
+												sessionScope.topicId = topic.getTopicUuid();
+												return "mViewForumTopic";}
+											]]>
+										</xe:this.targetPage>
+									</xe:moveTo>
+								</xp:this.action>
+							</xp:eventHandler>
 						</xp:link>
 					</xp:panel>
 					<xp:panel id="panel5" xp:key="extra0" style="width: 65%;">

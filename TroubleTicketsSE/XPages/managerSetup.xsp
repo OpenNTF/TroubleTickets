@@ -2,14 +2,11 @@
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core"
 	xmlns:xc="http://www.ibm.com/xsp/custom"
 	xmlns:xe="http://www.ibm.com/xsp/coreex">
-	
 	<xp:this.resources>
 		<xp:script src="/xpagesCommon.jss" clientSide="false"></xp:script>
-	</xp:this.resources>
-	<xp:this.resources>
 		<xp:script src="/xpagesTickets.jss" clientSide="false"></xp:script>
 	</xp:this.resources>
-	
+
 	<xc:layout>
 		<xp:this.facets>
 			<xp:panel xp:key="content">
@@ -26,8 +23,10 @@
 												// idStore does not exist
 												idStoreDoc = database.createDocument();
 												idStoreDoc.appendItemValue("Form", "idStore");
+												idStoreDoc.appendItemValue("URL", "");
 												idStoreDoc.appendItemValue("communityId","");
 												idStoreDoc.appendItemValue("forumId", "");
+												idStoreDoc.appendItemValue("connectionsEnabled", "");
 												idStoreDoc.save(true);
 												idStoreView.refresh();
 											}
@@ -42,7 +41,7 @@
 						</xp:this.documentId>
 					</xp:dominoDocument>
 				</xp:this.data>
-				<xe:formTable id="formTable1" formTitle="Connections Setup" labelWidth="25%">
+				<xe:formTable id="formTable1" formTitle="Connections Setup" labelWidth="25%" styleClass="setupTable">
 					<xe:this.facets>
 						<xp:div xp:key="footer">
 							<xp:button value="Save and Close" id="saveCloseBtn" styleClass="lotusFormButton">
@@ -76,17 +75,80 @@
 						</xp:div>
 					</xe:this.facets>
 					<xe:formRow id="formRow1" styleClass="formRow" labelPosition="none">
-						<xp:text id="infoLabel1" styleClass="lotusText" value="Set the Connections URL, Community UID and Forum ID here." /><xp:br />
-						<xp:text id="infoLabel2" styleClass="lotusText" value="ID format = XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" /><xp:br />
+						<xp:text id="infoLabel1" styleClass="lotusText" value="Set the Connections URL, Community UID and Forum ID here." />
+						<xp:br />
+						<xp:text id="infoLabel2" styleClass="lotusText" value="ID format = XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" />
+						<xp:br />
 					</xe:formRow>
-					<xe:formRow id="formRow2" styleClass="formRow" label="Connections URL:">
-						<xp:inputText value="#{idStore.URL}" id="url" styleClass="lotusText" style="width:100%;"></xp:inputText>
+					<xe:formRow id="formRow2" styleClass="formRow" label="Enable Connections Integration:">
+						<xp:checkBox id="connectionsCheck" value="#{idStore.connectionsEnabled}" style="display:none;"></xp:checkBox>
+						<xp:button id="onButton" value="ON">
+							<xp:this.styleClass>
+								<![CDATA[#{javascript:
+									var isEnabled = getComponent("connectionsCheck").isChecked();
+									return "lotusBtn segmentedButtonLeft " + (isEnabled ? "buttonSelected" : "buttonDeselected");							
+								}]]>
+							</xp:this.styleClass>
+							<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="formTable1">
+								<xp:this.action><![CDATA[#{javascript:
+									var checkbox = getComponent("connectionsCheck")
+									var checkedValue = checkbox.getValue();
+									checkbox.setValue(true);
+									
+									var onBtn = getComponent("onButton");
+									var offBtn = getComponent("offButton");
+									onBtn.styleClass = "lotusBtn segmentedButtonLeft buttonSelected";
+									offBtn.styleClass = "lotusBtn segmentedButtonRight buttonDeselected";
+									}]]></xp:this.action>
+							</xp:eventHandler>
+						</xp:button>
+						<xp:button id="offButton" value="OFF">
+							<xp:this.styleClass>
+								<![CDATA[#{javascript:
+									var isEnabled = getComponent("connectionsCheck").isChecked();
+									return "lotusBtn segmentedButtonRight " + (!isEnabled ? "buttonSelected" : "buttonDeselected");							
+								}]]>
+							</xp:this.styleClass>
+							<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="formTable1">
+								<xp:this.action><![CDATA[#{javascript:
+									var checkbox = getComponent("connectionsCheck")
+									var checkedValue = checkbox.isChecked();
+									checkbox.setValue(false);
+									
+									var onBtn = getComponent("onButton");
+									var offBtn = getComponent("offButton");
+									onBtn.styleClass = "lotusBtn segmentedButtonLeft buttonDeselected";
+									offBtn.styleClass = "lotusBtn segmentedButtonRight buttonSelected";
+									}]]></xp:this.action>
+							</xp:eventHandler>
+						</xp:button>
 					</xe:formRow>
-					<xe:formRow id="formRow3" styleClass="formRow" label="Connections Community UID:">
-						<xp:inputText value="#{idStore.communityId}" id="communityId" styleClass="lotusText" style="width:100%;"></xp:inputText>
+					<xe:formRow id="formRow3" styleClass="formRow" label="Connections URL:">
+						<xp:inputText value="#{idStore.URL}" id="url" styleClass="lotusText" style="width:100%;">
+							<xp:this.disabled>
+								<![CDATA[#{javascript:
+									return !getComponent("connectionsCheck").isChecked();						
+								}]]>
+							</xp:this.disabled>
+						</xp:inputText>
 					</xe:formRow>
-					<xe:formRow id="formRow4" styleClass="formRow" label="Community Forum ID:">
-						<xp:inputText value="#{idStore.forumId}" id="forumId" styleClass="lotusText" style="width:100%;"></xp:inputText>
+					<xe:formRow id="formRow4" styleClass="formRow" label="Connections Community UID:">
+						<xp:inputText value="#{idStore.communityId}" id="communityId" styleClass="lotusText" style="width:100%;">
+							<xp:this.disabled>
+								<![CDATA[#{javascript:
+									return !getComponent("connectionsCheck").isChecked();						
+								}]]>
+							</xp:this.disabled>
+						</xp:inputText>
+					</xe:formRow>
+					<xe:formRow id="formRow5" styleClass="formRow" label="Community Forum ID:">
+						<xp:inputText value="#{idStore.forumId}" id="forumId" styleClass="lotusText" style="width:100%;">
+							<xp:this.disabled>
+								<![CDATA[#{javascript:
+									return !getComponent("connectionsCheck").isChecked();						
+								}]]>
+							</xp:this.disabled>
+						</xp:inputText>
 					</xe:formRow>
 				</xe:formTable>
 			</xp:panel>

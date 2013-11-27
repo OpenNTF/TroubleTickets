@@ -7,19 +7,24 @@
 			title="Open Community Members page in new window">
 			<xp:this.value>
 				<![CDATA[#{javascript:
-					var endpoint = BeanFactory.getSSOBean("connections");
-					if(null == endpoint) {
-						endpoint = BeanFactory.createSSOBean("connections", getConnectionsURL());
-					}
-					var commSvc = new com.ibm.sbt.services.client.connections.communities.CommunityService(endpoint);
-					var commId = getCommunityId();
-					if("" != commId) {
-						var comm = commSvc.getCommunity(commId);
-						var commUrl = comm.getCommunityUrl();
-						var commFilesUrl = commUrl + "#fullpageWidgetId=Members";
-						return commFilesUrl;
-					}else{
-						return null;
+					try{
+						var endpoint = BeanFactory.getSSOBean("connections");
+						if(null == endpoint) {
+							endpoint = BeanFactory.createSSOBean("connections", getConnectionsURL());
+						}
+						var commSvc = new com.ibm.sbt.services.client.connections.communities.CommunityService(endpoint);
+						var commId = getCommunityId();
+						if("" != commId) {
+							var comm = commSvc.getCommunity(commId);
+							var commUrl = comm.getCommunityUrl();
+							var commFilesUrl = commUrl + "#fullpageWidgetId=Members";
+							return commFilesUrl;
+						}else{
+							return null;
+						}
+					}catch(exc){ 
+						exc.printStackTrace();
+						return null;;
 					}
 				}]]>
 			</xp:this.value>
@@ -58,16 +63,24 @@
 											
 											var commSvc = new com.ibm.sbt.services.client.connections.communities.CommunityService(endpoint);
 											var members = commSvc.getMembers(communityId);
+											viewScope.membersAvailable = true;
 											return members;
 										}catch(exception){
 											println("Community Members value error: " + exception);
+											viewScope.membersAvailable = false;
 											return null;
 										}}]]>
 								</xp:this.value>
 								<xp:this.facets>
 									<xp:panel xp:key="noRows" id="noMembersPanel">
 										<xp:div styleClass="lotusWidgetBody">
-											No Community Members found.
+											<xp:text>
+												<xp:this.value>
+													<![CDATA[#{javascript:
+														return (viewScope.membersAvailable ? "No Community Members found." : "Community Member list unavailable.");
+													}]]>
+												</xp:this.value>
+											</xp:text>
 										</xp:div>
 									</xp:panel>
 									<xp:panel id="summaryPanel" xp:key="summary"
