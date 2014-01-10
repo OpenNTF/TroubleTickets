@@ -138,12 +138,14 @@ function isOpen(doc:NotesDocument) {
 }
 
 function getConnectionsURL() {
-	var url = "";
-	var idStoreView:NotesView = database.getView("idStoreLookup");
-	if(null != idStoreView){
-		var idStoreDoc = idStoreView.getFirstDocument();
-		if(null != idStoreDoc){
-			url = idStoreDoc.getItemValueString("URL");
+	var url = BeanFactory.getConnectionsURL();
+	if(null == url || "" == url) {
+		var idStoreView:NotesView = database.getView("idStoreLookup");
+		if(null != idStoreView){
+			var idStoreDoc = idStoreView.getFirstDocument();
+			if(null != idStoreDoc){
+				url = idStoreDoc.getItemValueString("URL");
+			}
 		}
 	}
 	return url;
@@ -171,4 +173,37 @@ function getForumId() {
 		}
 	}
 	return forumId;
+}
+
+function getEndpoint(endpointName:String) {
+	var endpoint = null;
+	
+	//Retrieve the login type for Connections: 'BASIC' or 'SSO'
+	var loginType = "";
+	var idStoreView:NotesView = database.getView("idStoreLookup");
+	if(null != idStoreView){
+		var idStoreDoc = idStoreView.getFirstDocument();
+		if(null != idStoreDoc){
+			loginType = idStoreDoc.getItemValueString("Login");
+		}
+	}
+	
+	//Based on the login type, retrieve the correct endpoint from the EndpointFactory
+	if("" != loginType) {
+		if(loginType == BeanFactory.CONNECTIONS_BASIC) {
+			endpoint = BeanFactory.getBasicBean(BeanFactory.CONNECTIONS);
+			if(null == endpoint) {
+				endpoint = BeanFactory.createBasicBean(endpointName, getConnectionsURL());
+			}
+		}else if(loginType == BeanFactory.CONNECTIONS_SSO) {
+			endpoint = BeanFactory.getSSOBean(BeanFactory.CONNECTIONS);
+			if(null == endpoint) {
+				endpoint = BeanFactory.createSSOBean(endpointName, getConnectionsURL());
+			}
+		}
+	}
+	//if(null != endpoint && endpoint instanceof ConnectionsSSOEndpoint && !endpoint.isAuthenticated()) {
+	//	endpoint.authenticate(true);
+	//}
+	return endpoint;
 }

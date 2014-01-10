@@ -30,6 +30,8 @@ import com.ibm.commons.util.io.json.JsonException;
 import com.ibm.commons.util.io.json.JsonGenerator;
 import com.ibm.commons.util.io.json.JsonJavaFactory;
 
+import nsf.EndpointManager;
+
 public class XPagesTickets {
 	
 	public static boolean updateNotifcation(String documentId){
@@ -98,7 +100,7 @@ public class XPagesTickets {
 	public static String getConUserId(String email) {
 		String result = "";
 		try {
-			SSOEndpoint endpoint = ConnectionsBean.getSSOBean("connections");
+			SSOEndpoint endpoint = nsf.EndpointManager.getSSOBean("connections");
 			com.ibm.sbt.services.client.connections.profiles.ProfileService profileService = new ProfileService(endpoint);
 			
 			/*
@@ -198,7 +200,7 @@ public class XPagesTickets {
 		header.put("Content-Type", "application/json");
 		String activityId = null;
 		try {
-			SSOEndpoint endpoint = ConnectionsBean.getSSOBean("connections");
+			SSOEndpoint endpoint = EndpointManager.getSSOBean("connections");
 			ActivityStreamService svc = new ActivityStreamService(endpoint);
 			activityId=svc.postEntry("@me", "@public", "@all", activity);
 		} catch (ActivityStreamServiceException e) {
@@ -210,7 +212,7 @@ public class XPagesTickets {
 	}
 	
 	public static void generateEscalationPost(String summary, String submitterId, String managerName) {
-		SSOEndpoint endpoint = ConnectionsBean.getSSOBean("connections");
+		SSOEndpoint endpoint = EndpointManager.getSSOBean("connections");
 		if(endpoint !=null) {
 			
 			JsonJavaObject postPayload = new JsonJavaObject();

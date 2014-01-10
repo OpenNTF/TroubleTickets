@@ -22,11 +22,8 @@
 			title="Open Community Forum in new window">
 			<xp:this.value>
 				<![CDATA[#{javascript:
-					try{
-						var endpoint = BeanFactory.getSSOBean("connections");
-						if(null == endpoint) {
-							endpoint = BeanFactory.createSSOBean("connections", getConnectionsURL());
-						}
+					//try{
+						var endpoint = getEndpoint("connections");
 						var forumSvc = new com.ibm.sbt.services.client.connections.forums.ForumService(endpoint);
 						var forumId = getForumId();
 						if("" != forumId) {
@@ -36,10 +33,10 @@
 						}else{
 							return null;
 						}
-					}catch(exc){ 
-						exc.printStackTrace();
-						return null;;
-					}
+					//}catch(exc){ 
+					//	println("Error: " + exc);
+					//	return null;
+					//}
 				}]]>
 			</xp:this.value>
 			<h2>Community Forum</h2>
@@ -60,19 +57,8 @@
 								</xe:this.summaryColumn>
 								<xp:this.value>
 									<![CDATA[#{javascript:
-										try{
-											var url = getConnectionsURL();
-											var forumId = getForumId();
-											if("" == url || "" == forumId) {
-												return null;
-											}
-											
-											var endpoint = BeanFactory.getSSOBean("connections");
-											if(endpoint == null) {
-												endpoint = BeanFactory.createSSOBean("connections", url);
-											}
-											
-											var forumSvc = new com.ibm.sbt.services.client.connections.forums.ForumService(endpoint);	
+										try{											
+											//var forumSvc = new com.ibm.sbt.services.client.connections.forums.ForumService(endpoint);	
 											var topics = forumSvc.getForum(forumId).getTopics();
 											viewScope.forumAvailable = true;
 											return topics;
@@ -128,11 +114,9 @@
 		<xe:this.beforeContentLoad>
 			<![CDATA[#{javascript:
 				var dlgId = sessionScope.topicId;
-				println("vs id: " + sessionScope.topicId);
 				var dlgTopic = forumSvc.getForumTopic(dlgId);
-				println("topic: " + dlgTopic);
 				var dlgUrl = dlgTopic.getTopicUrl();
-				println("url: " + dlgUrl);}]]>
+			}]]>
 		</xe:this.beforeContentLoad>
 		<xe:dialogContent id="pnl1" style="width:500px">
 			<xp:table style="width:100%;">

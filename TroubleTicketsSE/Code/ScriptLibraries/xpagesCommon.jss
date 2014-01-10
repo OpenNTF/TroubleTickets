@@ -21,8 +21,10 @@ var roles = {
 	},
 
 	getRoles: function() {
+		var user = context.getUser().getFullName();
 		var userRoles:java.util.Vector = sessionScope.userRoles;
-		if (!userRoles) {
+		if (!userRoles || (sessionScope.user != user)) {
+			sessionScope.user = context.getUser().getFullName();
 			sessionScope.userRoles = userRoles = session.evaluate("@UserRoles");
 		}
 		return userRoles;
@@ -129,7 +131,6 @@ function isConnectionsEnabled() {
 		}else{
 			enabled = (storedValue[0] == "true");
 		}
-		return enabled;
 	}
-	return false;
+	return enabled;
 }

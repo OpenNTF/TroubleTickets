@@ -7,7 +7,7 @@
 		<xp:dominoDocument var="openDoc" documentId="#{sessionScope.documentId}"/>
 		<xp:dominoDocument formName="dialogCloseTicket" var="closeDoc" />
 	</xp:this.data>
-	
+	<xp:panel></xp:panel>
 	<xe:djxmHeading id="djxmHeading1" back="Cancel" moveTo="mViewTicket" label="Close Ticket">
 		<xp:this.facets>
 			<xp:panel xp:key="actionFacet">

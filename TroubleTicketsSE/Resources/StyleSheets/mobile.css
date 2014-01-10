@@ -195,7 +195,8 @@
 }
 
 .mobileFormContainer .dataCell > fieldset {
-	height: 40px;
+	height: 30px;
+	margin: 0 0 0 10px;
 }
 .mobileFormContainer .dataCell > fieldset > table {
 	margin: 0px 0px 0px -15px;

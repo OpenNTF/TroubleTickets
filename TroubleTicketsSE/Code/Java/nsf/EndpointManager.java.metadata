@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="1.0" replicaid="85257C2000385D78" version="9.0" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="322" sequence="130" unid="6BE8F3B1367EB77785257C20003865C6">
+<created><datetime>20131111T051600,70-05</datetime></created>
+<modified><datetime>20140110T101154,07-05</datetime></modified>
+<revised><datetime>20140110T101154,06-05</datetime></revised>
+<lastaccessed><datetime>20140110T101154,07-05</datetime></lastaccessed>
+<addedtofile><datetime>20131111T051600,75-05</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Frank Adams/O=renovations</name></updatedby>
+<wassignedby><name>CN=Frank Adams/O=renovations</name></wassignedby>
+<item name="$Flags"><text>34567Cg~[</text></item>
+
+
+
+<item name="$TITLE"><text>nsf/EndpointManager.java</text></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+
+
+<item name="$FileNames" sign="true"><text>nsf/EndpointManager.java</text></item></note>

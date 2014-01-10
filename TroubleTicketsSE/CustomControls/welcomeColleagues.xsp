@@ -8,17 +8,14 @@
 			<xp:this.value>
 				<![CDATA[#{javascript:
 					try{
-						var endpoint = BeanFactory.getSSOBean("connections");
-						if(null == endpoint) {
-							endpoint = BeanFactory.createSSOBean("connections", getConnectionsURL());
-						}
+						var endpoint = getEndpoint("connections");
 						var profileSvc = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);
 						
 						//no SBT SDK functionality available to link to user's network
 						
 						return null;
 					}catch(exc){ 
-						exc.printStackTrace();
+						println("Error: " + exc);
 						return null;
 					}
 				}]]>
@@ -41,24 +38,17 @@
 								<xp:this.value>
 									<![CDATA[#{javascript:
 										try{
-											var url = getConnectionsURL();
-											if("" == url) {
-												return null;
-											}
+											var endpoint = getEndpoint("connections");											
 											
-											var endpoint = BeanFactory.getSSOBean("connections");
-											if(endpoint == null) {
-												endpoint = BeanFactory.createSSOBean("connections", url);
-											}
-											if(!endpoint.isAuthenticated()) {
-												endpoint.authenticate(true);
-											}
+											//var myEmail = "";
+											//var userId = context.getUser().getFullName();
+											//if("" != userId) {
+											//	myEmail = nsf.XPagesTickets.getInternetEmail(userId);
+											//}
+											//For basic auth, need to replace above with below
+											var myEmail = endpoint.getUserIdentity();
+											println("myEmail = " + myEmail);
 											
-											var myEmail = "";
-											var userId = context.getUser().getFullName();
-											if("" != userId) {
-												myEmail = nsf.XPagesTickets.getInternetEmail(userId);
-											}
 											if("" != myEmail) {
 												var profileService = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);
 												var colleagues = profileService.getColleagues(myEmail);
@@ -69,7 +59,6 @@
 											}
 										}catch(exception){
 											println("MyColleagues error: " + exception);
-											exception.printStackTrace();
 											viewScope.myNetworkAvailable = false;
 											return null;
 										}
@@ -81,7 +70,7 @@
 											<xp:text>
 												<xp:this.value>
 													<![CDATA[#{javascript:
-														return (viewScope.mNetworkAvailable ? "No colleagues found." : "Colleagues list unavailable.");
+														return (viewScope.myNetworkAvailable ? "No colleagues found." : "Colleagues list unavailable.");
 													}]]>
 												</xp:this.value>
 											</xp:text>
@@ -94,9 +83,6 @@
 											styleClass="dataViewLink">
 											<xp:this.value><![CDATA[#{javascript:
 												try{
-													//var endpoint = BeanFactory.getSSOBean("connections");
-													
-													//var profileService = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);
 													var colleagueId = colleague.getUserid();
 													var profile = profileService.getProfile(colleagueId);
 													var profileUrl = profile.getProfileUrl().replace("/atom/profile.do", "/html/profileView.do");

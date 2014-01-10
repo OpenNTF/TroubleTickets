@@ -46,8 +46,7 @@
 						</xp:label>
 					</td>
 					<td>
-						<xp:comboBox value="#{document1.Category}"
-							id="category1">
+						<xp:comboBox value="#{document1.Category}" id="category1">
 							<xp:this.validators>
 								<xp:validateRequired
 									message="Category is required">
@@ -68,27 +67,21 @@
 						</xp:label>
 					</td>
 					<td>
-						<xp:radioGroup id="radioGroup1"
-							value="#{document1.Priority}" layout="lineDirection">
+						<xp:radioGroup id="radioGroup1" value="#{document1.Priority}" layout="lineDirection">
 							<xp:this.validators>
-								<xp:validateRequired
-									message="Priority is required">
+								<xp:validateRequired message="Priority is required">
 								</xp:validateRequired>
 							</xp:this.validators>
-							<xp:selectItem itemLabel="High"
-								itemValue="High">
+							<xp:selectItem itemLabel="High" itemValue="High">
 							</xp:selectItem>
-							<xp:selectItem itemLabel="Medium"
-								itemValue="Medium">
+							<xp:selectItem itemLabel="Medium" itemValue="Medium">
 							</xp:selectItem>
-							<xp:selectItem itemLabel="Low"
-								itemValue="Low">
+							<xp:selectItem itemLabel="Low" itemValue="Low">
 							</xp:selectItem>
 						</xp:radioGroup>
 					</td>
 				</tr>
-				<xp:tr rendered="#{not empty currentDocument.ID}"
-					styleClass="lotusFormFieldRow">
+				<xp:tr rendered="#{not empty currentDocument.ID}" styleClass="lotusFormFieldRow">
 					<td width="15%" class="lotusFormLabel">
 						<label for="description">Ticket ID:</label>
 					</td>
@@ -143,10 +136,11 @@
 												
 												if((null != sessionScope.connectionsEnabled && sessionScope.connectionsEnabled) || isConnectionsEnabled()) {
 													//Fetch the connections bean
-													var endpoint = BeanFactory.getSSOBean("connections");
-													if(endpoint == null) {
-														endpoint = BeanFactory.createSSOBean("connections", getConnectionsURL());
-													}
+													//var endpoint = BeanFactory.getSSOBean("connections");
+													//if(endpoint == null) {
+													//	endpoint = BeanFactory.createSSOBean("connections", getConnectionsURL());
+													//}
+													var endpoint = getEndpoint("connections");
 													
 													//Post the new ticket as an activity on the community activityStream
 													try{
