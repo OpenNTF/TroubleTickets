@@ -8,10 +8,8 @@
 			<xp:this.value>
 				<![CDATA[#{javascript:
 					try{
-						var endpoint = BeanFactory.getSSOBean("connections");
-						if(null == endpoint) {
-							endpoint = BeanFactory.createSSOBean("connections", getConnectionsURL());
-						}
+						var endpoint = getEndpoint("connections");
+											
 						var commSvc = new com.ibm.sbt.services.client.connections.communities.CommunityService(endpoint);
 						var commId = getCommunityId();
 						if("" != commId) {
@@ -22,8 +20,8 @@
 						}else{
 							return null;
 						}
-					}catch(exc){ 
-						exc.printStackTrace();
+					}catch(exc){
+						println("Error: " + exc);
 						return null;;
 					}
 				}]]>
@@ -53,13 +51,14 @@
 												return null;
 											}
 											
-											var endpoint = BeanFactory.getSSOBean("connections");
-											if(endpoint == null) {
-												endpoint = BeanFactory.createSSOBean("connections", url);
-											}
-											if(!endpoint.isAuthenticated()) {
-												endpoint.authenticate(true);
-											}
+											//var endpoint = BeanFactory.getSSOBean("connections");
+											//if(endpoint == null) {
+											//	endpoint = BeanFactory.createSSOBean("connections", url);
+											//}
+											//if(!endpoint.isAuthenticated()) {
+											//	endpoint.authenticate(true);
+											//}
+											var endpoint = getEndpoint("connections");
 											
 											var commSvc = new com.ibm.sbt.services.client.connections.communities.CommunityService(endpoint);
 											var members = commSvc.getMembers(communityId);
@@ -89,8 +88,6 @@
 											text="#{javascript:return member.getName();}" styleClass="dataViewLink">
 											<xp:this.value><![CDATA[#{javascript:
 												try{
-													//var endpoint = BeanFactory.getSSOBean("connections");
-													
 													var profileService = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);
 													var memberId = member.getUserid();
 													var profile = profileService.getProfile(memberId);
@@ -110,11 +107,6 @@
 											text="#{javascript:return profile.getEmail();}">
 											<xp:this.value><![CDATA[#{javascript:
 												try{
-													//var endpoint = BeanFactory.getSSOBean("connections");
-													//var profileService = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);
-													//var memberId = member.getUserid();
-													//var profile = profileService.getProfile(memberId);
-													
 													return "mailto:" + profile.getEmail();
 												}catch(exception){
 													println("Colleague Profile error: " + exception);

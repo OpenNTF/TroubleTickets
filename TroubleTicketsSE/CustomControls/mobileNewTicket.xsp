@@ -21,29 +21,6 @@
 			</xp:dominoDocument>
 		</xp:this.data>
 		<xe:djxmHeading id="djxmHeading1" back="Cancel" moveTo="#{javascript:return ('' != sessionScope.from ? 'mWelcome' : sessionScope.from);}" label="New Ticket">
-<!--			<xp:this.facets>-->
-<!--				<xp:panel xp:key="actionFacet">-->
-<!--					<xe:toolBarButton id="submitButton" label="Submit">-->
-<!--						<xp:eventHandler event="onclick" submit="true" refreshMode="complete">-->
-<!--							<xp:this.action>-->
-<!--								<xp:actionGroup>-->
-<!--									<xp:confirm message="Submit ticket?"></xp:confirm>-->
-<!--									<xp:executeScript>-->
-<!--										<xp:this.script><![CDATA[#{javascript:-->
-<!--											var doc:NotesDocument = currentDocument.getDocument(true);-->
-<!--											currentDocument.save();-->
-<!--											submitTicket(doc);}]]></xp:this.script>-->
-<!--									</xp:executeScript>-->
-<!--									<xe:moveTo direction="Left to Right"-->
-<!--										forceFullRefresh="true" targetPage="mEmployeeHome"-->
-<!--										transitionType="slide">-->
-<!--									</xe:moveTo>-->
-<!--								</xp:actionGroup>-->
-<!--							</xp:this.action>-->
-<!--						</xp:eventHandler>-->
-<!--					</xe:toolBarButton>-->
-<!--				</xp:panel>-->
-<!--			</xp:this.facets>-->
 		</xe:djxmHeading>
 		<xe:tabBar id="tabBar1" barType="segmentedControl">
 			<xe:tabBarButton id="tabBarButton1" label="Submit" styleClass="staffBtn1">
@@ -68,7 +45,7 @@
 					</xp:this.action>
 				</xp:eventHandler>
 			</xe:tabBarButton>
-			<xe:tabBarButton id="tabBarButton2" label="Save as Draft" rendered="#{javascript:document1.isEditable();}" styleClass="staffBtn1">
+			<xe:tabBarButton id="tabBarButton2" label="Save as Draft" rendered="#{javascript:document1.isEditable();}" styleClass="staffBtn1" style="min-width:90px;">
 				<xp:eventHandler event="onClick" submit="true" refreshMode="complete">
 					<xp:this.action>
 						<xe:moveTo direction="Right to Left"

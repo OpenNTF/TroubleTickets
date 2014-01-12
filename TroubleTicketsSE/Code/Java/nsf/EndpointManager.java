@@ -6,23 +6,33 @@ import com.ibm.sbt.services.client.connections.profiles.ProfileServiceException;
 import com.ibm.sbt.services.endpoints.BasicEndpoint;
 import com.ibm.sbt.services.endpoints.ConnectionsBasicEndpoint;
 import com.ibm.sbt.services.endpoints.ConnectionsSSOEndpoint;
+//import com.ibm.sbt.services.endpoints.Endpoint;
 import com.ibm.sbt.services.endpoints.SSOEndpoint;
 
-public class ConnectionsBean {
-	private ConnectionsBasicEndpoint connBasicBean = null;
+public class EndpointManager {
+	private static ConnectionsBasicEndpoint connBasicBean = null;
 	private static ConnectionsSSOEndpoint connSSOBean = null;
+	private static String connectionsURL = "";
 	
-	public final String CONNECTIONS_BASIC = "basic";
-	public final String CONNECTIONS_SSO = "sso";
+	public final static String CONNECTIONS_BASIC = "basic";
+	public final static String CONNECTIONS_SSO = "sso";
+	public final static String CONNECTIONS = "connections";
 	
-	public ConnectionsBean() {
-		//AUTO-GENERATED constructor
+	public EndpointManager() {
+
 	}
 	
-	public BasicEndpoint createBasicBean(String beanName, String URL) {
-		if(beanName.equals("connections")) {this.connBasicBean = new ConnectionsBasicEndpoint();
+	public static BasicEndpoint createBasicBean(String beanName, String URL) {
+		if(beanName.equals(CONNECTIONS)) {
+			setConnectionsURL(URL);
+		
+			connBasicBean = new ConnectionsBasicEndpoint();
 			connBasicBean.setForceTrustSSLCertificate(true);
-			connBasicBean.setUrl(URL);
+			connBasicBean.setUrl(getConnectionsURL());
+			connBasicBean.setName(CONNECTIONS);
+			connBasicBean.setAuthenticationService("communities/service/atom/communities/all");
+			connBasicBean.setAuthenticationPage("TroubleTicketsSE.nsf/_BasicLogin.xsp?endpoint=connections");
+			connBasicBean.setCredentialStore("PasswordStore");
 			return connBasicBean;
 		}else{
 			return null;
@@ -30,31 +40,41 @@ public class ConnectionsBean {
 	}
 	
 	public SSOEndpoint createSSOBean(String beanName, String URL) {
-		if(beanName.equals("connections")) {
+		if(beanName.equals(CONNECTIONS)) {
+			setConnectionsURL(URL);
 			connSSOBean = new ConnectionsSSOEndpoint();
 			connSSOBean.setForceTrustSSLCertificate(true);
-			connSSOBean.setUrl(URL);
+			connSSOBean.setUrl(getConnectionsURL());
 			return connSSOBean;
 		}else{
 			return null;
 		}
 	}
 	
-	public BasicEndpoint getBasicBean(String beanName) {
-		if(beanName.equals("connections")) {
-			return this.connBasicBean;
+	public static BasicEndpoint getBasicBean(String beanName) {
+		if(beanName.equals(CONNECTIONS)) {
+			return connBasicBean;
 		}else{
 			return null;
 		}
 	}
 	
 	public static SSOEndpoint getSSOBean(String beanName) {
-		if(beanName.equals("connections")) {
+		if(beanName.equals(CONNECTIONS)) {
 			return connSSOBean;
 		}else{
 			return null;
 		}
 	}
+	
+	public static String getConnectionsURL() {
+		return connectionsURL;
+	}
+
+	public static void setConnectionsURL(String connectionsURL) {
+		EndpointManager.connectionsURL = connectionsURL;
+	}
+
 	
 	/**
 	 * getConUserId calls the SBTSDK to get a Unique User Id
@@ -72,16 +92,5 @@ public class ConnectionsBean {
 			e.printStackTrace();
 		}
 		return result;
-	}
-	
-	/*
-	 * Temporary hack for making the page sleep for testing loading functionality
-	 */
-	public void sleep(int milliseconds) {
-		try{
-			Thread.sleep(milliseconds);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
 	}
 }

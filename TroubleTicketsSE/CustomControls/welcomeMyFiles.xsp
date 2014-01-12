@@ -39,24 +39,12 @@
 								<xp:this.value>
 									<![CDATA[#{javascript:
 										try{
-											var url = "";
-											var idStoreView:NotesView = database.getView("idStoreLookup");
-						                	if(null != idStoreView){
-						                    	var idStoreDoc = idStoreView.getFirstDocument();
-						                        if(null != idStoreDoc){
-						                      		url = idStoreDoc.getItemValueString("URL");
-												}
-												if("" == url) {
-													return null;
-												}
-											}else{
-												return null;
-											}
-											
-											var endpoint = BeanFactory.getSSOBean("connections");
-											if(endpoint == null || url != endpoint.getUrl()) {
-												endpoint = BeanFactory.createSSOBean("connections", url);
-											}
+											//var url = getConnectionsURL();
+											//var endpoint = BeanFactory.getSSOBean("connections");
+											//if(endpoint == null || url != endpoint.getUrl()) {
+											//	endpoint = BeanFactory.createSSOBean("connections", url);
+											//}
+											var endpoint = getEndpoint("connections");
 											
 											var filesService = new com.ibm.sbt.services.client.connections.files.FileService(endpoint); 
 											var myFiles = filesService.getMyFiles();
@@ -147,16 +135,16 @@
 								<![CDATA[#{javascript:
 									//upload file
 									var file = getComponent("fileUpload2").getValue();
-									var url = getConnectionsURL();
 									var communityId = getCommunityId();
-									
-									var endpoint = BeanFactory.getSSOBean("connections");
-									if(endpoint == null) {
-										endpoint = BeanFactory.createSSOBean("connections", url);
-									}
-									if(!endpoint.isAuthenticated()) {
-										endpoint.authenticate(true);
-									}
+									//var url = getConnectionsURL();
+									//var endpoint = BeanFactory.getSSOBean("connections");
+									//if(endpoint == null) {
+									//	endpoint = BeanFactory.createSSOBean("connections", url);
+									//}
+									//if(!endpoint.isAuthenticated()) {
+									//	endpoint.authenticate(true);
+									//}
+									var endpoint = getEndpoint("connections");
 											
 									if(file != null && null != communityId) {
 										var svc = new com.ibm.sbt.services.client.connections.files.FileService(endpoint);

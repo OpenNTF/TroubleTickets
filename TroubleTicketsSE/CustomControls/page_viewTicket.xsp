@@ -176,38 +176,16 @@
 							<xp:selectItems>
 								<xp:this.value><![CDATA[#{javascript:
 									if((null != sessionScope.connectionsEnabled && sessionScope.connectionsEnabled) || isConnectionsEnabled()) {
-										var url = "";
-										var communityId = "";
-										var idStoreView:NotesView = database.getView("idStoreLookup");
-					                    if(null != idStoreView){
-					                    	var idStoreDoc = idStoreView.getFirstDocument();
-					                    	if(null != idStoreDoc){
-					                    		url = idStoreDoc.getItemValueString("URL");
-											}
-											if("" == url) {
-												return "empty url";
-											}
-										}else{
-											return "null notes view";
-										}
-										
-										var endpoint = BeanFactory.getSSOBean("connections");
-										if(endpoint == null) {
-											endpoint = BeanFactory.createSSOBean("connections", url);
-											println("new endpoint: " + endpoint);
-										}
+										var endpoint = getEndpoint("connections");
 										
 										var ps = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);
 										var userId = context.getUser().getFullName();
 										var email= nsf.XPagesTickets.getInternetEmail(userId);
 										var profiles = ps.getColleagues(email);
-										var result=[]; 
+										var result=[];
 										for(var i=0;i < profiles.length;i++){
 											result.push(profiles[i].getName() + "|" + profiles[i].getEmail());
 										}
-										//result.push('fadams@renovations.com');
-										//result.push('aadmin/IBM');
-										//result.push('buser/IBM');
 										return result;
 									}else{
 										var category = currentDocument.getItemValueString("Category");
@@ -235,7 +213,8 @@
 								embeddedJson="#{javascript:nsf.XPagesTickets.createJSONPart()}">
 							</xp:sendMail>
 							<xp:executeScript>
-								<xp:this.script><![CDATA[#{javascript:var assignTo = viewScope.dialogAssignTo;
+								<xp:this.script><![CDATA[#{javascript:
+									var assignTo = viewScope.dialogAssignTo;
 									if (assignTo && assignTo.length > 0) {
 										var doc = currentDocument.getDocument(true);
 										assignTicket(doc, assignTo);
@@ -270,7 +249,8 @@
 			<xp:button value="Close" id="button4" styleClass="lotusFormButton">
 				<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
 					<xp:this.action>
-					<![CDATA[#{javascript:var resolution = getComponent("closeReason").getValue();
+					<![CDATA[#{javascript:
+						var resolution = getComponent("closeReason").getValue();
 						if (resolution && resolution.length > 0) {
 							var doc = currentDocument.getDocument(true);
 							closeTicket(doc, resolution);
@@ -310,10 +290,11 @@
 									if((null != sessionScope.connectionsEnabled && sessionScope.connectionsEnabled) || isConnectionsEnabled()) {
 										var url = getConnectionsURL();
 										
-										var endpoint = BeanFactory.getSSOBean("connections");
-										if(endpoint == null) {
-											endpoint = BeanFactory.createSSOBean("connections", url);
-										}
+										//var endpoint = BeanFactory.getSSOBean("connections");
+										//if(endpoint == null) {
+										//	endpoint = BeanFactory.createSSOBean("connections", url);
+										//}
+										var endpoint = getEndpoint("connections");
 										var ps = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);
 										var userId = context.getUser().getFullName();
 										var email= nsf.XPagesTickets.getInternetEmail(userId);
@@ -324,9 +305,6 @@
 												result.push(managers[i].getName() + "|" + managers[i].getEmail());
 											}
 										}
-										//result.push('fadams@renovations.com');
-										//result.push('aadmin/IBM');
-										//result.push('buser/IBM');
 										return result;
 									}else{
 										var category = currentDocument.getItemValueString("Category");
@@ -352,11 +330,7 @@
 								embeddedJson="#{javascript:nsf.XPagesTickets.createJSONPart()}">
 								<xp:this.cc><![CDATA[#{javascript:
 									if((null != sessionScope.connectionsEnabled && sessionScope.connectionsEnabled) || isConnectionsEnabled()) {
-										var url = getConnectionsURL();
-										var endpoint = BeanFactory.getSSOBean("connections");
-										if(endpoint == null && null != url) {
-											endpoint = BeanFactory.createSSOBean("connections", url);
-										}	
+										var endpoint = getEndpoint("connections");
 										
 										var ps = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);
 										var userId = context.getUser().getFullName();

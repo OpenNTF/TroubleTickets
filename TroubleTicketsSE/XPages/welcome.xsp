@@ -22,8 +22,7 @@
 		<xp:script src="/xpagesCommon.jss" clientSide="false"></xp:script>
 	</xp:this.resources>
 	<xp:this.data>
-		<xp:dominoView var="announcementsView"
-			viewName="xpagesAnnouncements">
+		<xp:dominoView var="announcementsView" viewName="xpagesAnnouncements">
 		</xp:dominoView>
 	</xp:this.data>
 	<xp:this.beforePageLoad>
@@ -32,6 +31,11 @@
 			sessionScope.connectionsEnabled = isConnectionsEnabled();
 			sessionScope.pageLoaded = false;
 		
+			var endpoint = getEndpoint("connections");
+			if(!endpoint.isAuthenticated()){
+				endpoint.authenticate(true);
+			}
+			
 			var version = session.getNotesVersion();
 			if(version.contains("9.0.1")) {				
 				if(deviceBean.isMobile() || deviceBean.isTablet()){

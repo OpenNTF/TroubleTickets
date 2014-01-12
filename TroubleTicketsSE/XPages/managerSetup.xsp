@@ -52,8 +52,16 @@
 											<xp:executeScript>
 												<xp:this.script><![CDATA[#{javascript:
 													var url = getComponent("url").getValue();
+													var loginType = getComponent("loginType").getValue();
 													try{
-														var ssoBean = BeanFactory.createSSOBean("connections", url);
+														var endpoint = null;
+														if("" != loginType) {
+															if(loginType == BeanFactory.CONNECTIONS_BASIC) {
+																endpoint = BeanFactory.createBasicBean("connections", url);
+															}else if(loginType == BeanFactory.CONNECTIONS_SSO) {
+																endpoint = BeanFactory.createSSOBean("connections", url);
+															}
+														}
 													}catch(e) {
 														print("bean exception: " + e);
 														throw e;
@@ -122,6 +130,17 @@
 									}]]></xp:this.action>
 							</xp:eventHandler>
 						</xp:button>
+					</xe:formRow>
+					<xe:formRow id="formRow6" styleClass="formRow" label="Connections Login Type:">
+						<xp:comboBox value="#{idStore.Login}" id="loginType" style="width:50%;">
+							<xp:this.disabled>
+								<![CDATA[#{javascript:
+									return !getComponent("connectionsCheck").isChecked();						
+								}]]>
+							</xp:this.disabled>
+							<xp:selectItem itemLabel="Single Sign On (SSO)" itemValue="sso"></xp:selectItem>
+							<xp:selectItem itemLabel="Basic Login" itemValue="basic"></xp:selectItem>
+						</xp:comboBox>
 					</xe:formRow>
 					<xe:formRow id="formRow3" styleClass="formRow" label="Connections URL:">
 						<xp:inputText value="#{idStore.URL}" id="url" styleClass="lotusText" style="width:100%;">
