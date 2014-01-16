@@ -8,10 +8,6 @@
 			<xp:this.value>
 				<![CDATA[#{javascript:
 					try{
-						//var endpoint = BeanFactory.getSSOBean("connections");
-						//if(null == endpoint) {
-						//	endpoint = BeanFactory.createSSOBean("connections", getConnectionsURL());
-						//}
 						var endpoint = getEndpoint("connections");
 						var commSvc = new com.ibm.sbt.services.client.connections.communities.CommunityService(endpoint);
 						var commId = getCommunityId();
@@ -55,15 +51,6 @@
 											if("" == communityId) {
 												return null;
 											}
-											
-											//var url = getConnectionsURL();
-											//var endpoint = BeanFactory.getSSOBean("connections");
-											//if(endpoint == null) {
-											//	endpoint = BeanFactory.createSSOBean("connections", url);
-											//}
-											//if(!endpoint.isAuthenticated()) {
-											//	endpoint.authenticate(true);
-											//}
 											
 											var filesService = new com.ibm.sbt.services.client.connections.files.FileService(endpoint); 
 											var communityFiles = filesService.getCommunityFiles(communityId);
@@ -159,16 +146,7 @@
 								<![CDATA[#{javascript:
 									//upload file
 									var file = getComponent("fileUpload1").getValue();
-									var url = getConnectionsURL();
 									var communityId = getCommunityId();
-									
-									//var endpoint = BeanFactory.getSSOBean("connections");
-									//if(endpoint == null) {
-									//	endpoint = BeanFactory.createSSOBean("connections", url);
-									//}
-									//if(!endpoint.isAuthenticated()) {
-									//	endpoint.authenticate(true);
-									//}
 									var endpoint = getEndpoint("connections");
 												
 									if(file != null && null != communityId) {

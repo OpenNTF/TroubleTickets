@@ -3,25 +3,25 @@
 	xmlns:xc="http://www.ibm.com/xsp/custom"
 	xmlns:xe="http://www.ibm.com/xsp/coreex">
 	<div class="lotusWidget2">
-		<xp:link id="colleaguesLink" target="_blank"
-			title="Open user's Connections Network page in new window">
-			<xp:this.value>
-				<![CDATA[#{javascript:
-					try{
-						var endpoint = getEndpoint("connections");
-						var profileSvc = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);
-						
-						//no SBT SDK functionality available to link to user's network
-						
-						return null;
-					}catch(exc){ 
-						println("Error: " + exc);
-						return null;
-					}
-				}]]>
-			</xp:this.value>
+<!--		<xp:link id="colleaguesLink" target="_blank"-->
+<!--			title="Open user's Connections Network page in new window">-->
+<!--			<xp:this.value>-->
+<!--				<![CDATA[#{javascript:-->
+<!--					try{-->
+<!--						var endpoint = getEndpoint("connections");-->
+<!--						var profileSvc = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);-->
+<!--						-->
+<!--						//no SBT SDK functionality available to link to user's network-->
+<!--						-->
+<!--						return null;-->
+<!--					}catch(exc){ -->
+<!--						println("Error: " + exc);-->
+<!--						return null;-->
+<!--					}-->
+<!--				}]]>-->
+<!--			</xp:this.value>-->
 			<h2>My Colleagues</h2>
-		</xp:link>		
+<!--		</xp:link>		-->		
 		<xp:panel id="colleaguesPanel">
 			<xp:div styleClass="lotusWidgetBody">			
 				<table cellpadding="0" cellspacing="0" style="width: 100%;">
@@ -39,15 +39,17 @@
 									<![CDATA[#{javascript:
 										try{
 											var endpoint = getEndpoint("connections");											
+											var myEmail = "";
 											
-											//var myEmail = "";
-											//var userId = context.getUser().getFullName();
-											//if("" != userId) {
-											//	myEmail = nsf.XPagesTickets.getInternetEmail(userId);
-											//}
-											//For basic auth, need to replace above with below
-											var myEmail = endpoint.getUserIdentity();
-											println("myEmail = " + myEmail);
+											if("" != getAuthType() && isAuthBasic()) {
+												//For basic auth, need to replace above with below
+												var myEmail = endpoint.getUserIdentity();
+											}else if("" != getAuthType() && isAuthSSO) {
+												var userId = context.getUser().getFullName();
+												if(null != userId && "" != userId) {
+													myEmail = nsf.XPagesTickets.getInternetEmail(userId);
+												}
+											}
 											
 											if("" != myEmail) {
 												var profileService = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);

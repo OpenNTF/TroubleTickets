@@ -15,16 +15,11 @@ import lotus.domino.View;
 
 import com.ibm.commons.util.io.json.JsonJavaObject;
 import com.ibm.sbt.services.client.ClientServicesException;
-//import com.ibm.sbt.services.client.SBTServiceException;
 import com.ibm.sbt.services.client.connections.activitystreams.ActivityStreamService;
 import com.ibm.sbt.services.client.connections.activitystreams.ActivityStreamServiceException;
 import com.ibm.sbt.services.client.connections.profiles.Profile;
 import com.ibm.sbt.services.client.connections.profiles.ProfileService;
 import com.ibm.sbt.services.client.connections.profiles.ProfileServiceException;
-//import com.ibm.sbt.services.endpoints.ConnectionsOAuth2Endpoint;
-//import com.ibm.sbt.services.endpoints.ConnectionsSSOEndpoint;
-//import com.ibm.sbt.services.endpoints.EndpointFactory;
-import com.ibm.sbt.services.endpoints.SSOEndpoint;
 import com.ibm.xsp.extlib.util.ExtLibUtil;
 import com.ibm.commons.util.io.json.JsonException;
 import com.ibm.commons.util.io.json.JsonGenerator;
@@ -50,6 +45,7 @@ public class XPagesTickets {
 		ActivityStreamService svc = new com.ibm.sbt.services.client.connections.activitystreams.ActivityStreamService("connections");
 		
 		try {
+			@SuppressWarnings("unused")
 			Object msg = svc.updateData("/connections/opensocial/basic/rest/activitystreams/@me/@actions/@all/activitystreams:"+documentId, null,json,null);
 		} catch (ClientServicesException e) {
 			// TODO Auto-generated catch block
@@ -100,14 +96,19 @@ public class XPagesTickets {
 	public static String getConUserId(String email) {
 		String result = "";
 		try {
-			SSOEndpoint endpoint = nsf.EndpointManager.getSSOBean("connections");
-			com.ibm.sbt.services.client.connections.profiles.ProfileService profileService = new ProfileService(endpoint);
-			
-			/*
-			 * Gets the Profile Information
-			 */
-			Profile profile = profileService.getProfile(email);
-			result = profile.getUserid();
+			FacesContext context = FacesContext.getCurrentInstance();
+			EndpointManager endpointManager = (EndpointManager)context.getApplication().getVariableResolver().resolveVariable(context, "EndpointManager");
+			if(null != endpointManager){
+				com.ibm.sbt.services.client.connections.profiles.ProfileService profileService = null;
+				if(endpointManager.isAuthBasic()) {
+					profileService = new ProfileService(endpointManager.getBasicBean("connections"));
+				}else if(endpointManager.isAuthSSO()) {
+					profileService = new ProfileService(endpointManager.getSSOBean("connections"));
+				}
+				//Gets the Profile Information
+				Profile profile = profileService.getProfile(email);
+				result = profile.getUserid();
+			 }
 		} catch (ProfileServiceException e) {
 			e.printStackTrace();
 		}
@@ -200,9 +201,19 @@ public class XPagesTickets {
 		header.put("Content-Type", "application/json");
 		String activityId = null;
 		try {
-			SSOEndpoint endpoint = EndpointManager.getSSOBean("connections");
-			ActivityStreamService svc = new ActivityStreamService(endpoint);
-			activityId=svc.postEntry("@me", "@public", "@all", activity);
+			FacesContext context = FacesContext.getCurrentInstance();
+			EndpointManager endpointManager = (EndpointManager)context.getApplication().getVariableResolver().resolveVariable(context, "EndpointManager");
+			if(null != endpointManager){
+				ActivityStreamService svc = null;
+				
+				if(endpointManager.isAuthBasic()) {
+					svc = new ActivityStreamService(endpointManager.getBasicBean("connections"));
+				}else if(endpointManager.isAuthSSO()) {
+					svc = new ActivityStreamService(endpointManager.getSSOBean("connections"));
+				}
+
+				activityId=svc.postEntry("@me", "@public", "@all", activity);
+			 }
 		} catch (ActivityStreamServiceException e) {
 			e.printStackTrace();
 		}
@@ -212,51 +223,56 @@ public class XPagesTickets {
 	}
 	
 	public static void generateEscalationPost(String summary, String submitterId, String managerName) {
-		SSOEndpoint endpoint = EndpointManager.getSSOBean("connections");
-		if(endpoint !=null) {
-			
-			JsonJavaObject postPayload = new JsonJavaObject();
-			JsonJavaObject actor =new JsonJavaObject();
-			JsonJavaObject object =new JsonJavaObject();
-			actor.put("id", submitterId);
-			object.put("summary", "A Trouble Ticket has been escalated to " +managerName);
-			object.put("objectType", "post");
-			java.util.Random randomGen = new java.util.Random(19580427);
-			int randomNum = randomGen.nextInt();
-			object.put("id", randomNum);
-			object.put("displayName", "Escalated Trouble Ticket");
-			object.put("url", getEEUrl());
-			
-			postPayload.put("actor", actor);
-			postPayload.put("verb", "post");
-			postPayload.put("title", "Trouble Ticket escalated to "+managerName);
-					
-			postPayload.put("content", summary );
-			postPayload.put("updated", new java.util.Date().getTime());
-			postPayload.put("object", object);
-			
-			JsonJavaObject embed = new JsonJavaObject();
-			embed.putJsonProperty("url", nsf.XPagesTickets.getEEUrl());
-			JsonJavaObject opensocial = new JsonJavaObject();
-			opensocial.putJsonProperty("embed", embed);
+		JsonJavaObject postPayload = new JsonJavaObject();
+		JsonJavaObject actor =new JsonJavaObject();
+		JsonJavaObject object =new JsonJavaObject();
+		actor.put("id", submitterId);
+		object.put("summary", "A Trouble Ticket has been escalated to " +managerName);
+		object.put("objectType", "post");
+		java.util.Random randomGen = new java.util.Random(19580427);
+		int randomNum = randomGen.nextInt();
+		object.put("id", randomNum);
+		object.put("displayName", "Escalated Trouble Ticket");
+		object.put("url", getEEUrl());
 		
-			postPayload.putJsonProperty("openSocial", opensocial);
+		postPayload.put("actor", actor);
+		postPayload.put("verb", "post");
+		postPayload.put("title", "Trouble Ticket escalated to "+managerName);
+				
+		postPayload.put("content", summary );
+		postPayload.put("updated", new java.util.Date().getTime());
+		postPayload.put("object", object);
 		
-			object.putJsonProperty("summary", summary);
-			object.putJsonProperty("objectType", "ticket");
-			object.putJsonProperty("id", randomNum);
-			object.putJsonProperty("displayName", "Trouble Ticket");
-			object.putJsonProperty("url", getTicketUrl());
-		
-			postPayload.putJsonProperty("object", object);
-			try{
-				ActivityStreamService svc = new ActivityStreamService(endpoint);		
+		JsonJavaObject embed = new JsonJavaObject();
+		embed.putJsonProperty("url", nsf.XPagesTickets.getEEUrl());
+		JsonJavaObject opensocial = new JsonJavaObject();
+		opensocial.putJsonProperty("embed", embed);
+	
+		postPayload.putJsonProperty("openSocial", opensocial);
+	
+		object.putJsonProperty("summary", summary);
+		object.putJsonProperty("objectType", "ticket");
+		object.putJsonProperty("id", randomNum);
+		object.putJsonProperty("displayName", "Trouble Ticket");
+		object.putJsonProperty("url", getTicketUrl());
+	
+		postPayload.putJsonProperty("object", object);
+		try{
+			FacesContext context = FacesContext.getCurrentInstance();
+			EndpointManager endpointManager = (EndpointManager)context.getApplication().getVariableResolver().resolveVariable(context, "EndpointManager");
+			if(null != endpointManager){
+				ActivityStreamService svc = null;
+				
+				if(endpointManager.isAuthBasic()) {
+					svc = new ActivityStreamService(endpointManager.getBasicBean("connections"));
+				}else if(endpointManager.isAuthSSO()) {
+					svc = new ActivityStreamService(endpointManager.getSSOBean("connections"));
+				}
 				svc.postEntry("@me", "@public", "@all", postPayload);
-			}catch(Exception e) {
-				e.printStackTrace();
 			}
-		}else{
-			//report error in escalation
+				
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -391,7 +407,6 @@ public class XPagesTickets {
 		return "A <a href=\"" + getTicketUrl()
 				+ "\">trouble ticket</a> was escalated to you.";
 	}
-
 	public static String createTextPart() {
 		return "A new trouble ticket was assigned to you. " + getTicketUrl();
 	}
@@ -402,6 +417,4 @@ public class XPagesTickets {
 		String url = getEEUrl();
 		return "{\"url\":\"" + url + "\"}";
 	}
-	
-
 }

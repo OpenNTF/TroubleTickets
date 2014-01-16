@@ -135,11 +135,6 @@
 												setConfirmationMessage("Ticket has been submitted to help desk");
 												
 												if((null != sessionScope.connectionsEnabled && sessionScope.connectionsEnabled) || isConnectionsEnabled()) {
-													//Fetch the connections bean
-													//var endpoint = BeanFactory.getSSOBean("connections");
-													//if(endpoint == null) {
-													//	endpoint = BeanFactory.createSSOBean("connections", getConnectionsURL());
-													//}
 													var endpoint = getEndpoint("connections");
 													
 													//Post the new ticket as an activity on the community activityStream
@@ -151,7 +146,7 @@
 													}
 													
 													//Create forum topic in community if checkbox is selected
-													if(getComponent("shareOnForum") && getComponent("shareOnForum").getValue()) {
+													if(getComponent("shareOnForum") && (getComponent("shareOnForum").getValue() == "true")) {
 														try{
 															var forumSvc = new com.ibm.sbt.services.client.connections.forums.ForumService(endpoint);
 															var topic = new com.ibm.sbt.services.client.connections.forums.ForumTopic(forumSvc);

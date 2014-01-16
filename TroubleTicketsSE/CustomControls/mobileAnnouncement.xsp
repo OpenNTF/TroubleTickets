@@ -5,7 +5,7 @@
 	<xp:this.data>
 		<xp:dominoDocument var="document1" formName="announcement"></xp:dominoDocument>
 	</xp:this.data>
-	<xe:djxmHeading id="djxmHeading1" back="#{javascript:return (!document1.isEditable() ? 'Cancel' : 'Back');}" moveTo="#{javascript:sessionScope.from}" label="Announcement">
+	<xe:djxmHeading id="djxmHeading1" back="#{javascript:return (!document1.isEditable() ? 'Back' : 'Cancel');}" moveTo="#{javascript:return sessionScope.from}" label="Announcement">
 		<xp:this.facets>
 			<xp:panel xp:key="actionFacet">
 				<xe:toolBarButton id="editButton" label="Edit">

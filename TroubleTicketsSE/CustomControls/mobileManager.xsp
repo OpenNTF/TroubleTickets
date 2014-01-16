@@ -71,7 +71,7 @@
 						<xp:this.rendered>
 							<![CDATA[#{javascript:
 								var size = getComponent("annsDataView").getRowCount();
-								return size > 5;
+								return size > 1;
 							}]]>
 						</xp:this.rendered>
 

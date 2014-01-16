@@ -170,18 +170,7 @@
 								if((null != sessionScope.connectionsEnabled && sessionScope.connectionsEnabled) || isConnectionsEnabled()) {
 									var result = [];
 									try{
-										var url = getConnectionsURL();
-										if("" == url) {
-											return null;
-										}
-										
-										var endpoint = BeanFactory.getSSOBean("connections");
-										if(endpoint == null) {
-											endpoint = BeanFactory.createSSOBean("connections", url);
-										}
-										if(!endpoint.isAuthenticated()) {
-											endpoint.authenticate(true);
-										}
+										var endpoint = getEndpoint("connections");
 										
 										var myEmail = "";
 										var userId = context.getUser().getFullName();
@@ -196,7 +185,6 @@
 											for(var i=0;i < colleagues.length;i++){
 												result.push(colleagues[i].getName() + '|' + colleagues[i].getEmail());
 											}
-											//return colleagues;
 										}else{
 											return null;
 										}
@@ -267,18 +255,7 @@
 							<xp:this.value><![CDATA[#{javascript:
 								var result = [];
 								try{
-									var url = getConnectionsURL();
-									if("" == url) {
-										return null;
-									}
-									
-									var endpoint = BeanFactory.getSSOBean("connections");
-									if(endpoint == null) {
-										endpoint = BeanFactory.createSSOBean("connections", url);
-									}
-									if(!endpoint.isAuthenticated()) {
-										endpoint.authenticate(true);
-									}
+									var endpoint = getEndpoint("connections");
 									
 									var myEmail = "";
 									var userId = context.getUser().getFullName();
@@ -287,7 +264,7 @@
 									}
 									if("" != myEmail) {
 										var profileService = new com.ibm.sbt.services.client.connections.profiles.ProfileService(endpoint);
-										var managers = profileService.getReportChain(myEmail);
+										var managers = profileService.getReportingChain(myEmail);
 										
 										result.push('Select...|');
 										for(var i=0;i < managers.length;i++){
@@ -419,8 +396,6 @@
 								<xp:actionGroup>
 									<xp:executeScript>
 										<xp:this.script><![CDATA[#{javascript:
-											//var commentBox = getComponent("commentText");
-											//var comment = commentBox.getValue();
 											var comment = viewScope.comment;
 											if (comment && comment.length > 0) {
 												viewScope.mobileMessage = "Comment added to ticket";

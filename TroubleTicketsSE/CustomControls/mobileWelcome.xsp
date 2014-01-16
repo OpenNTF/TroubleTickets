@@ -104,7 +104,7 @@
 				<xe:this.value><![CDATA[#{javascript:
 					try{
 						var forumId = getForumId();
-						if("" == url || "" == forumId) {
+						if("" == forumId) {
 							return null;
 						}
 						
@@ -148,7 +148,7 @@
 							</xp:eventHandler>
 						</xp:link>
 					</xp:panel>
-					<xp:panel id="panel5" xp:key="extra0" style="width: 65%;">
+					<xp:panel id="panel5" xp:key="extra0" styleClass="topicsContent">
 						<xp:text escape="false">
 							<xp:this.value><![CDATA[#{javascript:return topic.getContent();}]]></xp:this.value>
 						</xp:text>
@@ -175,7 +175,7 @@
 					<![CDATA[#{javascript:
 						try{
 							var communityId = getCommunityId();
-							if("" == url || "" == communityId) {
+							if("" == communityId) {
 								return null;
 							}
 							

@@ -7,8 +7,8 @@
 	</xp:this.resources>
 	<xp:this.beforePageLoad>
 		<![CDATA[#{javascript:
-			viewScope.endpoint = "connections";
-			//viewScope.endpoint = param.endpoint||compositeData.defaultEndpoint||"connections"
+			viewScope.endpointName = "connections";
+			//viewScope.endpointName = param.endpoint||compositeData.defaultEndpoint||"connections"
 		}]]>
 	</xp:this.beforePageLoad>
 	<xp:div styleClass="lotusLogin lotusLoginForm">
@@ -19,9 +19,9 @@
 						<xp:text escape="true" id="computedField1">
 							<xp:this.value>
 								<![CDATA[#{javascript:
-									//var ep = getEndpoint(viewScope.endpoint);//@Endpoint(viewScope.endpoint);
-									//var tg = ep.getLabel()||viewScope.endpoint;
-									return I18n.format("Login to {0}",viewScope.endpoint);//tg);
+									//var ep = getEndpoint(viewScope.endpointName);//@Endpoint(viewScope.endpointName);
+									//var tg = ep.getLabel()||viewScope.endpointName;
+									return I18n.format("Login to {0}",viewScope.endpointName);//tg);
 								}]]>
 							</xp:this.value>
 						</xp:text>
@@ -32,7 +32,7 @@
 					</h2>
 					<xp:br />
 					<xp:br />
-					<xc:sbtLoginPanel endpoint="#{viewScope.endpoint}" loginButton="true">
+					<xc:sbtLoginPanel endpoint="#{viewScope.endpointName}" loginButton="true">
 					</xc:sbtLoginPanel>
 				</xp:div>
 			</xp:div>

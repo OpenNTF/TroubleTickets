@@ -1,18 +1,20 @@
 package nsf;
 
-import com.ibm.sbt.services.client.connections.profiles.Profile;
-import com.ibm.sbt.services.client.connections.profiles.ProfileService;
-import com.ibm.sbt.services.client.connections.profiles.ProfileServiceException;
+import java.io.Serializable;
+import lotus.domino.NotesException;
+
 import com.ibm.sbt.services.endpoints.BasicEndpoint;
 import com.ibm.sbt.services.endpoints.ConnectionsBasicEndpoint;
 import com.ibm.sbt.services.endpoints.ConnectionsSSOEndpoint;
-//import com.ibm.sbt.services.endpoints.Endpoint;
 import com.ibm.sbt.services.endpoints.SSOEndpoint;
+import com.ibm.xsp.extlib.util.ExtLibUtil;
 
-public class EndpointManager {
-	private static ConnectionsBasicEndpoint connBasicBean = null;
-	private static ConnectionsSSOEndpoint connSSOBean = null;
-	private static String connectionsURL = "";
+public class EndpointManager implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	private ConnectionsBasicEndpoint connBasicBean = null;
+	private ConnectionsSSOEndpoint connSSOBean = null;
+	private String connectionsURL = "";
 	
 	public final static String CONNECTIONS_BASIC = "basic";
 	public final static String CONNECTIONS_SSO = "sso";
@@ -22,16 +24,20 @@ public class EndpointManager {
 
 	}
 	
-	public static BasicEndpoint createBasicBean(String beanName, String URL) {
+	public BasicEndpoint createBasicBean(String beanName, String URL) {
 		if(beanName.equals(CONNECTIONS)) {
 			setConnectionsURL(URL);
-		
 			connBasicBean = new ConnectionsBasicEndpoint();
 			connBasicBean.setForceTrustSSLCertificate(true);
 			connBasicBean.setUrl(getConnectionsURL());
 			connBasicBean.setName(CONNECTIONS);
 			connBasicBean.setAuthenticationService("communities/service/atom/communities/all");
-			connBasicBean.setAuthenticationPage("TroubleTicketsSE.nsf/_BasicLogin.xsp?endpoint=connections");
+			try {
+				connBasicBean.setAuthenticationPage(ExtLibUtil.getCurrentDatabase().getFileName()+"/_BasicLogin.xsp?endpoint=connections");
+				System.out.println(ExtLibUtil.getCurrentDatabase().getFileName());
+			} catch (NotesException e) {
+				e.printStackTrace();
+			} 
 			connBasicBean.setCredentialStore("PasswordStore");
 			return connBasicBean;
 		}else{
@@ -51,7 +57,7 @@ public class EndpointManager {
 		}
 	}
 	
-	public static BasicEndpoint getBasicBean(String beanName) {
+	public BasicEndpoint getBasicBean(String beanName) {
 		if(beanName.equals(CONNECTIONS)) {
 			return connBasicBean;
 		}else{
@@ -59,7 +65,7 @@ public class EndpointManager {
 		}
 	}
 	
-	public static SSOEndpoint getSSOBean(String beanName) {
+	public SSOEndpoint getSSOBean(String beanName) {
 		if(beanName.equals(CONNECTIONS)) {
 			return connSSOBean;
 		}else{
@@ -67,30 +73,19 @@ public class EndpointManager {
 		}
 	}
 	
-	public static String getConnectionsURL() {
+	public String getConnectionsURL() {
 		return connectionsURL;
 	}
 
-	public static void setConnectionsURL(String connectionsURL) {
-		EndpointManager.connectionsURL = connectionsURL;
+	public void setConnectionsURL(String connectionsURL) {
+		this.connectionsURL = connectionsURL;
 	}
 
+	public boolean isAuthSSO() {
+		return connSSOBean != null;		
+	}
 	
-	/**
-	 * getConUserId calls the SBTSDK to get a Unique User Id
-	 * 
-	 * @param email
-	 * @return
-	 */
-	public static String getConUserId(String email) {
-		String result = "";
-		try {
-			ProfileService profileService = new ProfileService(connSSOBean);
-			Profile profile = profileService.getProfile(email);
-			result = profile.getName();
-		} catch (ProfileServiceException e) {
-			e.printStackTrace();
-		}
-		return result;
+	public boolean isAuthBasic() {
+		return connBasicBean != null;		
 	}
 }
