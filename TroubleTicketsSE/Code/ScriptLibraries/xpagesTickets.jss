@@ -69,10 +69,10 @@ function postCommunityUpdate(doc:NotesDocument, poster) {
 
 	var submitterEmail = nsf.XPagesTickets.getInternetEmail(poster);
 	print('submitterEmail='+submitterEmail);
-	var submitterId = nsf.ConnectionsBean.getConUserId(submitterEmail);
+	var submitterId = nsf.XPagesTickets.getConUserId(submitterEmail);
 	print('submitterId='+submitterId);
 	
-	var endpoint = nsf.ConnectionsBean.getSSOBean("connections");
+	var endpoint = getEndpoint("connections");
 	var activitySvc = new com.ibm.sbt.services.client.connections.activitystreams.ActivityStreamService(endpoint);
 
 	var uniDocId = doc.getUniversalID();
@@ -138,17 +138,17 @@ function isOpen(doc:NotesDocument) {
 }
 
 function getConnectionsURL() {
-	var url = BeanFactory.getConnectionsURL();
-	if(null == url || "" == url) {
+	if(null == sessionScope.connectionsURL || "" == sessionScope.connectionsURL) {
 		var idStoreView:NotesView = database.getView("idStoreLookup");
 		if(null != idStoreView){
 			var idStoreDoc = idStoreView.getFirstDocument();
 			if(null != idStoreDoc){
 				url = idStoreDoc.getItemValueString("URL");
+				sessionScope.connectionsURL = url;
 			}
 		}
 	}
-	return url;
+	return sessionScope.connectionsURL;
 }
 
 function getCommunityId() {
@@ -176,8 +176,31 @@ function getForumId() {
 }
 
 function getEndpoint(endpointName:String) {
+	//Retrieve the login type for Connections: 'BASIC' or 'SSO'
+	var loginType = getAuthType();
 	var endpoint = null;
 	
+	//Based on the login type, retrieve the correct endpoint from the EndpointFactory
+	if(null != loginType && "" != loginType) {
+		if(isAuthBasic()) {
+			endpoint = EndpointManager.getBasicBean(EndpointManager.CONNECTIONS);
+			if(null == endpoint) {
+				endpoint = EndpointManager.createBasicBean(endpointName, getConnectionsURL());
+			}
+		}else if(isAuthSSO()) {
+			endpoint = EndpointManager.getSSOBean(EndpointManager.CONNECTIONS);
+			if(null == endpoint) {
+				endpoint = EndpointManager.createSSOBean(endpointName, getConnectionsURL());
+			}
+		}
+	}
+	//if(null != sessionScope.endpoint && !sessionScope.endpoint.isAuthenticated()) {
+	//	sessionScope.endpoint.authenticate(true);
+	//}
+	return endpoint;
+}
+
+function getAuthType() {
 	//Retrieve the login type for Connections: 'BASIC' or 'SSO'
 	var loginType = "";
 	var idStoreView:NotesView = database.getView("idStoreLookup");
@@ -187,23 +210,13 @@ function getEndpoint(endpointName:String) {
 			loginType = idStoreDoc.getItemValueString("Login");
 		}
 	}
-	
-	//Based on the login type, retrieve the correct endpoint from the EndpointFactory
-	if("" != loginType) {
-		if(loginType == BeanFactory.CONNECTIONS_BASIC) {
-			endpoint = BeanFactory.getBasicBean(BeanFactory.CONNECTIONS);
-			if(null == endpoint) {
-				endpoint = BeanFactory.createBasicBean(endpointName, getConnectionsURL());
-			}
-		}else if(loginType == BeanFactory.CONNECTIONS_SSO) {
-			endpoint = BeanFactory.getSSOBean(BeanFactory.CONNECTIONS);
-			if(null == endpoint) {
-				endpoint = BeanFactory.createSSOBean(endpointName, getConnectionsURL());
-			}
-		}
-	}
-	//if(null != endpoint && endpoint instanceof ConnectionsSSOEndpoint && !endpoint.isAuthenticated()) {
-	//	endpoint.authenticate(true);
-	//}
-	return endpoint;
+	return loginType;
+}
+
+function isAuthBasic() {
+	return (getAuthType() == EndpointManager.CONNECTIONS_BASIC);
+}
+
+function isAuthSSO() {
+	return (getAuthType() == EndpointManager.CONNECTIONS_SSO);
 }

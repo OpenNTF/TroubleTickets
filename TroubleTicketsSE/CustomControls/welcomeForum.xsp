@@ -13,7 +13,6 @@
 					<xe:remoteMethodArg name="id" type="string"></xe:remoteMethodArg>
 				</xe:this.arguments>
 			</xe:remoteMethod>
-			<xe:remoteMethod name="setScopeId"></xe:remoteMethod>
 		</xe:this.methods>
 	</xe:jsonRpcService>
 
@@ -57,16 +56,25 @@
 								</xe:this.summaryColumn>
 								<xp:this.value>
 									<![CDATA[#{javascript:
-										try{											
-											//var forumSvc = new com.ibm.sbt.services.client.connections.forums.ForumService(endpoint);	
-											var topics = forumSvc.getForum(forumId).getTopics();
-											viewScope.forumAvailable = true;
-											return topics;
-										}catch(exception){
-											println("Forum value error: " + exception);
+										//try{											
+											var endpoint = getEndpoint("connections");
+											if(null != endpoint) {
+												var forumSvc = new com.ibm.sbt.services.client.connections.forums.ForumService(endpoint);
+												var forumId = getForumId();
+												if(null != forumId && "" != forumId) {
+													var topics = forumSvc.getForum(forumId).getTopics();
+													viewScope.forumAvailable = true;
+													return topics;
+												}
+											}
 											viewScope.forumAvailable = false;
 											return null;
-										}}]]>
+										//}catch(exception){
+										//	println("Forum value error: " + exception);
+										//	viewScope.forumAvailable = false;
+										//	return null;
+										//}
+										}]]>
 								</xp:this.value>
 								<xp:this.facets>
 									<xp:panel xp:key="noRows" id="topicsPanel2">
@@ -97,7 +105,7 @@
 										</xp:link>
 										
 									</xp:panel>
-									<xp:panel id="contentPanel" xp:key="extra0" style="white-space:nowrap;">
+									<xp:panel id="contentPanel" xp:key="extra0" styleClass="topicsContent">
 										<xp:text escape="false">
 											<xp:this.value><![CDATA[#{javascript:return topic.getContent();}]]></xp:this.value>
 										</xp:text>
@@ -113,9 +121,12 @@
 	<xe:dialog id="topicDialog" title="Forum Topic">
 		<xe:this.beforeContentLoad>
 			<![CDATA[#{javascript:
+				var endpoint = getEndpoint("connections");
+				var forumSvc = new com.ibm.sbt.services.client.connections.forums.ForumService(endpoint);	
 				var dlgId = sessionScope.topicId;
 				var dlgTopic = forumSvc.getForumTopic(dlgId);
 				var dlgUrl = dlgTopic.getTopicUrl();
+				println("preload topic: " + dlgTopic);
 			}]]>
 		</xe:this.beforeContentLoad>
 		<xe:dialogContent id="pnl1" style="width:500px">

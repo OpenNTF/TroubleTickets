@@ -1,6 +1,7 @@
 .mobileFormContainer .centeredRow .dataCell {
 	vertical-align: middle;
 	font-size: 14px;
+	height: 20px;
 }
 
 .mobileFormContainer .viewTicket .labelCell {
@@ -199,7 +200,7 @@
 	margin: 0 0 0 10px;
 }
 .mobileFormContainer .dataCell > fieldset > table {
-	margin: 0px 0px 0px -15px;
+	margin: -15px 0px 0px -15px;
 	width: 200px;
 }
 
@@ -308,4 +309,19 @@
 
 .oneui .topicsDataView .lotusTable .lotusFirstCell{
 	width: 35% !important;
+}
+
+/* fix text clipping on content column of forum panel */
+.topicsContent > span > p {
+	overflow:hidden;
+	text-overflow:ellipsis;
+	line_height: 16px;
+	max-height: 38px;
+	-webkit-line-clamp: 2;
+	display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
+.mblAccordion .mblDataView .mblDomButtonArrow > div{
+	top: 25px;
 }

@@ -7,10 +7,7 @@
 		<xp:script src="/xpagesTickets.jss" clientSide="false"></xp:script>
 	</xp:this.resources>
 	<xp:this.beforePageLoad><![CDATA[#{javascript:
-		var endpoint = BeanFactory.getSSOBean("connections");
-		if(null == endpoint) {
-			endpoint = BeanFactory.createSSOBean("connections", getConnectionsURL());
-		}
+		var endpoint = getEndpoint("connections");
 		}]]>
 	</xp:this.beforePageLoad>
 	<xe:djxmHeading id="djxmHeading1" back="#{javascript:return 'Back';}" moveTo="mWelcome" label="Trouble Ticket">

@@ -35,7 +35,32 @@
 								<xp:this.script><![CDATA[#{javascript:
 									var doc:NotesDocument = currentDocument.getDocument(true);
 									currentDocument.save();
-									submitTicket(doc);}]]></xp:this.script>
+									submitTicket(doc);
+									
+									if((null != sessionScope.connectionsEnabled && sessionScope.connectionsEnabled) || isConnectionsEnabled()) {
+										var endpoint = getEndpoint("connections");
+										
+										//Post the new ticket as an activity on the community activityStream
+										try{
+											var userId = context.getUser().getFullName();
+											postCommunityUpdate(doc, userId);
+										}catch(exc) {
+											println("Community update failure: " + exc);
+										}
+										
+										//Create forum topic in community if checkbox is selected
+										if(getComponent("shareOnForum") && (getComponent("shareOnForum").getValue() == "true")) {
+											try{
+												var forumSvc = new com.ibm.sbt.services.client.connections.forums.ForumService(endpoint);
+												var topic = new com.ibm.sbt.services.client.connections.forums.ForumTopic(forumSvc);
+												topic.setTitle(currentDocument.getItemValueString("Summary"));
+												topic.setContent("" + currentDocument.getValue("Details"));
+												forumSvc.createForumTopic(topic, getForumId());														
+											}catch(exc) {
+												println("Community forum post failure: " + exc);
+											}
+										}
+									}}]]></xp:this.script>
 							</xp:executeScript>
 							<xe:moveTo direction="Right to Left"
 								forceFullRefresh="true" targetPage="mEmployeeHome"
@@ -93,6 +118,13 @@
 					rows="8" htmlFilterIn="acf" htmlFilter="acf" styleClass="detailsTextarea">
 				</xp:inputTextarea>
 				<xp:br />
+			</xe:formRow>
+			<xe:formRow	loaded="${javascript:return isConnectionsEnabled();}"
+				label="Community Forum:" styleClass="formRow centeredRow">
+				<xp:checkBox id="shareOnForum"
+					text="Create accompanying community forum topic?"
+					defaultChecked="false" styleClass="">
+				</xp:checkBox>
 			</xe:formRow>
 		</xe:formTable>
 	</xp:panel>

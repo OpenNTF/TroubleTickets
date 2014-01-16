@@ -14,14 +14,17 @@
 	padding: 5px !important;
 }
 
+/* fix width of filename column on files panel*/
 .lotusui30 .lotusWidgetBody .filesDataView .lotusTable .lotusFirstCell{
 	width: 65% !important;
 }
 
+/* fix width of topic title column on forum panel*/
 .lotusui30 .lotusWidgetBody .topicsDataView .lotusTable .lotusFirstCell{
 	width: 35% !important;
 }
 
+/* fix width of member name column on members panel*/
 .lotusui30 .lotusWidgetBody .membersDataView .lotusTable .lotusFirstCell{
 	width: 55% !important;
 }
@@ -33,10 +36,24 @@
 	font-weight:bold;
 }
 
+/* fix text clipping on content column of forum panel */
+.lotusui30 .lotusWidgetBody .topicsDataView .topicsContent > span > p {
+	overflow:hidden;
+	text-overflow:ellipsis;
+	line-height: 12px;
+	max-height: 36px;
+	-webkit-line-clamp: 3;
+	display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
 .lotusui30 .lotusWidget2 .xspLink > h2 {
 	cursor: pointer;
 }
 
+.lotusui30 .lotusWidget2 > h2 {
+	cursor: default;
+}
 .lotusui30 .lotusWidget2 > h2 > a {
 	float:right;
 	font-size:20pt;

@@ -39,13 +39,7 @@
 								<xp:this.value>
 									<![CDATA[#{javascript:
 										try{
-											//var url = getConnectionsURL();
-											//var endpoint = BeanFactory.getSSOBean("connections");
-											//if(endpoint == null || url != endpoint.getUrl()) {
-											//	endpoint = BeanFactory.createSSOBean("connections", url);
-											//}
 											var endpoint = getEndpoint("connections");
-											
 											var filesService = new com.ibm.sbt.services.client.connections.files.FileService(endpoint); 
 											var myFiles = filesService.getMyFiles();
 											viewScope.myFilesAvailable = true;
@@ -136,16 +130,7 @@
 									//upload file
 									var file = getComponent("fileUpload2").getValue();
 									var communityId = getCommunityId();
-									//var url = getConnectionsURL();
-									//var endpoint = BeanFactory.getSSOBean("connections");
-									//if(endpoint == null) {
-									//	endpoint = BeanFactory.createSSOBean("connections", url);
-									//}
-									//if(!endpoint.isAuthenticated()) {
-									//	endpoint.authenticate(true);
-									//}
-									var endpoint = getEndpoint("connections");
-											
+									var endpoint = getEndpoint("connections");		
 									if(file != null && null != communityId) {
 										var svc = new com.ibm.sbt.services.client.connections.files.FileService(endpoint);
 										var is = new java.io.FileInputStream(file.getServerFile());

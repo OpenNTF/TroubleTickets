@@ -56,10 +56,10 @@
 													try{
 														var endpoint = null;
 														if("" != loginType) {
-															if(loginType == BeanFactory.CONNECTIONS_BASIC) {
-																endpoint = BeanFactory.createBasicBean("connections", url);
-															}else if(loginType == BeanFactory.CONNECTIONS_SSO) {
-																endpoint = BeanFactory.createSSOBean("connections", url);
+															if(loginType == EndpointManager.CONNECTIONS_BASIC) {
+																endpoint = EndpointManager.createBasicBean("connections", url);
+															}else if(loginType == EndpointManager.CONNECTIONS_SSO) {
+																endpoint = EndpointManager.createSSOBean("connections", url);
 															}
 														}
 													}catch(e) {
